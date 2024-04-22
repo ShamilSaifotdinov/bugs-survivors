@@ -1,18 +1,29 @@
-import { useEffect } from 'react'
-import './App.css'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import Discovery from './pages/Discovery'
+import './global.scss'
+
+const themeOptions = {
+  palette: {
+    type: 'light',
+    primary: {
+      main: '#117738',
+    },
+    secondary: {
+      main: '#d9ba20',
+    },
+  },
+  typography: {
+    fontFamily: ['"Press Start 2P"', '"Roboto"'].join(','),
+  },
+}
+const theme = createTheme(themeOptions)
 
 function App() {
-  useEffect(() => {
-    const fetchServerData = async () => {
-      const url = `http://localhost:${__SERVER_PORT__}`
-      const response = await fetch(url)
-      const data = await response.json()
-      console.log(data)
-    }
-
-    fetchServerData()
-  }, [])
-  return <div className="App">Вот тут будет жить ваше приложение :)</div>
+  return (
+    <ThemeProvider theme={theme}>
+      <Discovery />
+    </ThemeProvider>
+  )
 }
 
 export default App
