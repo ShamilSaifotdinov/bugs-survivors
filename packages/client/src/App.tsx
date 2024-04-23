@@ -22,6 +22,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Discovery />
+      ывфыв
     </ThemeProvider>
   )
 }
