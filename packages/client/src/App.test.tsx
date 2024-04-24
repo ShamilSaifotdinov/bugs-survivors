@@ -1,6 +1,3 @@
-// TODO: Need to fix scss parsing in Jest tests
-// https://stackoverflow.com/questions/54627028/jest-unexpected-token-when-importing-css
-
 import App from './App'
 import { render, screen } from '@testing-library/react'
 
