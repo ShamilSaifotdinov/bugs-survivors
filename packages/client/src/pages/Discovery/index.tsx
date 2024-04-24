@@ -8,7 +8,7 @@ const Discovery = () => {
       <img className={styles.background} src="/bgImage.png" alt="" />
       <div className={clsx('container', styles.container)}>
         <div className={styles.wrapper}>
-          <h1 className={styles.title}>Bugs Survivors</h1>
+          <h1 className={styles.title}>Bugs Survivors2</h1>
           <h4 className={styles.title}>By StathamGames</h4>
           <Button variant="contained">Play game</Button>
           <ul className={styles.links}>
