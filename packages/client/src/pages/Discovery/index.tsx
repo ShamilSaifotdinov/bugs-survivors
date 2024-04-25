@@ -13,15 +13,15 @@ const Discovery = () => {
           <Button variant="contained">Play game</Button>
           <ul className={styles.links}>
             <li>
-              <Link color="secondary" href="#">
+              <Link color="secondary" href={`/forum`}>
                 Forum
               </Link>
             </li>
             <li>
-              <Link href="#">Leaderboard</Link>
+              <Link href={`/leaderboard`}>Leaderboard</Link>
             </li>
             <li>
-              <Link href="#">Profile</Link>
+              <Link href={`/profile`}>Profile</Link>
             </li>
           </ul>
         </div>
