@@ -1,0 +1,15 @@
+0 silly argv {
+0 silly argv   _: [ 'add' ],
+0 silly argv   scope: 'client',
+0 silly argv   globs: [],
+0 silly argv   lernaVersion: '5.4.3',
+0 silly argv   '$0': 'node_modules\\lerna\\cli.js',
+0 silly argv   pkg: '@mui/styles'
+0 silly argv }
+1 notice cli v5.4.3
+2 verbose rootPath C:\Users\User\frontend\bugs-survivors
+3 notice filter including "client"
+4 info filter [ 'client' ]
+5 info Adding @mui/styles in 1 package
+6 verbose add @mui/styles@^5.15.15 to dependencies in client
+7 error

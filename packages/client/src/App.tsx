@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import RegisterPage from './pages/registration/RegisterPage'
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
-import PressStart from '../src/assets/fonts/PressStart2P-Regular.ttf'
+import { createTheme, ThemeProvider } from '@mui/material'
 import './App.css'
 
 function App() {
