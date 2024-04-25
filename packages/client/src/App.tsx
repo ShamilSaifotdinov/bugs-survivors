@@ -1,4 +1,4 @@
-import React from 'react'
+import { forwardRef } from 'react'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -49,7 +49,7 @@ const router = createBrowserRouter([
   },
 ])
 
-const LinkBehavior = React.forwardRef<
+const LinkBehavior = forwardRef<
   HTMLAnchorElement,
   Omit<RouterLinkProps, 'to'> & { href: RouterLinkProps['to'] }
 >((props, ref) => {
