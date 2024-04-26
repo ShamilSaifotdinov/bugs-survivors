@@ -22,8 +22,7 @@ function RegisterPage() {
               'linear-gradient(180deg, #FF5C00 50%, #FFFFFF 67.91%, #4396B5 89.37%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
-            // marginBottom: '80px',
-            margin: '0 auto 80px auto ',
+            margin: '0 auto 3.7rem auto ',
           }}>
           <Typography
             sx={{
@@ -50,36 +49,22 @@ function RegisterPage() {
             <TextField
               fullWidth={true}
               name="first_name"
-              placeholder="First name"></TextField>
+              label="First name"></TextField>
             <TextField
               fullWidth={true}
               name="second_name"
-              placeholder="Second name"></TextField>
-            <TextField
-              fullWidth={true}
-              name="email"
-              placeholder="E-mail"></TextField>
-            <TextField
-              fullWidth={true}
-              name="phone"
-              placeholder="Phone"></TextField>
-            <TextField
-              fullWidth={true}
-              name="login"
-              placeholder="Login"></TextField>
+              label="Second name"></TextField>
+            <TextField fullWidth={true} name="email" label="E-mail"></TextField>
+            <TextField fullWidth={true} name="phone" label="Phone"></TextField>
+            <TextField fullWidth={true} name="login" label="Login"></TextField>
             <TextField
               fullWidth={true}
               name="password"
-              placeholder="Password"></TextField>
-            <ButtonGroup
-              sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Button variant="contained" color="secondary">
-                SIGN IN
-              </Button>
-              <Button variant="contained" color="primary">
-                SIGN UP
-              </Button>
-            </ButtonGroup>
+              label="Password"></TextField>
+            <div className={style.buttonContainer}>
+              <Button color="secondary">SIGN IN</Button>
+              <Button color="primary">SIGN UP</Button>
+            </div>
           </Form>
         </Grid>
       </Grid>
