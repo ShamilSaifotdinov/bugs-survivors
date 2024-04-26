@@ -1,0 +1,7 @@
+.previousPageBtn {
+  margin-right: 4rem;
+  color: white !important;
+  &:before {
+    content: '<-';
+  }
+}

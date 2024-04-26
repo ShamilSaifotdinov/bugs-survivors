@@ -5,7 +5,11 @@ import styles from './styles.module.scss'
 const Discovery = () => {
   return (
     <section className={styles.discovery}>
-      <img className={styles.background} src="/bgImage.png" alt="" />
+      <img
+        className={styles.background}
+        src="/images/mainBackground.png"
+        alt=""
+      />
       <div className={clsx('container', styles.container)}>
         <div className={styles.wrapper}>
           <h1 className={styles.title}>Bugs Survivors</h1>
