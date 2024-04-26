@@ -50,7 +50,7 @@ const columns: readonly Column[] = [
   },
 ]
 
-const tableRows = mockData.leaderboard.map((item: any) => ({
+const tableRows = mockData?.leaderboard?.map(item => ({
   ...item,
   user: (
     <div className={styles.user}>
