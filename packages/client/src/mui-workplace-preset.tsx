@@ -56,9 +56,9 @@ export const themeOptions: ThemeOptions = {
     fontSize: 16,
     fontWeightRegular: 400,
     h2: {
-      fontSize: '3rem',
+      fontSize: '2rem',
       [mediaBreakpoint.lg]: {
-        fontSize: '2rem',
+        fontSize: '1.5rem',
       },
       [mediaBreakpoint.sm]: {
         fontSize: '1.25rem',

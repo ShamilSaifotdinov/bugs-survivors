@@ -14,9 +14,7 @@ const PreviousPageBtn = ({ className, children }: PreviousPageBtnProps) => {
   const navigate = useNavigate()
   return (
     <Link
-      classes={{
-        root: clsx(className, styles.previousPageBtn),
-      }}
+      className={clsx(className, styles.previousPageBtn)}
       onClick={() => navigate(-1)}>
       {children}
     </Link>
