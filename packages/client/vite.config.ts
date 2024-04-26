@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import dotenv from 'dotenv'
-import { resolve } from 'path'
 dotenv.config()
 
 console.log(__dirname, '-------------000-------')
@@ -15,7 +14,4 @@ export default defineConfig({
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
   plugins: [react()],
-  resolve: {
-    alias: [{ find: '@bugs-survivors', replacement: resolve(__dirname) }],
-  },
 })

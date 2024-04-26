@@ -10,7 +10,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material'
-import mockData from '@bugs-survivors/mockData'
+import mockData from '../../../../../mockData.json'
 import { logDOM } from '@testing-library/react'
 
 type User = {
@@ -49,8 +49,6 @@ const columns: readonly Column[] = [
     align: 'right',
   },
 ]
-
-console.log(mockData)
 
 const tableRows = mockData.leaderboard.map((item: any) => ({
   ...item,
