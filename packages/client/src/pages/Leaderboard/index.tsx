@@ -1,20 +1,15 @@
-import { Typography } from '@mui/material'
 import { clsx } from 'clsx'
-import styles from './styles.module.scss'
+import { Typography } from '@mui/material'
 import PreviousPageBtn from '../../components/PreviousPageBtn'
 import LeaderboardTable from './components/LeaderboardTable'
+import styles from './styles.module.scss'
 
 const Leaderboard = () => {
   return (
     <section className={styles.section}>
-      <img
-        className={styles.background}
-        src="/images/leaderboardBackground.png"
-        alt=""
-      />
       <div className={clsx('container', styles.container)}>
         <div className={styles.wrapper}>
-          <Typography variant="h2" color="white">
+          <Typography variant="h2">
             <PreviousPageBtn />
             Leaderboard
           </Typography>

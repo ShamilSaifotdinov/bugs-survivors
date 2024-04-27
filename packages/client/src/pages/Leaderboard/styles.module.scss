@@ -1,6 +1,9 @@
 .section {
   position: relative;
   height: 100vh;
+  background-image: url('/images/leaderboardBackground.png');
+  background-position: center;
+  background-size: cover;
 }
 .container {
   padding-top: 4.375rem;
@@ -30,9 +33,6 @@
   border-radius: 0.625rem;
   display: flex;
   flex-direction: column;
-}
-.title {
-  text-align: center;
 }
 
 .links {

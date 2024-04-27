@@ -17,7 +17,7 @@ html {
   font-weight: 400;
   font-style: normal;
   line-height: 1.4;
-  color: #000;
+  color: #fff;
   @include xxl {
     font-size: 12px;
   }
@@ -41,40 +41,3 @@ h3,
 h4 {
   font-family: 'Press Start 2P', sans-serif;
 }
-
-// Useful converter from px to rem:
-// https://nekocalc.com/px-to-rem-converter
-// height: 1px;
-// height: 0.125rem; /* 2px */
-// height: 0.25rem; /* 4px */
-// height: 0.375rem; /* 6px */
-// height: 0.5rem; /* 8px */
-// height: 0.625rem; /* 10px */
-// height: 0.75rem; /* 12px */
-// height: 0.875rem; /* 14px */
-// height: 1rem; /* 16px */
-// height: 1.25rem; /* 20px */
-// height: 1.5rem; /* 24px */
-// height: 1.75rem; /* 28px */
-// height: 2rem; /* 32px */
-// height: 2.25rem; /* 36px */
-// height: 2.5rem; /* 40px */
-// height: 2.75rem; /* 44px */
-// height: 3rem; /* 48px */
-// height: 3.5rem; /* 56px */
-// height: 4rem; /* 64px */
-// height: 5rem; /* 80px */
-// height: 6rem; /* 96px */
-// height: 7rem; /* 112px */
-// height: 8rem; /* 128px */
-// height: 9rem; /* 144px */
-// height: 10rem; /* 160px */
-// height: 11rem; /* 176px */
-// height: 12rem; /* 192px */
-// height: 13rem; /* 208px */
-// height: 14rem; /* 224px */
-// height: 15rem; /* 240px */
-// height: 16rem; /* 256px */
-// height: 18rem; /* 288px */
-// height: 20rem; /* 320px */
-// height: 24rem; /* 384px */
