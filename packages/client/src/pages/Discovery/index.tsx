@@ -7,10 +7,16 @@ const Discovery = () => {
     <section className={styles.section}>
       <div className={clsx('container', styles.container)}>
         <div className={styles.wrapper}>
-          <Typography className={styles.title} variant="h2" color="black">
+          <Typography
+            className={styles.title}
+            variant="h2"
+            color="text.secondary">
             Bugs Survivors
           </Typography>
-          <Typography className={styles.title} variant="h5" color="black">
+          <Typography
+            className={styles.title}
+            variant="h5"
+            color="text.secondary">
             By StathamGames
           </Typography>
           <Button variant="contained">Play game</Button>

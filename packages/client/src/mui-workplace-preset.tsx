@@ -53,7 +53,7 @@ export const themeOptions: ThemeOptions = {
     },
     text: {
       primary: '#fff',
-      secondary: '#ddd',
+      secondary: '#000',
       disabled: '#ddd',
     },
     background: {
