@@ -3,7 +3,6 @@ import RegisterPage from './pages/registration/RegisterPage'
 import { createTheme, ThemeProvider } from '@mui/material'
 import { Routes, Route } from 'react-router-dom'
 import './App.css'
-import LoginPage from './pages/login/LoginPage'
 
 const theme = createTheme({
   typography: {
@@ -108,7 +107,6 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         <Routes>
-          <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Routes>
       </ThemeProvider>
