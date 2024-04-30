@@ -1,0 +1,10 @@
+.table-container {
+  margin-top: 2.5rem;
+  overflow: auto;
+  flex-grow: 1;
+  max-height: 100%;
+}
+
+.tr {
+  cursor: pointer;
+}

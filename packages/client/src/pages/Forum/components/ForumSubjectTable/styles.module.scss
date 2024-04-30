@@ -1,0 +1,23 @@
+.table-container {
+  margin-top: 2.5rem;
+  overflow: auto;
+  max-height: 100%;
+}
+
+.pagination {
+  margin-top: 2.5rem;
+  overflow: initial !important;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .avatar {
+    margin-right: 0.5rem;
+  }
+}
+
+.tr {
+  cursor: pointer;
+}

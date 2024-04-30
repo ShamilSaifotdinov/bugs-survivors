@@ -210,5 +210,199 @@
       "time": "11:11",
       "score": "456"
     }
+  ],
+  "forum": [
+    {
+      "id": "new_games",
+      "name": "Новые игры",
+      "data": [
+        {
+          "id": "1",
+          "name": "Покер",
+          "creator": {
+            "id": "1",
+            "avatar": "/images/defaultAvatar.png",
+            "name": "statham.j"
+          },
+          "answers": [
+            {
+              "id": "1",
+              "author": {
+                "id": "1",
+                "avatar": "/images/defaultAvatar.png",
+                "name": "statham.j"
+              },
+              "answer": "Здравствуйте! Предлагаю сделать покер по мотивам Карты, деньги, два ствола. Но не просто покер, а с возможностью шулерства."
+            },
+            {
+              "id": "2",
+              "author": {
+                "id": "2",
+                "avatar": "/images/defaultAvatar.png",
+                "name": "statham.j 2"
+              },
+              "answer": "Типа можно подложить свои карты или использовать фальшивые фишки"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "name": "Бои без правил",
+          "creator": {
+            "id": "2",
+            "avatar": "/images/defaultAvatar.png",
+            "name": "statham.j 2"
+          },
+          "answers": [
+            {
+              "id": "1",
+              "author": {
+                "id": "1",
+                "avatar": "/images/defaultAvatar.png",
+                "name": "statham.j"
+              },
+              "answer": "Здравствуйте! Предлагаю сделать покер по мотивам Карты, деньги, два ствола. Но не просто покер, а с возможностью шулерства."
+            },
+            {
+              "id": "2",
+              "author": {
+                "id": "2",
+                "avatar": "/images/defaultAvatar.png",
+                "name": "statham.j 2"
+              },
+              "answer": "Типа можно подложить свои карты или использовать фальшивые фишки"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "game_designers",
+      "name": "Геймдизайнеры",
+      "data": [
+        {
+          "id": "3",
+          "name": "designer 1",
+          "creator": {
+            "id": "1",
+            "avatar": "/images/defaultAvatar.png",
+            "name": "statham.j"
+          },
+          "answers": [
+            {
+              "id": "1",
+              "author": {
+                "id": "1",
+                "avatar": "/images/defaultAvatar.png",
+                "name": "statham.j"
+              },
+              "answer": "Здравствуйте! Предлагаю сделать покер по мотивам Карты, деньги, два ствола. Но не просто покер, а с возможностью шулерства."
+            },
+            {
+              "id": "2",
+              "author": {
+                "id": "2",
+                "avatar": "/images/defaultAvatar.png",
+                "name": "statham.j 2"
+              },
+              "answer": "Типа можно подложить свои карты или использовать фальшивые фишки"
+            }
+          ]
+        },
+        {
+          "id": "4",
+          "name": "designer 2",
+          "creator": {
+            "id": "2",
+            "avatar": "/images/defaultAvatar.png",
+            "name": "statham.j 2"
+          },
+          "answers": [
+            {
+              "id": "1",
+              "author": {
+                "id": "1",
+                "avatar": "/images/defaultAvatar.png",
+                "name": "statham.j 2"
+              },
+              "answer": "Здравствуйте! Предлагаю сделать покер по мотивам Карты, деньги, два ствола. Но не просто покер, а с возможностью шулерства."
+            },
+            {
+              "id": "2",
+              "author": {
+                "id": "2",
+                "avatar": "/images/defaultAvatar.png",
+                "name": "statham.j 2"
+              },
+              "answer": "Типа можно подложить свои карты или использовать фальшивые фишки"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "technologies",
+      "name": "Технологии",
+      "data": [
+        {
+          "id": "5",
+          "name": "Tech 1",
+          "creator": {
+            "id": "2",
+            "avatar": "/images/defaultAvatar.png",
+            "name": "statham.j 2"
+          },
+          "answers": [
+            {
+              "id": "1",
+              "author": {
+                "id": "1",
+                "avatar": "/images/defaultAvatar.png",
+                "name": "statham.j"
+              },
+              "answer": "Здравствуйте! Предлагаю сделать покер по мотивам Карты, деньги, два ствола. Но не просто покер, а с возможностью шулерства."
+            },
+            {
+              "id": "2",
+              "author": {
+                "id": "2",
+                "avatar": "/images/defaultAvatar.png",
+                "name": "statham.j 2"
+              },
+              "answer": "Типа можно подложить свои карты или использовать фальшивые фишки"
+            }
+          ]
+        },
+        {
+          "id": "6",
+          "name": "Tech 2",
+          "creator": {
+            "id": "3",
+            "avatar": "/images/defaultAvatar.png",
+            "name": "statham.j 3"
+          },
+          "answers": [
+            {
+              "id": "1",
+              "author": {
+                "id": "1",
+                "avatar": "/images/defaultAvatar.png",
+                "name": "statham.j"
+              },
+              "answer": "Здравствуйте! Предлагаю сделать покер по мотивам Карты, деньги, два ствола. Но не просто покер, а с возможностью шулерства."
+            },
+            {
+              "id": "2",
+              "author": {
+                "id": "2",
+                "avatar": "/images/defaultAvatar.png",
+                "name": "statham.j 2"
+              },
+              "answer": "Типа можно подложить свои карты или использовать фальшивые фишки"
+            }
+          ]
+        }
+      ]
+    }
   ]
 }
