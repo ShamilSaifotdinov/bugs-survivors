@@ -3,12 +3,17 @@ import { createBrowserRouter } from 'react-router-dom'
 import Discovery from './pages/Discovery'
 import Leaderboard from './pages/Leaderboard'
 import Error_404 from './pages/404'
+import MainMenu from './pages/MainMenu'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Discovery />,
     errorElement: <Error_404 />,
+  },
+  {
+    path: '/main_menu',
+    element: <MainMenu />,
   },
   {
     path: '/signin',
