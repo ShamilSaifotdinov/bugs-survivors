@@ -43,13 +43,17 @@ export const themeOptions: ThemeOptions = {
       white: '#fff',
     },
     primary: {
-      light: '#C1E0DF',
       main: '#3F767B',
-      dark: '#345256',
-      contrastText: '#fff',
+      contrastText: '#F2F9F8',
+      // light: '#C1E0DF',
+      // main: '#3F767B',
+      // dark: '#345256',
+      // contrastText: '#fff',
     },
     secondary: {
-      main: '#FF5C00',
+      main: '#C1E0DF',
+      contrastText: '#2F464A',
+      // main: '#FF5C00',
     },
     text: {
       primary: '#fff',
@@ -90,23 +94,32 @@ export const themeOptions: ThemeOptions = {
     fontFamily: ['"Press Start 2P"', 'sans-serif'].join(','),
     fontSize: 16,
     fontWeightRegular: 400,
+    body1: {
+      color: '#FFFFFF',
+    },
     h1: {
-      fontSize: '2.5rem',
-      [mediaBreakpoint.lg]: {
-        fontSize: '2rem',
-      },
-      [mediaBreakpoint.sm]: {
-        fontSize: '1.75rem',
-      },
+      fontSize: '5.3rem',
+      lineHeight: '4.9rem',
+      textAlign: 'center',
+      // fontSize: '2.5rem',
+      // [mediaBreakpoint.lg]: {
+      //   fontSize: '2rem',
+      // },
+      // [mediaBreakpoint.sm]: {
+      //   fontSize: '1.75rem',
+      // },
     },
     h2: {
-      fontSize: '2rem',
-      [mediaBreakpoint.lg]: {
-        fontSize: '1.5rem',
-      },
-      [mediaBreakpoint.sm]: {
-        fontSize: '1.25rem',
-      },
+      fontSize: '2.3rem',
+      lineHeight: '2.2rem',
+      textAlign: 'center',
+      // fontSize: '2rem',
+      // [mediaBreakpoint.lg]: {
+      //   fontSize: '1.5rem',
+      // },
+      // [mediaBreakpoint.sm]: {
+      //   fontSize: '1.25rem',
+      // },
     },
     h3: {
       fontSize: '1.75rem',
@@ -127,7 +140,8 @@ export const themeOptions: ThemeOptions = {
       },
     },
     h5: {
-      fontSize: '1.1rem',
+      color: '#FFFFFF',
+      fontSize: '1.5rem',
       [mediaBreakpoint.lg]: {
         fontSize: '1rem',
       },
@@ -167,6 +181,69 @@ export const themeOptions: ThemeOptions = {
     MuiButtonBase: {
       defaultProps: {
         LinkComponent: LinkBehavior,
+      },
+    },
+    MuiButton: {
+      defaultProps: {
+        disableRipple: true,
+        disableElevation: true,
+        variant: 'contained',
+      },
+
+      styleOverrides: {
+        root: {
+          padding: '0.5rem 1.3rem',
+          fontSize: '1rem',
+          lineHeight: '1.5rem',
+          font: 'Press Start 2P',
+          shadowBox: 'none',
+        },
+      },
+    },
+    MuiTextField: {
+      defaultProps: {
+        fullWidth: true,
+      },
+      styleOverrides: {
+        root: {
+          boxSizing: 'border-box',
+        },
+      },
+    },
+
+    MuiInputBase: {
+      defaultProps: {
+        color: 'secondary',
+      },
+      styleOverrides: {
+        root: {
+          border: '1px solid #C1E0DF',
+          fontSize: '1rem',
+          lineHeight: '1.4rem',
+          fontFamily: 'Roboto',
+          fontWeight: '400',
+          width: '100%',
+          backgroundColor: '#FFFFFF',
+          color: '#00000099',
+          padding: '1rem 0,75rem ',
+        },
+      },
+    },
+    MuiInputLabel: {
+      defaultProps: {
+        shrink: true,
+      },
+      styleOverrides: {
+        root: {
+          fontFamily: 'Roboto, sans-serif',
+          fontWeight: '400',
+          padding: '1px 0.25rem 1px 0.25rem',
+          borderRadius: '0.25rem',
+          fontSize: '1rem',
+          lineHeight: '1.4rem',
+          backgroundColor: '#C1E0DF',
+          color: '#2F464A',
+        },
       },
     },
   },
