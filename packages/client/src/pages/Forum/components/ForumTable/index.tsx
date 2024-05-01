@@ -1,33 +1,9 @@
 import styles from './styles.module.scss'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableCellProps,
-  TableHead,
-  TableRow,
-} from '@mui/material'
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material'
 import mockData from '../../../../../mockData.json'
 import { useNavigate } from 'react-router-dom'
-
-type Data = {
-  forum: string
-  topic_count: number
-  answers_count: number
-}
-
-type Column = {
-  id: keyof Data
-  label: string
-  minWidth?: number
-  align?: TableCellProps['align']
-}
-
-const columns: readonly Column[] = [
-  { id: 'forum', label: 'FORUM' },
-  { id: 'topic_count', label: 'TOPIC COUNT', align: 'right' },
-  { id: 'answers_count', label: 'ANSWERS COUNT', align: 'right' },
-]
+import { clsx } from 'clsx'
+import { forumColumns } from '../constants'
 
 const tableRows = mockData?.forum?.map(item => ({
   id: item.id,
@@ -47,15 +23,14 @@ export default function ForumTable() {
       <div className={styles.table}>
         <Table>
           <TableHead>
-            <TableRow>
-              {columns.map(column => (
+            <TableRow className={styles.tr}>
+              {forumColumns.map(column => (
                 <TableCell
                   key={column.id}
-                  align={column.align}
-                  style={{
-                    minWidth: column.minWidth,
-                    borderBottom: '1px solid #fff',
-                  }}>
+                  className={clsx(
+                    styles.tc,
+                    column.className ? styles[column.className] : ''
+                  )}>
                   {column.label}
                 </TableCell>
               ))}
@@ -71,13 +46,15 @@ export default function ForumTable() {
                   key={row.forum}
                   className={styles.tr}
                   onClick={() => navigate(`/forum/${row.id}`)}>
-                  {columns.map(column => {
+                  {forumColumns.map(column => {
                     const value = row[column.id]
                     return (
                       <TableCell
                         key={column.id}
-                        align={column.align}
-                        style={{ borderBottom: '1px solid #fff' }}>
+                        className={clsx(
+                          styles.tc,
+                          column.className ? styles[column.className] : ''
+                        )}>
                         {value}
                       </TableCell>
                     )

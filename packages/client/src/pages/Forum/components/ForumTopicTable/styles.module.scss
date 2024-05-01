@@ -1,9 +1,3 @@
-.table {
-  flex-grow: 1;
-  max-height: 40%;
-  overflow: auto;
-}
-
 .user {
   display: flex;
   flex-direction: column;
@@ -19,6 +13,24 @@
 
 .tr {
   height: 13.375rem;
+}
+
+.tr .tc {
+  border: 1px solid #fff;
+}
+
+.tc.author_cell {
+  width: 17.5rem;
+  text-align: center;
+  background-color: var(--primary-color-dark);
+  color: #fff;
+}
+
+.tc.answer_cell {
+  width: 92.5rem;
+  vertical-align: baseline;
+  background-color: var(--primary-color-light);
+  color: #000;
 }
 
 .pagination {

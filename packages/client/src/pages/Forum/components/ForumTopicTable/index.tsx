@@ -3,61 +3,19 @@ import styles from './styles.module.scss'
 import {
   Avatar,
   Button,
-  SimplePaletteColorOptions,
   Table,
   TableBody,
   TableCell,
-  TableCellProps,
   TablePagination,
   TableRow,
   Typography,
 } from '@mui/material'
 import mockData from '../../../../../mockData.json'
 import { useParams } from 'react-router-dom'
-import { themeOptions } from '../../../../mui-workplace-preset'
 import EmojiPicker from '@emoji-mart/react'
 import emojiData from '@emoji-mart/data'
-
-type User = {
-  id: string
-  avatar: string
-  name: string
-}
-
-type Data = {
-  author: User
-  answer: string
-}
-
-type Column = {
-  id: keyof Data
-  width: string
-  backgroundColor: string
-  color: string
-  align?: TableCellProps['align']
-  verticalAlign?: string
-}
-
-const primaryPaletteThemeOptions = themeOptions.palette
-  ?.primary as SimplePaletteColorOptions
-const textThemeOptions = themeOptions.palette?.text
-
-const columns: readonly Column[] = [
-  {
-    id: 'author',
-    backgroundColor: primaryPaletteThemeOptions.dark ?? '#345256',
-    color: textThemeOptions?.primary ?? '#fff',
-    width: '17.5rem',
-    align: 'center',
-  },
-  {
-    id: 'answer',
-    backgroundColor: primaryPaletteThemeOptions.light ?? '#345256',
-    color: textThemeOptions?.secondary ?? '#000',
-    width: '92.5rem',
-    verticalAlign: 'baseline',
-  },
-]
+import { clsx } from 'clsx'
+import { forumTopicColumns } from '../constants'
 
 export default function ForumTopicTable() {
   const { forumId, topicId } = useParams()
@@ -124,20 +82,15 @@ export default function ForumTopicTable() {
                     tabIndex={-1}
                     key={row.id}
                     className={styles.tr}>
-                    {columns.map(column => {
+                    {forumTopicColumns.map(column => {
                       const value = row[column.id]
                       return (
                         <TableCell
-                          className={styles.tc}
                           key={column.id}
-                          align={column.align}
-                          style={{
-                            width: column.width,
-                            backgroundColor: column.backgroundColor,
-                            border: '1px solid #fff',
-                            color: column.color,
-                            verticalAlign: column.verticalAlign,
-                          }}>
+                          className={clsx(
+                            styles.tc,
+                            column.className ? styles[column.className] : ''
+                          )}>
                           {value}
                         </TableCell>
                       )

@@ -2,10 +2,10 @@ import { ChangeEvent, useState } from 'react'
 import styles from './styles.module.scss'
 import {
   Avatar,
+  Button,
   Table,
   TableBody,
   TableCell,
-  TableCellProps,
   TableHead,
   TablePagination,
   TableRow,
@@ -13,31 +13,8 @@ import {
 } from '@mui/material'
 import mockData from '../../../../../mockData.json'
 import { useNavigate, useParams } from 'react-router-dom'
-
-type User = {
-  id: string
-  avatar: string
-  name: string
-}
-
-type Data = {
-  name: string
-  creator: User
-  answers_count: number
-}
-
-type Column = {
-  id: keyof Data
-  label: string
-  minWidth?: number
-  align?: TableCellProps['align']
-}
-
-const columns: readonly Column[] = [
-  { id: 'name', label: 'NAME' },
-  { id: 'creator', label: 'CREATOR', align: 'center' },
-  { id: 'answers_count', label: 'ANSWERS COUNT', align: 'right' },
-]
+import { clsx } from 'clsx'
+import { forumSubjectColumns } from '../constants'
 
 export default function ForumSubjectTable() {
   const { forumId } = useParams()
@@ -75,18 +52,22 @@ export default function ForumSubjectTable() {
 
   return (
     <>
+      <div className={styles.button_container}>
+        <Button variant="contained" className={styles.create_topic_button}>
+          CREATE TOPIC
+        </Button>
+      </div>
       <div className={styles.table}>
         <Table>
           <TableHead>
-            <TableRow>
-              {columns.map(column => (
+            <TableRow className={styles.tr}>
+              {forumSubjectColumns.map(column => (
                 <TableCell
                   key={column.id}
-                  align={column.align}
-                  style={{
-                    minWidth: column.minWidth,
-                    borderBottom: '1px solid #fff',
-                  }}>
+                  className={clsx(
+                    styles.tc,
+                    column.headerClassName ? styles[column.headerClassName] : ''
+                  )}>
                   {column.label}
                 </TableCell>
               ))}
@@ -104,13 +85,17 @@ export default function ForumSubjectTable() {
                     key={row.id}
                     className={styles.tr}
                     onClick={() => navigate(`/forum/${forumId}/${row.id}`)}>
-                    {columns.map(column => {
+                    {forumSubjectColumns.map(column => {
                       const value = row[column.id]
                       return (
                         <TableCell
                           key={column.id}
-                          align={column.align}
-                          style={{ borderBottom: '1px solid #fff' }}>
+                          className={clsx(
+                            styles.tc,
+                            column.bodyClassName
+                              ? styles[column.bodyClassName]
+                              : ''
+                          )}>
                           {value}
                         </TableCell>
                       )
