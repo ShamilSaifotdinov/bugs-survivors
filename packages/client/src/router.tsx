@@ -4,6 +4,7 @@ import Discovery from './pages/Discovery'
 import Leaderboard from './pages/Leaderboard'
 import RegisterPage from './pages/registration/RegisterPage'
 import Error_404 from './pages/404'
+import Forum from './pages/Forum'
 import MainMenu from './pages/MainMenu'
 
 const router = createBrowserRouter([
@@ -35,15 +36,20 @@ const router = createBrowserRouter([
   },
   {
     path: '/forum',
-    element: <div>Forum!</div>,
-  },
-  {
-    path: '/forum/:forumId',
-    element: <div>One of forums!</div>,
-  },
-  {
-    path: '/forum/:forumId/:topicId',
-    element: <div>Topic of forum!</div>,
+    element: <Forum />,
+    children: [
+      {
+        path: '/forum/:forumId',
+        element: <Forum />,
+        children: [
+          {
+            path: '/forum/:forumId/:topicId',
+            element: <Forum />,
+          },
+        ],
+      },
+    ],
+    errorElement: <Error_404 />,
   },
 ])
 
