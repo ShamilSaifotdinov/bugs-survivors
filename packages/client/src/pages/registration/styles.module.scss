@@ -4,3 +4,22 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.gridItem {
+  background-color: #2f464ab2;
+  height: 100vh;
+  align-content: center;
+}
+
+.title {
+  text-align: center;
+  background: linear-gradient(
+    180deg,
+    #ff5c00 50%,
+    #ffffff 67.91%,
+    #4396b5 89.37%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

@@ -1,6 +1,7 @@
 import { Button, Grid, TextField, Typography } from '@mui/material'
-import style from './styles.module.scss'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import style from './styles.module.scss'
 
 const BASE_URL = 'https://ya-praktikum.tech/api/v2'
 
@@ -14,6 +15,7 @@ function RegisterPage() {
     password: '',
   }
   const [dataForm, setDataForm] = useState(initialData)
+  const navigate = useNavigate()
   const handleChange = (event: React.ChangeEvent<HTMLFormElement>) => {
     switch (event.target.name) {
       case 'first_name':
@@ -54,7 +56,7 @@ function RegisterPage() {
       })
       .then(() => {
         setDataForm(initialData)
-        // navigate('/login')
+        navigate('/signin')
       })
       .catch(error => {
         console.log(error)
@@ -62,87 +64,68 @@ function RegisterPage() {
   }
 
   return (
-    <Grid container justifyContent={'right'} className={style.registration}>
-      <Grid
-        item
-        xs={4}
-        height={'100vh'}
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: '#2F464AB2',
-        }}>
-        <Grid
-          item
-          xs={6}
-          sx={{
-            height: '74%',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-          }}>
-          <Grid
-            item
-            sx={{
-              background:
-                'linear-gradient(180deg, #FF5C00 50%, #FFFFFF 67.91%, #4396B5 89.37%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}>
-            <Typography variant="h1" component="h1">
-              BUGS
-            </Typography>
-            <Typography variant="h2" component="h1">
-              SURVIVORS
-            </Typography>
-          </Grid>
-          <Grid item>
-            <form onSubmit={handleSubmit} onChange={handleChange}>
-              <Grid container gap="1.5rem">
-                <Typography variant="h5">Sign Up</Typography>
-                <TextField
-                  value={dataForm.first_name}
-                  name="first_name"
-                  label="First name"></TextField>
-
-                <TextField
-                  value={dataForm.second_name}
-                  name="second_name"
-                  label="Second name"></TextField>
-                <TextField
-                  value={dataForm.email}
-                  name="email"
-                  label="E-mail"></TextField>
-                <TextField
-                  value={dataForm.phone}
-                  name="phone"
-                  label="Phone"></TextField>
-                <TextField
-                  value={dataForm.login}
-                  name="login"
-                  label="Login"></TextField>
-                <TextField
-                  value={dataForm.password}
-                  name="password"
-                  label="Password"></TextField>
-                <Grid
-                  item
-                  display={'flex'}
-                  width={'100%'}
-                  justifyContent={'space-between'}>
-                  <Button
-                    type="button"
-                    onClick={() => console.log('to login')}
-                    color="secondary">
-                    SIGN IN
-                  </Button>
-                  <Button type="submit" color="primary">
-                    SIGN UP
-                  </Button>
+    <Grid
+      container
+      rowGap={4}
+      justifyContent={'right'}
+      className={style.registration}>
+      <Grid item xs={4} className={style.gridItem}>
+        {' '}
+        <Grid container justifyContent={'center'}>
+          <Grid xs={6}>
+            <Grid container gap={'3.8rem'}>
+              <Grid container justifyContent={'center'}>
+                <Grid className={style.title}>
+                  <Typography variant="h1" component="h1">
+                    BUGS
+                  </Typography>
+                  <Typography variant="h2" component="h1">
+                    SURVIVORS
+                  </Typography>
                 </Grid>
               </Grid>
-            </form>
+              <form onSubmit={handleSubmit} onChange={handleChange}>
+                <Grid container rowGap={'1.5rem'}>
+                  <Typography variant="h5">Sign Up</Typography>
+                  <TextField
+                    value={dataForm.first_name}
+                    name="first_name"
+                    label="First name"></TextField>
+
+                  <TextField
+                    value={dataForm.second_name}
+                    name="second_name"
+                    label="Second name"></TextField>
+                  <TextField
+                    value={dataForm.email}
+                    name="email"
+                    label="E-mail"></TextField>
+                  <TextField
+                    value={dataForm.phone}
+                    name="phone"
+                    label="Phone"></TextField>
+                  <TextField
+                    value={dataForm.login}
+                    name="login"
+                    label="Login"></TextField>
+                  <TextField
+                    value={dataForm.password}
+                    name="password"
+                    label="Password"></TextField>
+                  <Grid container gap={'10px'} justifyContent={'space-between'}>
+                    <Button
+                      type="button"
+                      onClick={() => navigate('/signin')}
+                      color="secondary">
+                      SIGN IN
+                    </Button>
+                    <Button type="submit" color="primary">
+                      SIGN UP
+                    </Button>
+                  </Grid>
+                </Grid>
+              </form>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

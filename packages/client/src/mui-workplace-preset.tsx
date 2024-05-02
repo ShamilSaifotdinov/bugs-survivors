@@ -99,8 +99,7 @@ export const themeOptions: ThemeOptions = {
     },
     h1: {
       fontSize: '5.3rem',
-      lineHeight: '4.9rem',
-      textAlign: 'center',
+      lineHeight: '5.5rem',
       // fontSize: '2.5rem',
       // [mediaBreakpoint.lg]: {
       //   fontSize: '2rem',
@@ -111,7 +110,7 @@ export const themeOptions: ThemeOptions = {
     },
     h2: {
       fontSize: '2.3rem',
-      lineHeight: '2.2rem',
+      lineHeight: '2.5rem',
       textAlign: 'center',
       // fontSize: '2rem',
       // [mediaBreakpoint.lg]: {
@@ -207,28 +206,16 @@ export const themeOptions: ThemeOptions = {
       styleOverrides: {
         root: {
           boxSizing: 'border-box',
-        },
-      },
-    },
-
-    MuiInputBase: {
-      defaultProps: {
-        color: 'secondary',
-      },
-      styleOverrides: {
-        root: {
           border: '1px solid #C1E0DF',
           fontSize: '1rem',
           lineHeight: '1.4rem',
           fontFamily: 'Roboto',
-          fontWeight: '400',
-          width: '100%',
           backgroundColor: '#FFFFFF',
           color: '#00000099',
-          padding: '1rem 0,75rem ',
         },
       },
     },
+
     MuiInputLabel: {
       defaultProps: {
         shrink: true,
