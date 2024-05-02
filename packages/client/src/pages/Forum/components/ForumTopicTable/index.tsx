@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useMemo, useState, useTransition } from 'react'
 import styles from './styles.module.scss'
 import {
   Avatar,
@@ -18,13 +18,14 @@ import { clsx } from 'clsx'
 import { forumTopicColumns } from '../constants'
 
 export default function ForumTopicTable() {
+  const [isPending, startTransition] = useTransition()
   const { forumId, topicId } = useParams()
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(2)
   const [textareaText, setTextareaText] = useState('')
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 
-  const tableRows =
+  const tableRowsData =
     mockData?.forum
       .find(item => item.id === forumId)
       ?.data.find(item => item.id === topicId)
@@ -45,13 +46,48 @@ export default function ForumTopicTable() {
         ),
       })) ?? []
 
+  const tableRows = useMemo(
+    () =>
+      tableRowsData
+        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        .map(row => {
+          return (
+            <TableRow
+              hover
+              role="checkbox"
+              tabIndex={-1}
+              key={row.id}
+              className={styles.tr}>
+              {forumTopicColumns.map(column => {
+                const value = row[column.id]
+                return (
+                  <TableCell
+                    key={column.id}
+                    className={clsx(
+                      styles.tc,
+                      column.className ? styles[column.className] : ''
+                    )}>
+                    {value}
+                  </TableCell>
+                )
+              })}
+            </TableRow>
+          )
+        }),
+    [page, rowsPerPage]
+  )
+
   const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage)
+    startTransition(() => {
+      setPage(newPage)
+    })
   }
 
   const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value)
-    setPage(0)
+    startTransition(() => {
+      setRowsPerPage(+event.target.value)
+      setPage(0)
+    })
   }
 
   const textareaChangeHandle = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -71,41 +107,14 @@ export default function ForumTopicTable() {
     <>
       <div className={styles.table}>
         <Table>
-          <TableBody>
-            {tableRows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map(row => {
-                return (
-                  <TableRow
-                    hover
-                    role="checkbox"
-                    tabIndex={-1}
-                    key={row.id}
-                    className={styles.tr}>
-                    {forumTopicColumns.map(column => {
-                      const value = row[column.id]
-                      return (
-                        <TableCell
-                          key={column.id}
-                          className={clsx(
-                            styles.tc,
-                            column.className ? styles[column.className] : ''
-                          )}>
-                          {value}
-                        </TableCell>
-                      )
-                    })}
-                  </TableRow>
-                )
-              })}
-          </TableBody>
+          <TableBody>{tableRows}</TableBody>
         </Table>
       </div>
       <TablePagination
         className={styles.pagination}
         rowsPerPageOptions={[1, 2, 5, 10]}
         component="div"
-        count={tableRows.length}
+        count={tableRowsData.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
