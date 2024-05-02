@@ -3,6 +3,7 @@
   background-image: url('/images/BugsSurvivorsBGt.png');
   background-repeat: no-repeat;
   background-size: cover;
+  image-rendering: pixelated;
 }
 
 .gridItem {
@@ -22,4 +23,11 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.containerButton {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
 }

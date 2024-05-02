@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import Discovery from './pages/Discovery'
 import Leaderboard from './pages/Leaderboard'
 import RegisterPage from './pages/registration/RegisterPage'
+import ProfilePage from './pages/profile/ProfilePage'
 import Error_404 from './pages/404'
 import Forum from './pages/Forum'
 import MainMenu from './pages/MainMenu'
@@ -27,7 +28,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/profile',
-    element: <div>Profile!</div>,
+    element: <ProfilePage />,
   },
   {
     path: '/leaderboard',

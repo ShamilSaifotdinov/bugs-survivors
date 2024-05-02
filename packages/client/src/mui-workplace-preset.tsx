@@ -97,6 +97,9 @@ export const themeOptions: ThemeOptions = {
     body1: {
       color: '#FFFFFF',
     },
+    body2: {
+      fontSize: '1rem',
+    },
     h1: {
       fontSize: '5.3rem',
       lineHeight: '5.5rem',
@@ -182,23 +185,7 @@ export const themeOptions: ThemeOptions = {
         LinkComponent: LinkBehavior,
       },
     },
-    MuiButton: {
-      defaultProps: {
-        disableRipple: true,
-        disableElevation: true,
-        variant: 'contained',
-      },
 
-      styleOverrides: {
-        root: {
-          padding: '0.5rem 1.3rem',
-          fontSize: '1rem',
-          lineHeight: '1.5rem',
-          font: 'Press Start 2P',
-          shadowBox: 'none',
-        },
-      },
-    },
     MuiTextField: {
       defaultProps: {
         fullWidth: true,
@@ -211,6 +198,14 @@ export const themeOptions: ThemeOptions = {
           lineHeight: '1.4rem',
           fontFamily: 'Roboto',
           backgroundColor: '#FFFFFF',
+          color: '#00000099',
+        },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          border: '1px solid #C1E0DF',
           color: '#00000099',
         },
       },
