@@ -1,17 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom'
 
-import ErrorBoundary from './services/ErrorBoundary'
 import Discovery from './pages/Discovery'
 import Error_404 from './pages/404'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <ErrorBoundary>
-        <Discovery />
-      </ErrorBoundary>
-    ),
+    element: <Discovery />,
     errorElement: <Error_404 />,
   },
   {
