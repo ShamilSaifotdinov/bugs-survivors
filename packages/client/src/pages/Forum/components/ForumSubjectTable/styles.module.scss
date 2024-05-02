@@ -1,0 +1,47 @@
+.button_container {
+  margin-left: auto;
+  margin-bottom: 2.5rem;
+
+  .create_topic_button {
+    height: 2.625rem;
+    background-color: var(--primary-color-light);
+    color: var(--background-color);
+
+    &:hover,
+    &:active {
+      background-color: var(--primary-color-light);
+      color: var(--background-color);
+    }
+  }
+}
+
+.pagination {
+  margin-top: 2.5rem;
+  overflow: initial !important;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+
+  .avatar {
+    margin-right: 0.5rem;
+  }
+}
+
+.tr {
+  cursor: pointer;
+}
+
+.tr .tc {
+  border-bottom: 1px solid #fff;
+}
+
+.tc.tc_align_right {
+  text-align: right;
+}
+
+.tc.creator_header {
+  padding-left: calc(56px + 0.5rem);
+}

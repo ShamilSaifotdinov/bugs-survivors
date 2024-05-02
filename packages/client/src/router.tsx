@@ -1,6 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom'
 
 import Discovery from './pages/Discovery'
+import Leaderboard from './pages/Leaderboard'
+import Forum from './pages/Forum'
+import MainMenu from './pages/MainMenu'
 import ErrorPage from './pages/Error'
 
 const errorBoundary = <ErrorPage title="Something went wrong :( Try later." />
@@ -16,6 +19,10 @@ const router = createBrowserRouter(
       element: <Discovery />,
     },
     {
+      path: '/main_menu',
+      element: <MainMenu />,
+    },
+    {
       path: '/signin',
       element: <div>Sign in!</div>,
     },
@@ -29,19 +36,23 @@ const router = createBrowserRouter(
     },
     {
       path: '/leaderboard',
-      element: <div>Leaderboard!</div>,
+      element: <Leaderboard />,
     },
     {
       path: '/forum',
-      element: <div>Forum!</div>,
-    },
-    {
-      path: '/forum/:forumId',
-      element: <div>One of forums!</div>,
-    },
-    {
-      path: '/forum/:forumId/:topicId',
-      element: <div>Topic of forum!</div>,
+      element: <Forum />,
+      children: [
+        {
+          path: '/forum/:forumId',
+          element: <Forum />,
+          children: [
+            {
+              path: '/forum/:forumId/:topicId',
+              element: <Forum />,
+            },
+          ],
+        },
+      ],
     },
   ].map(item => ({ ...item, errorElement: errorBoundary }))
 )
