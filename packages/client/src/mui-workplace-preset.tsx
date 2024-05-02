@@ -46,10 +46,11 @@ export const themeOptions: ThemeOptions = {
       light: '#C1E0DF',
       main: '#3F767B',
       dark: '#345256',
-      contrastText: '#fff',
+      contrastText: '#F2F9F8',
     },
     secondary: {
-      main: '#FF5C00',
+      main: '#C1E0DF',
+      contrastText: '#2F464A',
     },
     text: {
       primary: '#fff',
