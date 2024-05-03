@@ -43,14 +43,17 @@ export const themeOptions: ThemeOptions = {
       white: '#fff',
     },
     primary: {
-      light: '#C1E0DF',
       main: '#3F767B',
-      dark: '#345256',
       contrastText: '#F2F9F8',
+      // light: '#C1E0DF',
+      // main: '#3F767B',
+      // dark: '#345256',
+      // contrastText: '#fff',
     },
     secondary: {
       main: '#C1E0DF',
       contrastText: '#2F464A',
+      // main: '#FF5C00',
     },
     text: {
       primary: '#fff',
@@ -91,23 +94,17 @@ export const themeOptions: ThemeOptions = {
     fontFamily: ['"Press Start 2P"', 'sans-serif'].join(','),
     fontSize: 16,
     fontWeightRegular: 400,
+    body1: {
+      color: '#FFFFFF',
+    },
+    body2: {
+      fontSize: '1rem',
+    },
     h1: {
-      fontSize: '2.5rem',
-      [mediaBreakpoint.lg]: {
-        fontSize: '2rem',
-      },
-      [mediaBreakpoint.sm]: {
-        fontSize: '1.75rem',
-      },
+      fontSize: '5.3rem',
     },
     h2: {
-      fontSize: '2rem',
-      [mediaBreakpoint.lg]: {
-        fontSize: '1.5rem',
-      },
-      [mediaBreakpoint.sm]: {
-        fontSize: '1.25rem',
-      },
+      fontSize: '2.3rem',
     },
     h3: {
       fontSize: '1.75rem',
@@ -128,7 +125,8 @@ export const themeOptions: ThemeOptions = {
       },
     },
     h5: {
-      fontSize: '1.1rem',
+      color: '#FFFFFF',
+      fontSize: '1.5rem',
       [mediaBreakpoint.lg]: {
         fontSize: '1rem',
       },
@@ -168,6 +166,46 @@ export const themeOptions: ThemeOptions = {
     MuiButtonBase: {
       defaultProps: {
         LinkComponent: LinkBehavior,
+      },
+    },
+
+    MuiTextField: {
+      defaultProps: {
+        fullWidth: true,
+      },
+      styleOverrides: {
+        root: {
+          boxSizing: 'border-box',
+          fontSize: '1rem',
+          lineHeight: '1.4rem',
+          backgroundColor: '#FFFFFF',
+          color: '#00000099',
+          borderRadius: '0.25rem',
+        },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          color: '#00000099',
+        },
+      },
+    },
+
+    MuiInputLabel: {
+      defaultProps: {
+        shrink: true,
+      },
+      styleOverrides: {
+        root: {
+          fontWeight: '400',
+          padding: '1px 0.25rem 1px 0.25rem',
+          borderRadius: '0.25rem',
+          fontSize: '1rem',
+          lineHeight: '1.4rem',
+          backgroundColor: '#C1E0DF',
+          color: '#2F464A',
+        },
       },
     },
   },
