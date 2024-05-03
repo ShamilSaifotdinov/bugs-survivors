@@ -1,7 +1,9 @@
 import basicInstance from './basicInstance'
 import { User } from './types'
 
-export type ChangeUserPasswordData = {
+type ChangeUserProfileData = Partial<Omit<User, 'id' | 'avatar'>>
+
+type ChangeUserPasswordData = {
   oldPassword: string
   newPassword: string
 }
@@ -10,7 +12,9 @@ type GetUserByLoginData = {
   login: string
 }
 
-export const changeUserProfile = async (data: User): Promise<User> => {
+export const changeUserProfile = async (
+  data: ChangeUserProfileData
+): Promise<User> => {
   return basicInstance.put(`/user/profile`, { data })
 }
 
