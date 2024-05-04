@@ -1,4 +1,4 @@
-import { Button, Grid, TextField, Typography } from '@mui/material'
+import { Box, Button, Grid, TextField, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import style from './styles.module.scss'
@@ -39,28 +39,24 @@ function RegisterPage() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    fetch(`${BASE_URL}/auth/signup`, {
-      method: 'POST',
-      body: JSON.stringify(dataForm),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Network response with status ${response.status}`)
-        }
-        return response.json()
+  const handleSubmit = async (e: React.FormEvent) => {
+    try {
+      e.preventDefault()
+      const response = await fetch(`${BASE_URL}/auth/signup`, {
+        method: 'POST',
+        body: JSON.stringify(dataForm),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
-      .then(() => {
-        setDataForm(initialData)
-        navigate('/signin')
-      })
-      .catch(error => {
-        console.log(error)
-      })
+      if (!response.ok) {
+        throw new Error(`Network response with status ${response.status}`)
+      }
+      setDataForm(initialData)
+      navigate('/signin')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -69,13 +65,18 @@ function RegisterPage() {
       rowGap={4}
       justifyContent={'right'}
       className={style.registration}>
-      <Grid item xs={4} className={style.gridItem}>
+      <Grid
+        item
+        xs={12}
+        md={4}
+        className={style.gridItem}
+        justifyContent={'center'}>
         {' '}
         <Grid container justifyContent={'center'}>
-          <Grid xs={6}>
+          <Grid item xs={6}>
             <Grid container gap={'3.8rem'}>
               <Grid container justifyContent={'center'}>
-                <Grid className={style.title}>
+                <Grid item className={style.title}>
                   <Typography variant="h1" component="h1">
                     BUGS
                   </Typography>
@@ -112,17 +113,18 @@ function RegisterPage() {
                     value={dataForm.password}
                     name="password"
                     label="Password"></TextField>
-                  <Grid container gap={'10px'} justifyContent={'space-between'}>
+                  <Box className={style.containerButton}>
                     <Button
                       type="button"
                       onClick={() => navigate('/signin')}
-                      color="secondary">
+                      color="secondary"
+                      variant="contained">
                       SIGN IN
                     </Button>
-                    <Button type="submit" color="primary">
+                    <Button variant="contained" type="submit" color="primary">
                       SIGN UP
                     </Button>
-                  </Grid>
+                  </Box>
                 </Grid>
               </form>
             </Grid>

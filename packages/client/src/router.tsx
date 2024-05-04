@@ -27,7 +27,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/profile',
-    element: <div>Profile!</div>,
+    element: <div>Profile</div>,
   },
   {
     path: '/leaderboard',
