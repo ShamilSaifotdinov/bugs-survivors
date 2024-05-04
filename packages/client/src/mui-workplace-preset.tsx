@@ -102,8 +102,6 @@ export const themeOptions: ThemeOptions = {
     },
     h1: {
       fontSize: '5.3rem',
-      lineHeight: '5.5rem',
-      // fontSize: '2.5rem',
       // [mediaBreakpoint.lg]: {
       //   fontSize: '2rem',
       // },
@@ -113,9 +111,6 @@ export const themeOptions: ThemeOptions = {
     },
     h2: {
       fontSize: '2.3rem',
-      lineHeight: '2.5rem',
-      textAlign: 'center',
-      // fontSize: '2rem',
       // [mediaBreakpoint.lg]: {
       //   fontSize: '1.5rem',
       // },
@@ -193,19 +188,16 @@ export const themeOptions: ThemeOptions = {
       styleOverrides: {
         root: {
           boxSizing: 'border-box',
-          border: '1px solid #C1E0DF',
           fontSize: '1rem',
-          lineHeight: '1.4rem',
-          fontFamily: 'Roboto',
           backgroundColor: '#FFFFFF',
-          color: '#00000099',
+          borderRadius: '3px',
+          border: '1px solid #C1E0DF',
         },
       },
     },
     MuiInputBase: {
       styleOverrides: {
         root: {
-          border: '1px solid #C1E0DF',
           color: '#00000099',
         },
       },
@@ -222,7 +214,6 @@ export const themeOptions: ThemeOptions = {
           padding: '1px 0.25rem 1px 0.25rem',
           borderRadius: '0.25rem',
           fontSize: '1rem',
-          lineHeight: '1.4rem',
           backgroundColor: '#C1E0DF',
           color: '#2F464A',
         },

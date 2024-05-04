@@ -39,28 +39,24 @@ function RegisterPage() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    fetch(`${BASE_URL}/auth/signup`, {
-      method: 'POST',
-      body: JSON.stringify(dataForm),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Network response with status ${response.status}`)
-        }
-        return response.json()
+  const handleSubmit = async (e: React.FormEvent) => {
+    try {
+      e.preventDefault()
+      const response = await fetch(`${BASE_URL}/auth/signup`, {
+        method: 'POST',
+        body: JSON.stringify(dataForm),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
-      .then(() => {
-        setDataForm(initialData)
-        navigate('/signin')
-      })
-      .catch(error => {
-        console.log(error)
-      })
+      if (!response.ok) {
+        throw new Error(`Network response with status ${response.status}`)
+      }
+      setDataForm(initialData)
+      navigate('/signin')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -69,7 +65,12 @@ function RegisterPage() {
       rowGap={4}
       justifyContent={'right'}
       className={style.registration}>
-      <Grid item xs={4} className={style.gridItem} justifyContent={'center'}>
+      <Grid
+        item
+        xs={12}
+        md={4}
+        className={style.gridItem}
+        justifyContent={'center'}>
         {' '}
         <Grid container justifyContent={'center'}>
           <Grid item xs={6}>
