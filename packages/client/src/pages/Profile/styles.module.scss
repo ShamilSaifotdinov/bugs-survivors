@@ -1,0 +1,39 @@
+.profile {
+  height: 100%;
+  background-image: url('/images/BugsSurvivorsBGt.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  image-rendering: pixelated;
+}
+
+.gridItem {
+  background-color: #2f464ab2;
+  height: 100vh;
+  align-content: center;
+  min-width: 30%;
+
+  input {
+    font-family: Roboto, sans-serif;
+    border-radius: 4px;
+  }
+}
+
+.buttonClose {
+  font-family: '"Press Start 2P"', 'sans-serif';
+  width: 1rem;
+  height: 1rem;
+  text-align: center;
+  border: 1px solid #c1e0df;
+  position: absolute;
+  right: -30px;
+  top: 0;
+  background-color: white;
+}
+
+.containerInputPass {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  position: relative;
+}

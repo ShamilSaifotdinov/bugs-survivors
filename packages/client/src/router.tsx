@@ -6,6 +6,7 @@ import RegisterPage from './pages/registration/RegisterPage'
 import Error_404 from './pages/404'
 import Forum from './pages/Forum'
 import MainMenu from './pages/MainMenu'
+import ProfilePage from './pages/Profile/ProfilePage'
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/profile',
-    element: <div>Profile</div>,
+    element: <ProfilePage />,
   },
   {
     path: '/leaderboard',
