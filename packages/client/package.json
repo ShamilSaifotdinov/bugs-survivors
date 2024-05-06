@@ -11,7 +11,11 @@
     "test": "jest ./"
   },
   "dependencies": {
+    "@emoji-mart/data": "^1.2.1",
+    "@emoji-mart/react": "^1.1.1",
+    "@types/emoji-mart": "^3.0.14",
     "dotenv": "^16.0.2",
+    "emoji-mart": "^5.6.0",
     "eslint-config-prettier": "^8.5.0",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
@@ -24,6 +28,7 @@
     "@mui/material": "^5.15.15",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@testing-library/react": "^13.3.0",
+    "@types/emoji-mart": "^3.0.14",
     "@types/jest": "^28.1.8",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
