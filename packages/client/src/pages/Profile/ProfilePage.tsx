@@ -1,14 +1,7 @@
-import {
-  Avatar,
-  Button,
-  Grid,
-  TextField,
-  Typography,
-  Input,
-  Box,
-} from '@mui/material'
-import React, { useState, useEffect } from 'react'
+import { Button, Grid, TextField, Typography, Box } from '@mui/material'
+import React, { useState, useEffect, useCallback } from 'react'
 import styles from './styles.module.scss'
+import AvatarLoad from '../../components/AvatarLoad/AvatarLoad'
 
 const BASE_URL = 'https://ya-praktikum.tech/api/v2'
 
@@ -16,98 +9,48 @@ function ProfilePage() {
   const [changePass, setChangPass] = useState(true)
   const [loadAvatar, setLoadAvatar] = useState(false)
 
-  // const formData = new FormData()
-  const uploadAvatar = () => {
+  const handleSubmit = () => {
     return
   }
+
   return (
-    <Grid container justifyContent="right" className={styles.profile}>
-      <Grid
-        item
-        xs={12}
-        md={4}
-        className={styles.gridItem}
-        justifyContent={'center'}>
+    <Grid container className={styles.profile}>
+      <Grid item xs={12} md={6} xl={4} className={styles.gridItem}>
         <Grid container justifyContent={'center'}>
           <Grid item xs={8}>
             <Grid container gap={'3.8rem'} justifyContent={'center'}>
-              <Grid item>
-                <Button
-                  color="secondary"
-                  component="label"
-                  sx={{
-                    backgroundColor: 'white',
-                    padding: 0,
-                    borderRadius: '50%',
-                  }}>
-                  <Avatar
-                    sx={{ width: '10rem', height: '10rem', opacity: '90%' }}
-                  />
-                  <Input
-                    onChange={uploadAvatar}
-                    sx={{ display: 'none' }}
-                    type="file"
-                  />
-                </Button>
-              </Grid>
-              <form className={styles.form}>
+              <AvatarLoad
+                onChange={() => console.log('submit avatar')}
+                className={styles.avatar}></AvatarLoad>
+              <form className={styles.form} onSubmit={handleSubmit}>
                 <Grid container gap="1rem" justifyContent={'center'}>
-                  <Box
-                    width={'100%'}
-                    display="flex"
-                    gap={'1rem'}
-                    justifyContent={'space-between'}
-                    alignItems={'center'}>
+                  <Box className={styles.fieldItem}>
                     <Typography>First name</Typography>
                     <TextField
                       sx={{ width: '45%' }}
                       label="First name"></TextField>
                   </Box>
-                  <Box
-                    width={'100%'}
-                    display="flex"
-                    gap={'1rem'}
-                    justifyContent={'space-between'}
-                    alignItems={'center'}>
+                  <Box className={styles.fieldItem}>
                     <Typography>Second name</Typography>
                     <TextField
                       sx={{ width: '45%' }}
                       label="Second name"></TextField>
                   </Box>
-                  <Box
-                    width={'100%'}
-                    display="flex"
-                    gap={'1rem'}
-                    justifyContent={'space-between'}
-                    alignItems={'center'}>
+                  <Box className={styles.fieldItem}>
                     <Typography> Login</Typography>
                     <TextField sx={{ width: '45%' }} label="Login"></TextField>
                   </Box>
-                  <Box
-                    width={'100%'}
-                    display="flex"
-                    gap={'1rem'}
-                    justifyContent={'space-between'}
-                    alignItems={'center'}>
+                  <Box className={styles.fieldItem}>
                     <Typography>E-mail</Typography>
                     <TextField sx={{ width: '45%' }} label="E-mail"></TextField>
                   </Box>
-                  <Box
-                    width={'100%'}
-                    display="flex"
-                    gap={'1rem'}
-                    justifyContent={'space-between'}
-                    alignItems={'center'}>
+                  <Box className={styles.fieldItem}>
                     <Typography>Phone</Typography>
                     <TextField sx={{ width: '45%' }} label="Phone"></TextField>
                   </Box>
                   {changePass ? (
                     <Box
-                      width={'100%'}
-                      display="flex"
-                      gap={'1rem'}
-                      justifyContent={'space-between'}
-                      alignItems={'center'}
+                      className={styles.fieldItem}
                       sx={{ marginBottom: '2.8rem' }}>
                       <Typography>Password</Typography>
                       <Button

@@ -219,5 +219,10 @@ export const themeOptions: ThemeOptions = {
         },
       },
     },
+    MuiAvatar: {
+      defaultProps: {
+        src: '/images/defaultAvatar.png',
+      },
+    },
   },
 }
