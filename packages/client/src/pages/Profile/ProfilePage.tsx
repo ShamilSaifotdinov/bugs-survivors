@@ -1,11 +1,10 @@
-import { Button, Grid, TextField, Typography, Box, Input } from '@mui/material'
-import React, { useState, useEffect, useCallback } from 'react'
+import { Button, Grid, TextField, Typography, Box } from '@mui/material'
 import styles from './styles.module.scss'
 import AvatarLoad from '../../components/AvatarLoad/AvatarLoad'
 import PreviousPageBtn from '../../components/PreviousPageBtn'
 import ButtonModal from '../../components/ButtonModal/ButtonModal'
 
-const BASE_URL = 'https://ya-praktikum.tech/api/v2'
+// const BASE_URL = 'https://ya-praktikum.tech/api/v2'
 
 function ProfilePage() {
   const handleSubmit = () => {
