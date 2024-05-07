@@ -1,7 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom'
 
 import Discovery from './pages/Discovery'
+import Leaderboard from './pages/Leaderboard'
+import RegisterPage from './pages/registration/RegisterPage'
 import Error_404 from './pages/404'
+import Forum from './pages/Forum'
+import MainMenu from './pages/MainMenu'
+import Game from './pages/Game'
 
 const router = createBrowserRouter([
   {
@@ -10,32 +15,47 @@ const router = createBrowserRouter([
     errorElement: <Error_404 />,
   },
   {
+    path: '/game',
+    element: <Game />,
+    errorElement: <Error_404 />,
+  },
+  {
+    path: '/main_menu',
+    element: <MainMenu />,
+  },
+  {
     path: '/signin',
     element: <div>Sign in!</div>,
   },
   {
     path: '/signup',
-    element: <div>Sign up!</div>,
+    element: <RegisterPage />,
   },
   {
     path: '/profile',
-    element: <div>Profile!</div>,
+    element: <div>Profile</div>,
   },
   {
     path: '/leaderboard',
-    element: <div>Leaderboard!</div>,
+    element: <Leaderboard />,
+    errorElement: <Error_404 />,
   },
   {
     path: '/forum',
-    element: <div>Forum!</div>,
-  },
-  {
-    path: '/forum/:forumId',
-    element: <div>One of forums!</div>,
-  },
-  {
-    path: '/forum/:forumId/:topicId',
-    element: <div>Topic of forum!</div>,
+    element: <Forum />,
+    children: [
+      {
+        path: '/forum/:forumId',
+        element: <Forum />,
+        children: [
+          {
+            path: '/forum/:forumId/:topicId',
+            element: <Forum />,
+          },
+        ],
+      },
+    ],
+    errorElement: <Error_404 />,
   },
 ])
 
