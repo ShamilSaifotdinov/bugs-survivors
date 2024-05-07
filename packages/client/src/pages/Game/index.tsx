@@ -853,22 +853,22 @@ function Game() {
     const pressedKeys: Record<string, boolean> = {}
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      pressedKeys[event.key] = true
+      pressedKeys[event.code] = true
       updatePlayerVelocity()
     }
 
     const handleKeyUp = (event: KeyboardEvent) => {
-      pressedKeys[event.key] = false
+      pressedKeys[event.code] = false
       updatePlayerVelocity()
     }
 
     const updatePlayerVelocity = () => {
       Player.vx =
-        (pressedKeys['d'] ? Player.speed : 0) -
-        (pressedKeys['a'] ? Player.speed : 0)
+        (pressedKeys['KeyD'] ? Player.speed : 0) -
+        (pressedKeys['KeyA'] ? Player.speed : 0)
       Player.vy =
-        (pressedKeys['s'] ? Player.speed : 0) -
-        (pressedKeys['w'] ? Player.speed : 0)
+        (pressedKeys['KeyS'] ? Player.speed : 0) -
+        (pressedKeys['KeyW'] ? Player.speed : 0)
     }
 
     document.addEventListener('keydown', handleKeyDown)

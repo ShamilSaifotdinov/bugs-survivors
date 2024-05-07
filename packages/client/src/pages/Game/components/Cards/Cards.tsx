@@ -80,7 +80,8 @@ function Cards({ upgradePick }: CardsProps) {
         <div
           className={styles.card}
           style={{ backgroundColor: el.id > 4 ? '#ffe6b0' : '#b0ffd5' }}
-          onClick={() => upgradePick(el.id)}>
+          onClick={() => upgradePick(el.id)}
+          key={'card' + el.id}>
           <div
             className={styles.card_image}
             style={{ backgroundPositionX: el.id * -18 + 'vh' }}></div>
