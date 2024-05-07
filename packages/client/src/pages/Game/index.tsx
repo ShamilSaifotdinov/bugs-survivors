@@ -414,21 +414,6 @@ function Game() {
 
       ctx.globalAlpha = 1
 
-      // ctx.save();
-      // ctx.strokeStyle = 'rgb(0,255,0,0.07)';
-      // ctx.lineWidth = 5;
-      // ctx.setLineDash([5, 15]);
-      // ctx.beginPath();
-      // ctx.arc(
-      //   Player.x + Player.width / 2 + Camera.x,
-      //   Player.y + Player.height / 2 + Camera.y,
-      //   Player.expRadius,
-      //   0,
-      //   Math.PI * 2
-      // );
-      // ctx.stroke();
-      // ctx.restore();
-
       ctx.save()
       ctx.fillStyle = 'white'
       ctx.fillRect(0, 0, CanvasWidth, 10)
@@ -528,8 +513,6 @@ function Game() {
   function renderEnemies(ctx: CanvasRenderingContext2D) {
     if (enemyLoaded) {
       for (let i = 0; i < Enemy.length; i++) {
-        const side = Enemy[i].x > Player.x ? 16 : 0
-
         ctx.fillStyle = 'red'
         ctx.fillRect(
           Math.floor(Enemy[i].x + Camera.x),
@@ -831,49 +814,61 @@ function Game() {
       setExpLoaded(true)
     }
 
-    const animate = () => {
-      if (!GameStage.pause) {
-        clearCanvas(ctx, canvas)
-        renderBullet(ctx)
-        createBullet()
-        renderEnemies(ctx)
-        renderExp(ctx)
-        cameraMovement()
-        renderPlayer(ctx)
-        renderTextParticles(ctx)
-        createEnemy()
-        drawTimer(ctx)
+    let animationFrameId: number
+    let lastFrameTime = performance.now()
+    const fpsInterval = 1000 / 60
 
-        GameTick++
+    const animate = (timestamp: number) => {
+      animationFrameId = requestAnimationFrame(animate)
+
+      const elapsed = timestamp - lastFrameTime
+
+      if (elapsed > fpsInterval) {
+        lastFrameTime = timestamp - (elapsed % fpsInterval)
+
+        if (!GameStage.pause) {
+          clearCanvas(ctx, canvas)
+          renderBullet(ctx)
+          createBullet()
+          renderEnemies(ctx)
+          renderExp(ctx)
+          cameraMovement()
+          renderPlayer(ctx)
+          renderTextParticles(ctx)
+          createEnemy()
+          drawTimer(ctx)
+
+          GameTick++
+        }
       }
     }
 
-    const intervalId = setInterval(animate, 1000 / 60) // 60 FPS
+    animationFrameId = requestAnimationFrame(animate)
 
-    return () => clearInterval(intervalId)
+    return () => cancelAnimationFrame(animationFrameId)
   }, [CanvasRef, playerLoaded, enemyLoaded, bulletLoaded, expLoaded])
 
   // Создание листнера для отслеживания нажатых клавиш
   useEffect(() => {
-    const pressedKeys: Record<number, boolean> = {}
+    const pressedKeys: Record<string, boolean> = {}
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      pressedKeys[event.which] = true
+      pressedKeys[event.key] = true
       updatePlayerVelocity()
     }
 
     const handleKeyUp = (event: KeyboardEvent) => {
-      pressedKeys[event.which] = false
+      pressedKeys[event.key] = false
       updatePlayerVelocity()
     }
 
     const updatePlayerVelocity = () => {
       Player.vx =
-        (pressedKeys[68] ? Player.speed : 0) -
-        (pressedKeys[65] ? Player.speed : 0)
+        (pressedKeys['d'] ? Player.speed : 0) -
+        (pressedKeys['a'] ? Player.speed : 0)
       Player.vy =
-        (pressedKeys[83] ? Player.speed : 0) -
-        (pressedKeys[87] ? Player.speed : 0)
+        (pressedKeys['s'] ? Player.speed : 0) -
+        (pressedKeys['w'] ? Player.speed : 0)
     }
 
     document.addEventListener('keydown', handleKeyDown)
@@ -888,7 +883,6 @@ function Game() {
   //таймер
   useEffect(() => {
     const intervalId = setInterval(() => {
-      console.log(Enemy.length)
       if (!GameStage.pause) {
         Timer.seconds++
         if (GameStage.bossChance > 10) {

@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react'
 import styles from './style.module.scss'
 
-interface Cards {
-  upgradePick: (id: number) => void
-}
-
 function generateRandomNumbers(min: number, max: number): number[] {
   const result: number[] = []
   const numbers: number[] = []
@@ -22,16 +18,16 @@ function generateRandomNumbers(min: number, max: number): number[] {
   return result
 }
 
-interface description {
+interface CardDescription {
   id: number
   text: string
 }
 
-interface Cards {
+interface CardsProps {
   upgradePick: (id: number) => void
 }
 
-const CardsDescription: description[] = [
+const CardsDescription: CardDescription[] = [
   {
     id: 0,
     text: 'increases the players speed by 10%',
@@ -66,8 +62,8 @@ const CardsDescription: description[] = [
   },
 ]
 
-function Cards({ upgradePick }: Cards) {
-  const [cards, setCards] = useState<description[]>([])
+function Cards({ upgradePick }: CardsProps) {
+  const [cards, setCards] = useState<CardDescription[]>([])
 
   useEffect(() => {
     const randCards = generateRandomNumbers(0, 7)
@@ -80,7 +76,7 @@ function Cards({ upgradePick }: Cards) {
 
   return (
     <div className={styles.cards_container}>
-      {cards.map((el, _) => (
+      {cards.map(el => (
         <div
           className={styles.card}
           style={{ backgroundColor: el.id > 4 ? '#ffe6b0' : '#b0ffd5' }}
