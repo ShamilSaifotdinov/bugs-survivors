@@ -60,17 +60,8 @@ function RegisterPage() {
   }
 
   return (
-    <Grid
-      container
-      rowGap={4}
-      justifyContent={'right'}
-      className={style.registration}>
-      <Grid
-        item
-        xs={12}
-        md={4}
-        className={style.gridItem}
-        justifyContent={'center'}>
+    <Grid container className={style.registration}>
+      <Grid item xs={12} md={4} className={style.gridItem}>
         {' '}
         <Grid container justifyContent={'center'}>
           <Grid item xs={6}>
