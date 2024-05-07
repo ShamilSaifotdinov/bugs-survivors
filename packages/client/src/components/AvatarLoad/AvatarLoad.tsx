@@ -1,63 +1,43 @@
-import * as React from 'react'
-import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import Modal from '@mui/material/Modal'
-import { Avatar, Input } from '@mui/material'
+import { Avatar, styled } from '@mui/material'
+
 import styles from './styles.module.scss'
+
+const VisuallyHiddenInput = styled('input')({
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  height: 1,
+  overflow: 'hidden',
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  whiteSpace: 'nowrap',
+  width: 1,
+})
 
 type AvatarLoadProps = {
   src?: string
   className?: any
-  onClick?: () => void
   onChange?: () => void
 }
 
 function AvatarLoad({ src, className, onChange }: AvatarLoadProps) {
-  const [open, setOpen] = React.useState(false)
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
-
   return (
     <Button
-      disableFocusRipple={true}
-      onClick={handleOpen}
       component="label"
+      role={undefined}
+      variant="text"
       sx={{
-        p: 0,
+        padding: 0,
         borderRadius: '50%',
-        '&:hover': {
-          backgroundColor: '#fff',
-        },
-      }}>
+      }}
+      tabIndex={-10}>
       <Avatar className={className} src={src}></Avatar>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description">
-        <Box className={styles.modal}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Загружай аватарку
-          </Typography>
-          <Typography
-            id="modal-modal-description"
-            sx={{ mt: 2, color: 'inherit', mb: '0.8rem' }}>
-            Пока ветер без камней :)
-          </Typography>
-          <Input
-            size="small"
-            type="file"
-            onChange={onChange}
-            sx={{
-              '.MuiInput-input': {
-                color: '--primary-color-dark',
-                fontSize: '0.8rem',
-              },
-            }}
-          />
-        </Box>
-      </Modal>
+      <div className={styles.layout}>Load avatar</div>
+      <VisuallyHiddenInput
+        onChange={() => console.log('avatar submit')}
+        type="file"
+      />
     </Button>
   )
 }
