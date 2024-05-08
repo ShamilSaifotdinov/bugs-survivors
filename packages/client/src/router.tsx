@@ -7,17 +7,11 @@ import Error_404 from './pages/404'
 import Forum from './pages/Forum'
 import MainMenu from './pages/MainMenu'
 import ProfilePage from './pages/Profile/ProfilePage'
-import Game from './pages/Game'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Discovery />,
-    errorElement: <Error_404 />,
-  },
-  {
-    path: '/game',
-    element: <Game />,
     errorElement: <Error_404 />,
   },
   {
