@@ -46,46 +46,55 @@ const fields: ProfileDataProps = {
 function ProfilePage() {
   const [profile, setProfile] = useState<ProfileDataProps>(initialData)
   const [passwords, setPasswords] = useState<PasswordsProps>(initialPassword)
+  const [errorPasswords, setErrorPasswords] = useState<string>(' ')
   const [open, setOpen] = useState<boolean>(false)
+
   const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
+  const handleClose = () => {
+    setOpen(false)
+    setPasswords(initialPassword)
+    setErrorPasswords(' ')
+  }
   const handleSubmitData = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (open) {
+      try {
+        const response = await fetch(`${BASE_URL}/user/password`, {
+          method: 'PUT',
+          credentials: 'include',
+          body: JSON.stringify(passwords),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        if (!response.ok) {
+          const data = await response.json()
+          setErrorPasswords(data.reason)
+          throw new Error(`Network response with status ${response.status}`)
+        }
 
-    try {
-      const response = await fetch(`${BASE_URL}/user/profile`, {
-        method: 'PUT',
-        credentials: 'include',
-        body: JSON.stringify(profile),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      if (!response.ok)
-        throw new Error(`Network response with status ${response.status}`)
-      const data = await response.json()
-      setProfile(data)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const handleSubmitPasswords = async (e: React.FormEvent) => {
-    e.preventDefault()
-    try {
-      const response = await fetch(`${BASE_URL}/user/password`, {
-        method: 'PUT',
-        credentials: 'include',
-        body: JSON.stringify(passwords),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      if (!response.ok)
-        throw new Error(`Network response with status ${response.status}`)
-      handleClose()
-    } catch (error) {
-      console.log(error)
+        handleClose()
+        setPasswords(initialPassword)
+      } catch (error) {
+        console.log(error)
+      }
+    } else {
+      try {
+        const response = await fetch(`${BASE_URL}/user/profile`, {
+          method: 'PUT',
+          credentials: 'include',
+          body: JSON.stringify(profile),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        if (!response.ok)
+          throw new Error(`Network response with status ${response.status}`)
+        const data = await response.json()
+        setProfile(data)
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 
@@ -131,7 +140,6 @@ function ProfilePage() {
         break
       case 'old_password':
         setPasswords({ ...passwords, oldPassword: e.target.value })
-
         break
     }
   }
@@ -155,7 +163,7 @@ function ProfilePage() {
                   {Object.keys(fields).map(field => {
                     const key = field as keyof ProfileDataProps
                     return (
-                      <Box className={styles.fieldItem}>
+                      <Box key={key} className={styles.fieldItem}>
                         <Typography>{fields[key]}</Typography>
                         <TextField
                           sx={{ width: '45%' }}
@@ -176,31 +184,28 @@ function ProfilePage() {
                       open={open}
                       handleClose={handleClose}
                       handleOpen={handleOpen}>
-                      <form
-                        onSubmit={handleSubmitPasswords}
-                        onChange={handleChange}>
-                        <Grid
-                          container
-                          gap={'1.5rem'}
-                          justifyContent={'center'}>
-                          <TextField
-                            label="Old password"
-                            name="old_password"
-                            value={passwords.oldPassword}
-                          />
-                          <TextField
-                            label="New password"
-                            name="password"
-                            value={passwords.newPassword}
-                          />
-                          <Button
-                            color="secondary"
-                            variant="contained"
-                            type="submit">
-                            CHANGE PASSWORD
-                          </Button>
-                        </Grid>
-                      </form>
+                      <Grid container gap={'1.5rem'} justifyContent={'center'}>
+                        <TextField
+                          helperText={errorPasswords}
+                          error={errorPasswords.length > 1 ? true : false}
+                          label="Old password"
+                          name="old_password"
+                          value={passwords.oldPassword}
+                        />
+                        <TextField
+                          helperText={' '}
+                          label="New password"
+                          name="password"
+                          value={passwords.newPassword}
+                        />
+                        <Button
+                          onClick={handleSubmitData}
+                          color="secondary"
+                          variant="contained"
+                          type="submit">
+                          CHANGE PASSWORD
+                        </Button>
+                      </Grid>
                     </ButtonModal>
                   </Box>
                   <Button type="submit" variant="contained" color="primary">
