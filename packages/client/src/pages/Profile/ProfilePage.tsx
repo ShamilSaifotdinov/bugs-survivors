@@ -66,7 +66,7 @@ function ProfilePage() {
                             color="secondary"
                             variant="contained"
                             type="submit">
-                            CHANGE AVATAR
+                            CHANGE PASSWORD
                           </Button>
                         </Grid>
                       </form>
