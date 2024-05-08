@@ -1,0 +1,32 @@
+.main-menu {
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/images/main-menu_background.png');
+  background-position: 50% 75%;
+  background-size: cover;
+  padding: 5.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4.875rem;
+
+  &_title {
+    background: linear-gradient(#ff5c00 46%, #ffffff, #4396b5 80%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    filter: drop-shadow(0.5rem 0.5rem #2f464a);
+    letter-spacing: -0.5rem;
+  }
+
+  &_buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 15rem;
+    height: 32.625rem;
+    gap: 2rem;
+    max-height: max-content;
+  }
+}
