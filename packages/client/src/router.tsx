@@ -5,6 +5,7 @@ import Leaderboard from './pages/Leaderboard'
 import RegisterPage from './pages/registration/RegisterPage'
 import Forum from './pages/Forum'
 import MainMenu from './pages/MainMenu'
+import ProfilePage from './pages/Profile/ProfilePage'
 import ErrorPage from './pages/Error'
 
 const errorBoundary = <ErrorPage title="Something went wrong :( Try later." />
@@ -33,7 +34,7 @@ const router = createBrowserRouter(
     },
     {
       path: '/profile',
-      element: <div>Profile!</div>,
+      element: <ProfilePage />,
     },
     {
       path: '/leaderboard',
