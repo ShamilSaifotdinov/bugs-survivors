@@ -26,13 +26,13 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
   }
 
   static getDerivedStateFromError = (error: Error) => {
-    console.log(error)
+    console.error(error)
 
     return { hasError: true }
   }
 
   componentDidCatch = (error: Error, info: ErrorInfo) => {
-    console.log(error, info)
+    console.error(error, info)
 
     this.setState({ error, info })
   }
@@ -40,7 +40,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
   render() {
     try {
       const { hasError, error, info } = this.state
-      console.log(error, info)
+      console.error(error, info)
       const { children } = this.props
 
       return hasError ? <ErrorComponent /> : children
