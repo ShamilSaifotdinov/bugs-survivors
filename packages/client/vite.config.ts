@@ -12,4 +12,22 @@ export default defineConfig({
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
   plugins: [react()],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData(source, fp) {
+          if (
+            fp.endsWith('mixins.scss') ||
+            fp.endsWith('variables.scss') ||
+            fp.endsWith('reset.scss')
+          )
+            return source
+          return (
+            `@import "./src/assets/scss/mixins";@import "./src/assets/scss/variables";@import "./src/assets/scss/reset";` +
+            source
+          )
+        },
+      },
+    },
+  },
 })
