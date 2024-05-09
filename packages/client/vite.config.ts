@@ -16,16 +16,8 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData(source, fp) {
-          if (
-            fp.endsWith('mixins.scss') ||
-            fp.endsWith('variables.scss') ||
-            fp.endsWith('reset.scss')
-          )
-            return source
-          return (
-            `@import "./src/assets/scss/mixins";@import "./src/assets/scss/variables";@import "./src/assets/scss/reset";` +
-            source
-          )
+          if (fp.endsWith('mixins.scss')) return source
+          return `@import "./src/assets/scss/mixins";` + source
         },
       },
     },
