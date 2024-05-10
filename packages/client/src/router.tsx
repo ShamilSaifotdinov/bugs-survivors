@@ -5,7 +5,7 @@ import Leaderboard from './pages/Leaderboard'
 import RegisterPage from './pages/registration/RegisterPage'
 import Forum from './pages/Forum'
 import MainMenu from './pages/MainMenu'
-import ProfilePage from './pages/Profile/ProfilePage'
+import ProfilePage from './pages/Profile'
 import ErrorPage from './pages/Error'
 
 const errorBoundary = <ErrorPage title="Something went wrong :( Try later." />

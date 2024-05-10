@@ -3,23 +3,14 @@ import styles from './styles.module.scss'
 import AvatarLoad from '../../components/AvatarLoad/AvatarLoad'
 import PreviousPageBtn from '../../components/PreviousPageBtn'
 import ButtonModal from '../../components/ButtonModal/ButtonModal'
+import { getUserInfo } from '../../api/basic/auth'
+import { changeUserProfile, changeUserPassword } from '../../api/basic/users'
 import { useEffect, useState } from 'react'
+import { ChangeUserPasswordData } from '../../api/basic/users'
+import { User } from '../../api/basic/types'
+import { RESOURCES_URL } from '../../api/basic/basicInstance'
 
 const BASE_URL = 'https://ya-praktikum.tech/api/v2'
-const RESOURCE_URL = `https://ya-praktikum.tech/api/v2/resources`
-
-type ProfileDataProps = {
-  first_name: string
-  second_name: string
-  login: string
-  email: string
-  phone: string
-  avatar?: string
-}
-type PasswordsProps = {
-  oldPassword: string
-  newPassword: string
-}
 
 const initialData = {
   first_name: '',
@@ -35,7 +26,7 @@ const initialPassword = {
   newPassword: '',
 }
 
-const fields: ProfileDataProps = {
+const fields: Partial<User> = {
   first_name: 'First name',
   second_name: 'Second name',
   login: 'Login',
@@ -44,9 +35,10 @@ const fields: ProfileDataProps = {
 }
 
 function ProfilePage() {
-  const [profile, setProfile] = useState<ProfileDataProps>(initialData)
-  const [passwords, setPasswords] = useState<PasswordsProps>(initialPassword)
-  const [errorPasswords, setErrorPasswords] = useState<string>(' ')
+  const [profile, setProfile] = useState<Partial<User>>(initialData)
+  const [passwords, setPasswords] =
+    useState<ChangeUserPasswordData>(initialPassword)
+  const [errorPasswords, setErrorPasswords] = useState(' ')
   const [open, setOpen] = useState<boolean>(false)
 
   const handleOpen = () => setOpen(true)
@@ -57,64 +49,24 @@ function ProfilePage() {
   }
   const handleSubmitData = async (e: React.FormEvent) => {
     e.preventDefault()
+    console.log(open)
     if (open) {
-      try {
-        const response = await fetch(`${BASE_URL}/user/password`, {
-          method: 'PUT',
-          credentials: 'include',
-          body: JSON.stringify(passwords),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-        if (!response.ok) {
-          const data = await response.json()
-          setErrorPasswords(data.reason)
-          throw new Error(`Network response with status ${response.status}`)
-        }
-
-        handleClose()
-        setPasswords(initialPassword)
-      } catch (error) {
-        console.log(error)
-      }
+      const response = await changeUserPassword(passwords)
+      console.log(response)
+      // console.log(response.ok)
+      // console.log(response.response)
+      // handleClose()
+      // if (!response.ok) setErrorPasswords(response.reason)
     } else {
-      try {
-        const response = await fetch(`${BASE_URL}/user/profile`, {
-          method: 'PUT',
-          credentials: 'include',
-          body: JSON.stringify(profile),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-        if (!response.ok)
-          throw new Error(`Network response with status ${response.status}`)
-        const data = await response.json()
-        setProfile(data)
-      } catch (error) {
-        console.log(error)
-      }
+      const response = await changeUserProfile(profile)
+      setProfile(response)
     }
   }
 
   useEffect(() => {
     ;(async function () {
-      try {
-        const response = await fetch(`${BASE_URL}/auth/user`, {
-          method: 'GET',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-        if (!response.ok)
-          throw new Error(`Network response with status ${response.status}`)
-        const data = await response.json()
-        setProfile(data)
-      } catch (error) {
-        console.log(error)
-      }
+      const data = await getUserInfo()
+      setProfile(data)
     })()
   }, [])
 
@@ -152,7 +104,7 @@ function ProfilePage() {
             <PreviousPageBtn className={styles.buttonPrev} />
             <Grid container gap={'3.8rem'} justifyContent={'center'}>
               <AvatarLoad
-                src={`${RESOURCE_URL}${profile.avatar}`}
+                src={`${RESOURCES_URL}${profile.avatar}`}
                 onChange={() => console.log('submit avatar')}
                 className={styles.avatar}></AvatarLoad>
               <form
@@ -161,7 +113,7 @@ function ProfilePage() {
                 onChange={handleChange}>
                 <Grid container gap="1rem" justifyContent={'center'}>
                   {Object.keys(fields).map(field => {
-                    const key = field as keyof ProfileDataProps
+                    const key = field as keyof Partial<User>
                     return (
                       <Box key={key} className={styles.fieldItem}>
                         <Typography>{fields[key]}</Typography>
