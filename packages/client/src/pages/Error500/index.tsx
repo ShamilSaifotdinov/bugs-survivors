@@ -6,11 +6,15 @@ function ErrorPage500() {
   const navigate = useNavigate()
   return (
     <div className={styles.container}>
+      <img
+        className={styles.img}
+        src="images/500.png"
+        alt="page500 background"
+      />
       <Button
         type="button"
         onClick={() => navigate('/')}
-        sx={{ marginBottom: '16vh' }}
-        className={styles.button}
+        sx={{ marginBottom: '16vh', position: 'absolute' }}
         variant="contained">
         BACK TO MAIN MENU
       </Button>
