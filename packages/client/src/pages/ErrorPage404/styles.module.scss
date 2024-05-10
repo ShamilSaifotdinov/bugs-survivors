@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: end;
+
+  image-rendering: pixelated;
+  height: 100vh;
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}
