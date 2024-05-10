@@ -7,11 +7,16 @@ import Forum from './pages/Forum'
 import MainMenu from './pages/MainMenu'
 import ProfilePage from './pages/Profile/ProfilePage'
 import ErrorPage from './pages/Error'
+import ErrorPage500 from './pages/Error500'
 
 const errorBoundary = <ErrorPage title="Something went wrong :( Try later." />
 
 const router = createBrowserRouter(
   [
+    {
+      path: '/error500',
+      element: <ErrorPage500 />,
+    },
     {
       path: '*',
       element: <ErrorPage title="404" />,
