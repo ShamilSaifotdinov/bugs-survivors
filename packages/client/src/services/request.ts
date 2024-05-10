@@ -39,7 +39,11 @@ const fetchApi = (baseUrl?: string) => {
     }
 
     const response = await fetch(baseUrl + url, requestOptions)
-
+    if (!response.ok) {
+      const error = await response.json()
+      throw new Error(error.reason)
+    }
+    if (url === '/user/password' && response.ok) return
     return response.json()
   }
 

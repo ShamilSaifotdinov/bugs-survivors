@@ -3,7 +3,7 @@ import { User } from './types'
 
 type ChangeUserProfileData = Partial<Omit<User, 'id' | 'avatar'>>
 
-type ChangeUserPasswordData = {
+export type ChangeUserPasswordData = {
   oldPassword: string
   newPassword: string
 }

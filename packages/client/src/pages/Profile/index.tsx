@@ -10,8 +10,6 @@ import { ChangeUserPasswordData } from '../../api/basic/users'
 import { User } from '../../api/basic/types'
 import { RESOURCES_URL } from '../../api/basic/basicInstance'
 
-const BASE_URL = 'https://ya-praktikum.tech/api/v2'
-
 const initialData = {
   first_name: '',
   second_name: '',
@@ -49,14 +47,14 @@ function ProfilePage() {
   }
   const handleSubmitData = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log(open)
     if (open) {
-      const response = await changeUserPassword(passwords)
-      console.log(response)
-      // console.log(response.ok)
-      // console.log(response.response)
-      // handleClose()
-      // if (!response.ok) setErrorPasswords(response.reason)
+      try {
+        await changeUserPassword(passwords)
+        handleClose()
+      } catch (error) {
+        // @ts-ignore
+        setErrorPasswords(error.message)
+      }
     } else {
       const response = await changeUserProfile(profile)
       setProfile(response)
@@ -113,7 +111,7 @@ function ProfilePage() {
                 onChange={handleChange}>
                 <Grid container gap="1rem" justifyContent={'center'}>
                   {Object.keys(fields).map(field => {
-                    const key = field as keyof Partial<User>
+                    const key = field as keyof User
                     return (
                       <Box key={key} className={styles.fieldItem}>
                         <Typography>{fields[key]}</Typography>
