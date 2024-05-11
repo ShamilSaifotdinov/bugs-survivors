@@ -1,0 +1,17 @@
+.layout {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0);
+  opacity: 0;
+  position: absolute;
+  text-align: center;
+  display: flex;
+  transition: opacity 0.3s ease;
+  align-items: center;
+  color: white;
+  border-radius: 50%;
+
+  &:hover {
+    opacity: 0.6;
+  }
+}
