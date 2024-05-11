@@ -2,6 +2,7 @@ import Button from '@mui/material/Button'
 import { Avatar, styled } from '@mui/material'
 
 import styles from './styles.module.scss'
+import React from 'react'
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -18,7 +19,7 @@ const VisuallyHiddenInput = styled('input')({
 type AvatarLoadProps = {
   src?: string
   className?: any
-  onChange?: () => void
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 function AvatarLoad({ src, className, onChange }: AvatarLoadProps) {
@@ -34,10 +35,7 @@ function AvatarLoad({ src, className, onChange }: AvatarLoadProps) {
       tabIndex={-10}>
       <Avatar className={className} src={src}></Avatar>
       <div className={styles.layout}>Load avatar</div>
-      <VisuallyHiddenInput
-        onChange={() => console.log('avatar submit')}
-        type="file"
-      />
+      <VisuallyHiddenInput onChange={onChange} type="file" />
     </Button>
   )
 }

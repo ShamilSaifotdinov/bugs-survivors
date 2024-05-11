@@ -5,10 +5,11 @@ import PreviousPageBtn from '../../components/PreviousPageBtn'
 import ButtonModal from '../../components/ButtonModal/ButtonModal'
 import { getUserInfo } from '../../api/basic/auth'
 import { changeUserProfile, changeUserPassword } from '../../api/basic/users'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { ChangeUserPasswordData } from '../../api/basic/users'
 import { User } from '../../api/basic/types'
 import { RESOURCES_URL } from '../../api/basic/basicInstance'
+import { changeUserAvatar } from '../../api/basic/users'
 
 const initialData = {
   first_name: '',
@@ -45,6 +46,14 @@ function ProfilePage() {
     setPasswords(initialPassword)
     setErrorPasswords(' ')
   }
+
+  const uploadAvatar = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formData = new FormData()
+    if (e.target.files) formData.append('avatar', e.target?.files[0])
+    const response = await changeUserAvatar(formData)
+    setProfile({ ...profile, avatar: response.avatar })
+  }
+
   const handleSubmitData = async (e: React.FormEvent) => {
     e.preventDefault()
     if (open) {
@@ -103,7 +112,7 @@ function ProfilePage() {
             <Grid container gap={'3.8rem'} justifyContent={'center'}>
               <AvatarLoad
                 src={`${RESOURCES_URL}${profile.avatar}`}
-                onChange={() => console.log('submit avatar')}
+                onChange={useCallback(uploadAvatar, [])}
                 className={styles.avatar}></AvatarLoad>
               <form
                 className={styles.form}
