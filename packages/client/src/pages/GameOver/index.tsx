@@ -42,28 +42,28 @@ const GameOver = () => {
       </Grid>
       <List sx={{ width: '100%' }}>
         <ListItem className={styles.listItem}>
-          <img src="/public/images/time.png" alt="time" />
+          <img src="/images/time.png" alt="time" />
           <span className={styles.listTextLabel}>time</span>
           {results.time}
         </ListItem>
         <ListItem className={styles.listItem}>
-          <img src="/public/images/bugs.png" alt="bugs" />
+          <img src="/images/bugs.png" alt="bugs" />
           <span className={styles.listTextLabel}>bugs</span>
           {results.bugs}
         </ListItem>
         <ListItem className={styles.listItem}>
-          <img src="/public/images/levels.png" alt="levels" />
+          <img src="/images/levels.png" alt="levels" />
           <span className={styles.listTextLabel}>levels</span>
           <div>
             {results.levels?.hp && (
               <div className={styles.levelsItem}>
-                <img src="/public/images/heart.png" alt="HP" />
+                <img src="/images/heart.png" alt="HP" />
                 <span>{results.levels?.hp}</span>
               </div>
             )}
             {results.levels?.gun && (
               <div className={styles.levelsItem}>
-                <img src="/public/images/gun.png" alt="Gun" />
+                <img src="/images/gun.png" alt="Gun" />
                 <span>{results.levels?.gun}</span>
               </div>
             )}
