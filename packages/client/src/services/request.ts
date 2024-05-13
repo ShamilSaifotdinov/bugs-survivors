@@ -39,8 +39,17 @@ const fetchApi = (baseUrl?: string) => {
     }
 
     const response = await fetch(baseUrl + url, requestOptions)
-
-    return response.json()
+    if (!response.ok) {
+      const error = await response.json()
+      throw new Error(error.reason)
+    }
+    const text = await response.text()
+    try {
+      const json = JSON.parse(text)
+      return json
+    } catch {
+      return text
+    }
   }
 
   const get: FetchMethod = (url, options = {}) => {
