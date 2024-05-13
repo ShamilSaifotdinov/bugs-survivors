@@ -2,11 +2,11 @@
   display: flex;
   justify-content: center;
   align-items: end;
-
-  image-rendering: pixelated;
   height: 100vh;
-  img {
-    height: 100%;
-    width: 100%;
-  }
+  background-image: url('images/404.png'),
+    linear-gradient(to bottom, black, #485454);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
 }
