@@ -2,11 +2,10 @@ import { Button, Grid, TextField, Typography, Box } from '@mui/material'
 import styles from './styles.module.scss'
 import AvatarLoad from '../../components/AvatarLoad/AvatarLoad'
 import PreviousPageBtn from '../../components/PreviousPageBtn'
-import ButtonModal from '../../components/ButtonModal/ButtonModal'
+import PasswordChange from './PasswordChange'
 import { getUserInfo } from '../../api/basic/auth'
-import { changeUserProfile, changeUserPassword } from '../../api/basic/users'
+import { changeUserProfile } from '../../api/basic/users'
 import { useEffect, useState } from 'react'
-import { ChangeUserPasswordData } from '../../api/basic/users'
 import { User } from '../../api/basic/types'
 import { RESOURCES_URL } from '../../api/basic/basicInstance'
 
@@ -19,11 +18,6 @@ const initialData = {
   avatar: '',
 }
 
-const initialPassword = {
-  oldPassword: '',
-  newPassword: '',
-}
-
 const fields: Partial<User> = {
   first_name: 'First name',
   second_name: 'Second name',
@@ -34,37 +28,15 @@ const fields: Partial<User> = {
 
 function ProfilePage() {
   const [profile, setProfile] = useState<Partial<User>>(initialData)
-  const [passwords, setPasswords] =
-    useState<ChangeUserPasswordData>(initialPassword)
-  const [errorPasswords, setErrorPasswords] = useState(' ')
-  const [open, setOpen] = useState<boolean>(false)
-
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => {
-    setOpen(false)
-    setPasswords(initialPassword)
-    setErrorPasswords(' ')
-  }
-  const handleSubmitData = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (open) {
-      try {
-        await changeUserPassword(passwords)
-        handleClose()
-      } catch (error) {
-        // @ts-ignore
-        setErrorPasswords(error.message)
-      }
-    } else {
-      const response = await changeUserProfile(profile)
-      setProfile(response)
-    }
-  }
 
   useEffect(() => {
     ;(async function () {
-      const data = await getUserInfo()
-      setProfile(data)
+      try {
+        const data = await getUserInfo()
+        setProfile(data)
+      } catch (error) {
+        alert(error)
+      }
     })()
   }, [])
 
@@ -85,13 +57,13 @@ function ProfilePage() {
       case 'phone':
         setProfile({ ...profile, phone: e.target?.value })
         break
-      case 'password':
-        setPasswords({ ...passwords, newPassword: e.target.value })
-        break
-      case 'old_password':
-        setPasswords({ ...passwords, oldPassword: e.target.value })
-        break
     }
+  }
+
+  const handleSubmitData = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const response = await changeUserProfile(profile)
+    setProfile(response)
   }
 
   return (
@@ -127,36 +99,7 @@ function ProfilePage() {
                     className={styles.fieldItem}
                     sx={{ marginBottom: '2.8rem' }}>
                     <Typography>Password</Typography>
-                    <ButtonModal
-                      color="secondary"
-                      variant="contained"
-                      label="CHANGE"
-                      open={open}
-                      handleClose={handleClose}
-                      handleOpen={handleOpen}>
-                      <Grid container gap={'1.5rem'} justifyContent={'center'}>
-                        <TextField
-                          helperText={errorPasswords}
-                          error={errorPasswords.length > 1 ? true : false}
-                          label="Old password"
-                          name="old_password"
-                          value={passwords.oldPassword}
-                        />
-                        <TextField
-                          helperText={' '}
-                          label="New password"
-                          name="password"
-                          value={passwords.newPassword}
-                        />
-                        <Button
-                          onClick={handleSubmitData}
-                          color="secondary"
-                          variant="contained"
-                          type="submit">
-                          CHANGE PASSWORD
-                        </Button>
-                      </Grid>
-                    </ButtonModal>
+                    <PasswordChange />
                   </Box>
                   <Button type="submit" variant="contained" color="primary">
                     SAVE CHANGES

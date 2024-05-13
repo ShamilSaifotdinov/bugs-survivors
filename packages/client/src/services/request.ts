@@ -43,8 +43,13 @@ const fetchApi = (baseUrl?: string) => {
       const error = await response.json()
       throw new Error(error.reason)
     }
-    if (url === '/user/password' && response.ok) return
-    return response.json()
+    const text = await response.text()
+    try {
+      const json = JSON.parse(text)
+      return json
+    } catch {
+      return text
+    }
   }
 
   const get: FetchMethod = (url, options = {}) => {
