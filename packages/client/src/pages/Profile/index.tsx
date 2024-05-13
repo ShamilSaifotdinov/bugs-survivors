@@ -4,11 +4,8 @@ import AvatarLoad from '../../components/AvatarLoad/AvatarLoad'
 import PreviousPageBtn from '../../components/PreviousPageBtn'
 import PasswordChange from './PasswordChange'
 import { getUserInfo } from '../../api/basic/auth'
-import { changeUserProfile, changeUserPassword } from '../../api/basic/users'
-import { useCallback, useEffect, useState } from 'react'
-import { ChangeUserPasswordData } from '../../api/basic/users'
 import { changeUserProfile } from '../../api/basic/users'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { User } from '../../api/basic/types'
 import { RESOURCES_URL } from '../../api/basic/basicInstance'
 import { changeUserAvatar } from '../../api/basic/users'
@@ -70,6 +67,18 @@ function ProfilePage() {
     setProfile(response)
   }
 
+  const handleAvatar = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formData = new FormData()
+    if (e.target.files) {
+      formData.append('avatar', e.target.files[0])
+    }
+    try {
+      const response = await changeUserAvatar(formData)
+      setProfile(response)
+    } catch (error) {
+      alert(error)
+    }
+  }
   return (
     <Grid container className={styles.profile}>
       <Grid item xs={12} md={6} xl={4} className={styles.gridItem}>
@@ -79,7 +88,7 @@ function ProfilePage() {
             <Grid container gap={'3.8rem'} justifyContent={'center'}>
               <AvatarLoad
                 src={`${RESOURCES_URL}${profile.avatar}`}
-                onChange={useCallback(uploadAvatar, [])}
+                onChange={useCallback(handleAvatar, [])}
                 className={styles.avatar}></AvatarLoad>
               <form
                 className={styles.form}
