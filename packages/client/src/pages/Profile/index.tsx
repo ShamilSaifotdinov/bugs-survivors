@@ -3,20 +3,19 @@ import styles from './styles.module.scss'
 import AvatarLoad from '../../components/AvatarLoad/AvatarLoad'
 import PreviousPageBtn from '../../components/PreviousPageBtn'
 import PasswordChange from './PasswordChange'
-import { getUserInfo } from '../../api/basic/auth'
-import { changeUserProfile } from '../../api/basic/users'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { User } from '../../api/basic/types'
-import { RESOURCES_URL } from '../../api/basic/basicInstance'
-
-const initialData = {
-  first_name: '',
-  second_name: '',
-  login: '',
-  email: '',
-  phone: '',
-  avatar: '',
-}
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  fetchUser,
+  changeProfile,
+  setFirstname,
+  setSecondname,
+  setLogin,
+  setEmail,
+  setPhone,
+} from '../../store/userSlice'
+import { RootState } from '../../store'
 
 const fields: Partial<User> = {
   first_name: 'First name',
@@ -27,43 +26,36 @@ const fields: Partial<User> = {
 }
 
 function ProfilePage() {
-  const [profile, setProfile] = useState<Partial<User>>(initialData)
+  const profile = useSelector((state: RootState) => state.user.user)
+  const dispatch = useDispatch<any>()
 
   useEffect(() => {
-    ;(async function () {
-      try {
-        const data = await getUserInfo()
-        setProfile(data)
-      } catch (error) {
-        alert(error)
-      }
-    })()
+    dispatch(fetchUser())
   }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
     switch (e.target.name) {
       case 'first_name':
-        setProfile({ ...profile, first_name: e.target?.value })
+        dispatch(setFirstname(e.target.value))
         break
       case 'second_name':
-        setProfile({ ...profile, second_name: e.target?.value })
+        dispatch(setSecondname(e.target.value))
         break
       case 'login':
-        setProfile({ ...profile, login: e.target?.value })
+        dispatch(setLogin(e.target.value))
         break
       case 'email':
-        setProfile({ ...profile, email: e.target?.value })
+        dispatch(setEmail(e.target.value))
         break
       case 'phone':
-        setProfile({ ...profile, phone: e.target?.value })
+        dispatch(setPhone(e.target.value))
         break
     }
   }
 
-  const handleSubmitData = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const response = await changeUserProfile(profile)
-    setProfile(response)
+    dispatch(changeProfile(profile))
   }
 
   return (
@@ -73,13 +65,10 @@ function ProfilePage() {
           <Grid item xs={8} sx={{ position: 'relative' }}>
             <PreviousPageBtn className={styles.buttonPrev} />
             <Grid container gap={'3.8rem'} justifyContent={'center'}>
-              <AvatarLoad
-                src={`${RESOURCES_URL}${profile.avatar}`}
-                onChange={() => console.log('submit avatar')}
-                className={styles.avatar}></AvatarLoad>
+              <AvatarLoad className={styles.avatar}></AvatarLoad>
               <form
                 className={styles.form}
-                onSubmit={handleSubmitData}
+                onSubmit={handleSubmit}
                 onChange={handleChange}>
                 <Grid container gap="1rem" justifyContent={'center'}>
                   {Object.keys(fields).map(field => {
@@ -89,7 +78,7 @@ function ProfilePage() {
                         <Typography>{fields[key]}</Typography>
                         <TextField
                           sx={{ width: '45%' }}
-                          label="First name"
+                          label={fields[key]}
                           value={profile[key]}
                           name={field}></TextField>
                       </Box>
