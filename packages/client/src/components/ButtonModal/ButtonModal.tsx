@@ -16,6 +16,9 @@ type ButtonModalProps = {
     | 'secondary'
     | 'success'
     | 'warning'
+  handleOpen: () => void
+  handleClose: () => void
+  open: boolean
 }
 
 export default function ButtonModal({
@@ -23,11 +26,10 @@ export default function ButtonModal({
   children,
   label,
   color,
+  open,
+  handleClose,
+  handleOpen,
 }: ButtonModalProps) {
-  const [open, setOpen] = React.useState(false)
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
-
   return (
     <div>
       <Button color={color} variant={variant} onClick={handleOpen}>
