@@ -6,6 +6,7 @@ import RegisterPage from './pages/registration/RegisterPage'
 import Forum from './pages/Forum'
 import MainMenu from './pages/MainMenu'
 import ProfilePage from './pages/Profile/ProfilePage'
+import ErrorPage404 from './pages/ErrorPage404'
 import ErrorPage from './pages/Error'
 import GameOver from './pages/GameOver'
 
@@ -15,7 +16,7 @@ const router = createBrowserRouter(
   [
     {
       path: '*',
-      element: <ErrorPage title="404" />,
+      element: <ErrorPage404 />,
     },
     {
       path: '/',
