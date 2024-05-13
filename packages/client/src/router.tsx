@@ -6,15 +6,22 @@ import RegisterPage from './pages/registration/RegisterPage'
 import Forum from './pages/Forum'
 import MainMenu from './pages/MainMenu'
 import ProfilePage from './pages/Profile'
+import ErrorPage404 from './pages/ErrorPage404'
 import ErrorPage from './pages/Error'
+import ErrorPage500 from './pages/Error500'
+import GameOver from './pages/GameOver'
 
 const errorBoundary = <ErrorPage title="Something went wrong :( Try later." />
 
 const router = createBrowserRouter(
   [
     {
+      path: '/error500',
+      element: <ErrorPage500 />,
+    },
+    {
       path: '*',
-      element: <ErrorPage title="404" />,
+      element: <ErrorPage404 />,
     },
     {
       path: '/',
@@ -55,6 +62,10 @@ const router = createBrowserRouter(
           ],
         },
       ],
+    },
+    {
+      path: '/gameOver',
+      element: <GameOver />,
     },
   ].map(item => ({ ...item, errorElement: errorBoundary }))
 )

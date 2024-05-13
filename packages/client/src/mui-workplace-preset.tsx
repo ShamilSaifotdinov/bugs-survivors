@@ -209,7 +209,7 @@ export const themeOptions: ThemeOptions = {
       },
       styleOverrides: {
         root: {
-          fontFamily: '--primary-font',
+          fontFamily: 'var(--secondary-font)',
           fontWeight: '400',
           padding: '1px 0.25rem 1px 0.25rem',
           borderRadius: '0.25rem',
