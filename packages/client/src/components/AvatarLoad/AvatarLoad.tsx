@@ -50,4 +50,4 @@ function AvatarLoad({ className }: AvatarLoadProps) {
   )
 }
 
-export default React.memo(AvatarLoad)
+export default AvatarLoad
