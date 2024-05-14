@@ -516,6 +516,7 @@
     "@floating-ui/dom" "^1.6.1"
 
 "@floating-ui/utils@^0.2.0":
+"@floating-ui/utils@^0.2.0":
   version "0.2.1"
   resolved "https://registry.npmjs.org/@floating-ui/utils/-/utils-0.2.1.tgz"
   integrity sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q==
