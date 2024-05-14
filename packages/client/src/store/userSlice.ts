@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { User } from '../api/basic/types'
 import { getUserInfo } from '../api/basic/auth'
 import { changeUserProfile, changeUserAvatar } from '../api/basic/users'
@@ -60,23 +60,7 @@ export const changeAvatar = createAsyncThunk(
 const userSlice = createSlice({
   name: 'user',
   initialState: initialState,
-  reducers: {
-    setFirstname: (state, action: PayloadAction<string>) => {
-      state.user.first_name = action.payload
-    },
-    setSecondname: (state, action: PayloadAction<string>) => {
-      state.user.second_name = action.payload
-    },
-    setLogin: (state, action: PayloadAction<string>) => {
-      state.user.login = action.payload
-    },
-    setEmail: (state, action: PayloadAction<string>) => {
-      state.user.email = action.payload
-    },
-    setPhone: (state, action: PayloadAction<string>) => {
-      state.user.phone = action.payload
-    },
-  },
+  reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchUser.pending, state => {
       state.status = 'loading'
@@ -120,6 +104,4 @@ const userSlice = createSlice({
   },
 })
 
-export const { setFirstname, setSecondname, setLogin, setEmail, setPhone } =
-  userSlice.actions
 export default userSlice.reducer

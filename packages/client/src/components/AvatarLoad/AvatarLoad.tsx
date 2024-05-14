@@ -5,6 +5,7 @@ import styles from './styles.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeAvatar } from '../../store/userSlice'
 import { RootState } from '../../store'
+import React from 'react'
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -49,4 +50,4 @@ function AvatarLoad({ className }: AvatarLoadProps) {
   )
 }
 
-export default AvatarLoad
+export default React.memo(AvatarLoad)

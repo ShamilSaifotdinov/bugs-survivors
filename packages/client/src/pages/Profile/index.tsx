@@ -3,18 +3,10 @@ import styles from './styles.module.scss'
 import AvatarLoad from '../../components/AvatarLoad/AvatarLoad'
 import PreviousPageBtn from '../../components/PreviousPageBtn'
 import PasswordChange from './PasswordChange'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { User } from '../../api/basic/types'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  fetchUser,
-  changeProfile,
-  setFirstname,
-  setSecondname,
-  setLogin,
-  setEmail,
-  setPhone,
-} from '../../store/userSlice'
+import { fetchUser, changeProfile } from '../../store/userSlice'
 import { RootState } from '../../store'
 
 const fields: Partial<User> = {
@@ -26,29 +18,35 @@ const fields: Partial<User> = {
 }
 
 function ProfilePage() {
-  const profile = useSelector((state: RootState) => state.user.user)
+  const user = useSelector(
+    (state: RootState) => state.user.user as Partial<User>
+  )
   const dispatch = useDispatch<any>()
+  const [profile, setProfile] = useState<Partial<User>>(user)
 
   useEffect(() => {
     dispatch(fetchUser())
   }, [])
+  useEffect(() => {
+    if (user) setProfile(user)
+  }, [user])
 
   const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
     switch (e.target.name) {
       case 'first_name':
-        dispatch(setFirstname(e.target.value))
+        setProfile({ ...profile, first_name: e.target.value })
         break
       case 'second_name':
-        dispatch(setSecondname(e.target.value))
+        setProfile({ ...profile, second_name: e.target.value })
         break
       case 'login':
-        dispatch(setLogin(e.target.value))
+        setProfile({ ...profile, login: e.target.value })
         break
       case 'email':
-        dispatch(setEmail(e.target.value))
+        setProfile({ ...profile, email: e.target.value })
         break
       case 'phone':
-        dispatch(setPhone(e.target.value))
+        setProfile({ ...profile, phone: e.target.value })
         break
     }
   }
