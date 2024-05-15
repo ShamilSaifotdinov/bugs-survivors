@@ -2,6 +2,7 @@ import { Button, TextField, Typography } from '@mui/material'
 import style from './styles.module.scss'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { signIn } from '../../api/basic/auth'
 
 function Login() {
   const navigate = useNavigate()
@@ -26,6 +27,10 @@ function Login() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    signIn(dataForm)
+      .then(() => navigate('/'))
+      .catch(err => console.log(err))
   }
 
   return (
