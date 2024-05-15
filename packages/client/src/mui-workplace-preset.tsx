@@ -102,9 +102,21 @@ export const themeOptions: ThemeOptions = {
     },
     h1: {
       fontSize: '5.3rem',
+      // [mediaBreakpoint.lg]: {
+      //   fontSize: '2rem',
+      // },
+      // [mediaBreakpoint.sm]: {
+      //   fontSize: '1.75rem',
+      // },
     },
     h2: {
       fontSize: '2.3rem',
+      // [mediaBreakpoint.lg]: {
+      //   fontSize: '1.5rem',
+      // },
+      // [mediaBreakpoint.sm]: {
+      //   fontSize: '1.25rem',
+      // },
     },
     h3: {
       fontSize: '1.75rem',
@@ -177,10 +189,11 @@ export const themeOptions: ThemeOptions = {
         root: {
           boxSizing: 'border-box',
           fontSize: '1rem',
-          lineHeight: '1.4rem',
           backgroundColor: '#FFFFFF',
-          color: '#00000099',
-          borderRadius: '0.25rem',
+          borderRadius: '3px',
+          border: '1px solid #C1E0DF',
+          // color: '#00000099',
+          // lineHeight: '1.4rem',
         },
       },
     },
@@ -198,14 +211,20 @@ export const themeOptions: ThemeOptions = {
       },
       styleOverrides: {
         root: {
+          fontFamily: 'var(--secondary-font)',
           fontWeight: '400',
           padding: '1px 0.25rem 1px 0.25rem',
           borderRadius: '0.25rem',
           fontSize: '1rem',
-          lineHeight: '1.4rem',
           backgroundColor: '#C1E0DF',
           color: '#2F464A',
+          // lineHeight: '1.4rem',
         },
+      },
+    },
+    MuiAvatar: {
+      defaultProps: {
+        src: '/images/defaultAvatar.png',
       },
     },
   },
