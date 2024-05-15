@@ -8,6 +8,7 @@ import { changeUserProfile } from '../../api/basic/users'
 import { useEffect, useState } from 'react'
 import { User } from '../../api/basic/types'
 import { RESOURCES_URL } from '../../api/basic/basicInstance'
+import { useValidation } from '../../helpers/validation'
 
 const initialData = {
   first_name: '',
@@ -27,7 +28,11 @@ const fields: Partial<User> = {
 }
 
 function ProfilePage() {
-  const [profile, setProfile] = useState<Partial<User>>(initialData)
+  const {
+    form: profile,
+    setForm: setProfile,
+    valid,
+  } = useValidation(initialData)
 
   useEffect(() => {
     ;(async function () {
@@ -88,6 +93,15 @@ function ProfilePage() {
                       <Box key={key} className={styles.fieldItem}>
                         <Typography>{fields[key]}</Typography>
                         <TextField
+                          error={
+                            !valid[key].valid.isValid && valid[key].blur.isDirty
+                          }
+                          helperText={
+                            !valid[key].valid.isValid && valid[key].blur.isDirty
+                              ? valid[key].valid.errorText
+                              : ' '
+                          }
+                          onBlur={valid[key].blur.onBlur}
                           sx={{ width: '45%' }}
                           label="First name"
                           value={profile[key]}
@@ -101,7 +115,17 @@ function ProfilePage() {
                     <Typography>Password</Typography>
                     <PasswordChange />
                   </Box>
-                  <Button type="submit" variant="contained" color="primary">
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    disabled={
+                      !valid.first_name.valid.isValid ||
+                      !valid.second_name.valid.isValid ||
+                      !valid.login.valid.isValid ||
+                      !valid.email.valid.isValid ||
+                      !valid.phone.valid.isValid
+                    }>
                     SAVE CHANGES
                   </Button>
                 </Grid>

@@ -45,7 +45,7 @@ const useDirty = () => {
   }
 }
 
-export const useValid = (bool: boolean, error: string) => {
+const useValid = (bool: boolean, error: string) => {
   const [isValid, setValid] = useState(false)
   const [errorText, setErrorText] = useState(' ')
   useEffect(() => {
@@ -59,20 +59,20 @@ export const useValid = (bool: boolean, error: string) => {
 export const useValidation = (
   data: Record<string, unknown> & (Partial<User> | SignInData | SignUpData)
 ) => {
-  let valid = {}
-  const [profile, setProfile] = useState(data)
+  let valid: Record<string, any> = {}
+  const [form, setForm] = useState(data)
 
   for (const key in data) {
     valid = {
       ...valid,
       [key]: {
         valid: useValid(
-          inputValidators[key]?.regExp.test(profile[key] as string),
+          inputValidators[key]?.regExp.test(form[key] as string),
           inputValidators[key]?.errorText
         ),
         blur: useDirty(),
       },
     }
   }
-  return { valid, setProfile, profile }
+  return { valid, setForm, form }
 }
