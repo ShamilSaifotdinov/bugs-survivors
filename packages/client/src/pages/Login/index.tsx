@@ -1,4 +1,4 @@
-import { Button, TextField, Typography } from '@mui/material'
+import { Button, FormHelperText, TextField, Typography } from '@mui/material'
 import style from './styles.module.scss'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -13,6 +13,7 @@ function Login() {
   }
 
   const [dataForm, setDataForm] = useState(initialData)
+  const [loginError, setLoginError] = useState('')
 
   const handleChange = (event: React.ChangeEvent<HTMLFormElement>) => {
     switch (event.target.name) {
@@ -27,10 +28,11 @@ function Login() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setLoginError('')
 
     signIn(dataForm)
       .then(() => navigate('/'))
-      .catch(err => console.log(err))
+      .catch(error => setLoginError(error.message))
   }
 
   return (
@@ -53,9 +55,11 @@ function Login() {
             <TextField value={dataForm.login} name="login" label="Login" />
             <TextField
               value={dataForm.password}
+              type="password"
               name="password"
               label="Password"
             />
+            <FormHelperText children={loginError} error={!!loginError.length} />
             <div className={style.button_container}>
               <Button type="submit" variant="contained" color="secondary">
                 SIGN IN
