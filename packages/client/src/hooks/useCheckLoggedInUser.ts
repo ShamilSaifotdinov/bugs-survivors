@@ -1,17 +1,22 @@
 import { useState } from 'react'
 import { getUserInfo } from '../api/basic/auth'
 import { useAsyncEffect } from './useAsyncEffect'
+import { User } from '../api/basic/types'
 
-export function useCheckUserLoggedIn() {
-  const [userLoggedIn, setUserLoggedIn] = useState(true)
+export function useLoggedInUser() {
+  const [loggedInUser, setLoggedInUser] = useState<User | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   useAsyncEffect(async () => {
     try {
-      await getUserInfo()
+      const userInfo = await getUserInfo()
+      setLoggedInUser(userInfo)
     } catch (error) {
-      setUserLoggedIn(false)
+      console.error(error)
+    } finally {
+      setIsLoading(false)
     }
-  })
+  }, [])
 
-  return userLoggedIn
+  return [loggedInUser, isLoading]
 }
