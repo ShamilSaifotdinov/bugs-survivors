@@ -2,10 +2,11 @@ import { useState } from 'react'
 import { getUserInfo } from '../api/basic/auth'
 import { useAsyncEffect } from './useAsyncEffect'
 import { User } from '../api/basic/types'
+import { useNavigate } from 'react-router-dom'
 
 export function useLoggedInUser() {
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const navigate = useNavigate()
 
   useAsyncEffect(async () => {
     try {
@@ -13,10 +14,9 @@ export function useLoggedInUser() {
       setLoggedInUser(userInfo)
     } catch (error) {
       console.error(error)
-    } finally {
-      setIsLoading(false)
+      navigate('/signin/')
     }
   }, [])
 
-  return [loggedInUser, isLoading]
+  return loggedInUser
 }
