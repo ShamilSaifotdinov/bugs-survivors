@@ -5,10 +5,10 @@ import PreviousPageBtn from '../../components/PreviousPageBtn'
 import PasswordChange from './PasswordChange'
 import { getUserInfo } from '../../api/basic/auth'
 import { changeUserProfile } from '../../api/basic/users'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { User } from '../../api/basic/types'
 import { RESOURCES_URL } from '../../api/basic/basicInstance'
-import { useValidation } from '../../helpers/validation'
+import { useValidationForm } from '../../hooks/useValidationForm'
 
 const initialData = {
   first_name: '',
@@ -32,7 +32,13 @@ function ProfilePage() {
     form: profile,
     setForm: setProfile,
     valid,
-  } = useValidation(initialData)
+  } = useValidationForm(initialData)
+  const formIsValid =
+    !valid.first_name.valid.isValid ||
+    !valid.second_name.valid.isValid ||
+    !valid.login.valid.isValid ||
+    !valid.email.valid.isValid ||
+    !valid.phone.valid.isValid
 
   useEffect(() => {
     ;(async function () {
@@ -119,13 +125,7 @@ function ProfilePage() {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    disabled={
-                      !valid.first_name.valid.isValid ||
-                      !valid.second_name.valid.isValid ||
-                      !valid.login.valid.isValid ||
-                      !valid.email.valid.isValid ||
-                      !valid.phone.valid.isValid
-                    }>
+                    disabled={formIsValid}>
                     SAVE CHANGES
                   </Button>
                 </Grid>

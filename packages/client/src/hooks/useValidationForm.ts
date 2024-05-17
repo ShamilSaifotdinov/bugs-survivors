@@ -47,7 +47,7 @@ const useDirty = () => {
 
 const useValid = (bool: boolean, error: string) => {
   const [isValid, setValid] = useState(false)
-  const [errorText, setErrorText] = useState(' ')
+  const [errorText, setErrorText] = useState('')
   useEffect(() => {
     setValid(bool)
     setErrorText(error)
@@ -56,7 +56,7 @@ const useValid = (bool: boolean, error: string) => {
   return { isValid, errorText }
 }
 
-export const useValidation = (
+export const useValidationForm = (
   data: Record<string, unknown> & (Partial<User> | SignInData | SignUpData)
 ) => {
   let valid: Record<string, any> = {}
