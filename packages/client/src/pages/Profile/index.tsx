@@ -95,18 +95,18 @@ function ProfilePage() {
                 <Grid container gap="1rem" justifyContent={'center'}>
                   {Object.keys(fields).map(field => {
                     const key = field as keyof User
+                    const isError =
+                      !valid[key].valid.isValid && valid[key].blur.isDirty
+                    const isHelperText =
+                      !valid[key].valid.isValid && valid[key].blur.isDirty
+                        ? valid[key].valid.errorText
+                        : ' '
                     return (
                       <Box key={key} className={styles.fieldItem}>
                         <Typography>{fields[key]}</Typography>
                         <TextField
-                          error={
-                            !valid[key].valid.isValid && valid[key].blur.isDirty
-                          }
-                          helperText={
-                            !valid[key].valid.isValid && valid[key].blur.isDirty
-                              ? valid[key].valid.errorText
-                              : ' '
-                          }
+                          error={isError}
+                          helperText={isHelperText}
                           onBlur={valid[key].blur.onBlur}
                           sx={{ width: '45%' }}
                           label="First name"
