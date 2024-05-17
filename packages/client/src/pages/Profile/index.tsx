@@ -5,10 +5,8 @@ import PreviousPageBtn from '../../components/PreviousPageBtn'
 import PasswordChange from './PasswordChange'
 import { getUserInfo } from '../../api/basic/auth'
 import { changeUserProfile } from '../../api/basic/users'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { User } from '../../api/basic/types'
-import { RESOURCES_URL } from '../../api/basic/basicInstance'
-import { changeUserAvatar } from '../../api/basic/users'
 
 const initialData = {
   first_name: '',
@@ -66,19 +64,6 @@ function ProfilePage() {
     const response = await changeUserProfile(profile)
     setProfile(response)
   }
-
-  const handleAvatar = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formData = new FormData()
-    if (e.target.files) {
-      formData.append('avatar', e.target.files[0])
-    }
-    try {
-      const response = await changeUserAvatar(formData)
-      setProfile(response)
-    } catch (error) {
-      alert(error)
-    }
-  }
   return (
     <Grid container className={styles.profile}>
       <Grid item xs={12} md={6} xl={4} className={styles.gridItem}>
@@ -87,8 +72,7 @@ function ProfilePage() {
             <PreviousPageBtn className={styles.buttonPrev} />
             <Grid container gap={'3.8rem'} justifyContent={'center'}>
               <AvatarLoad
-                src={`${RESOURCES_URL}${profile.avatar}`}
-                onChange={useCallback(handleAvatar, [])}
+                src={profile.avatar}
                 className={styles.avatar}></AvatarLoad>
               <form
                 className={styles.form}

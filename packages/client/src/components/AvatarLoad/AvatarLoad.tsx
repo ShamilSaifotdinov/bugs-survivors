@@ -1,8 +1,9 @@
 import Button from '@mui/material/Button'
 import { Avatar, styled } from '@mui/material'
-
 import styles from './styles.module.scss'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { changeUserAvatar } from '../../api/basic/users'
+import { RESOURCES_URL } from '../../api/basic/basicInstance'
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -18,11 +19,28 @@ const VisuallyHiddenInput = styled('input')({
 
 type AvatarLoadProps = {
   src?: string
-  className?: any
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  className?: string
 }
 
-function AvatarLoad({ src, className, onChange }: AvatarLoadProps) {
+function AvatarLoad({ src, className }: AvatarLoadProps) {
+  const [avatar, setAvatar] = useState(src)
+
+  const handleAvatar = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formData = new FormData()
+    if (e.target.files) {
+      formData.append('avatar', e.target.files[0])
+    }
+    try {
+      const response = await changeUserAvatar(formData)
+      setAvatar(response.avatar)
+    } catch (error) {
+      alert(error)
+    }
+  }
+  useEffect(() => {
+    setAvatar(src)
+  }, [src])
+
   return (
     <Button
       component="label"
@@ -33,9 +51,17 @@ function AvatarLoad({ src, className, onChange }: AvatarLoadProps) {
         borderRadius: '50%',
       }}
       tabIndex={-10}>
-      <Avatar className={className} src={src}></Avatar>
+      <Avatar
+        className={className}
+        src={
+          avatar ? `${RESOURCES_URL}${avatar}` : 'images/defaultAvatar.png'
+        }></Avatar>
       <div className={styles.layout}>Load avatar</div>
-      <VisuallyHiddenInput onChange={onChange} type="file" />
+      <VisuallyHiddenInput
+        accept="image/*"
+        onChange={handleAvatar}
+        type="file"
+      />
     </Button>
   )
 }
