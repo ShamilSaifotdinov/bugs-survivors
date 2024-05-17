@@ -1,9 +1,19 @@
 import { Box, Button, Grid, TextField, Typography } from '@mui/material'
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useValidationForm } from '../../hooks/useValidationForm'
 import style from './styles.module.scss'
+import { SignUpData } from '../../api/basic/auth'
 
 const BASE_URL = 'https://ya-praktikum.tech/api/v2'
+
+const fields: SignUpData = {
+  first_name: 'First name',
+  second_name: 'Second name',
+  email: 'E-mail',
+  phone: 'Phone',
+  login: 'Login',
+  password: 'Password',
+}
 
 function RegisterPage() {
   const initialData = {
@@ -14,7 +24,18 @@ function RegisterPage() {
     login: '',
     password: '',
   }
-  const [dataForm, setDataForm] = useState(initialData)
+  const {
+    form: dataForm,
+    setForm: setDataForm,
+    valid,
+  } = useValidationForm(initialData)
+  const formIsValid =
+    !valid.first_name.valid.isValid ||
+    !valid.second_name.valid.isValid ||
+    !valid.login.valid.isValid ||
+    !valid.email.valid.isValid ||
+    !valid.phone.valid.isValid ||
+    !valid.password.valid.isValid
   const navigate = useNavigate()
   const handleChange = (event: React.ChangeEvent<HTMLFormElement>) => {
     switch (event.target.name) {
@@ -55,13 +76,12 @@ function RegisterPage() {
       setDataForm(initialData)
       navigate('/signin')
     } catch (error) {
-      console.log(error)
+      alert(error)
     }
   }
-
   return (
     <Grid container className={style.registration}>
-      <Grid item xs={12} md={4} className={style.gridItem}>
+      <Grid item xs={12} md={6} className={style.gridItem}>
         {' '}
         <Grid container justifyContent={'center'}>
           <Grid item xs={6}>
@@ -79,31 +99,25 @@ function RegisterPage() {
               <form onSubmit={handleSubmit} onChange={handleChange}>
                 <Grid container rowGap={'1.5rem'}>
                   <Typography variant="h5">Sign Up</Typography>
-                  <TextField
-                    value={dataForm.first_name}
-                    name="first_name"
-                    label="First name"></TextField>
-
-                  <TextField
-                    value={dataForm.second_name}
-                    name="second_name"
-                    label="Second name"></TextField>
-                  <TextField
-                    value={dataForm.email}
-                    name="email"
-                    label="E-mail"></TextField>
-                  <TextField
-                    value={dataForm.phone}
-                    name="phone"
-                    label="Phone"></TextField>
-                  <TextField
-                    value={dataForm.login}
-                    name="login"
-                    label="Login"></TextField>
-                  <TextField
-                    value={dataForm.password}
-                    name="password"
-                    label="Password"></TextField>
+                  {Object.keys(fields).map(field => {
+                    const key = field as keyof SignUpData
+                    const isError =
+                      !valid[key].valid.isValid && valid[key].blur.isDirty
+                    const isHelperText =
+                      !valid[key].valid.isValid && valid[key].blur.isDirty
+                        ? valid[key].valid.errorText
+                        : ' '
+                    return (
+                      <TextField
+                        key={key}
+                        value={dataForm[field]}
+                        name={field}
+                        label={fields[key]}
+                        error={isError}
+                        helperText={isHelperText}
+                        onBlur={valid[key].blur.onBlur}></TextField>
+                    )
+                  })}
                   <Box className={style.containerButton}>
                     <Button
                       type="button"
@@ -112,7 +126,11 @@ function RegisterPage() {
                       variant="contained">
                       SIGN IN
                     </Button>
-                    <Button variant="contained" type="submit" color="primary">
+                    <Button
+                      variant="contained"
+                      type="submit"
+                      color="primary"
+                      disabled={formIsValid}>
                       SIGN UP
                     </Button>
                   </Box>
