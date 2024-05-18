@@ -1,30 +1,5 @@
 import { Game } from '.'
 import { isPointInsideCircle } from './util'
-
-// interface Player {
-//   width: number
-//   height: number
-//   x: number
-//   y: number
-//   speed: number
-//   vx: number
-//   vy: number
-//   frameSize: number
-//   frameLine: number
-//   frame: number
-//   lastDirectionX: number
-//   lastDirectionY: number
-//   reloadTime: number
-//   damage: number
-//   exp: number
-//   level: number
-//   nextExp: number
-//   expRadius: number
-//   flameThrow: number
-//   hp: number
-//   deadless: number
-// }
-
 class Player {
   game: Game
 
