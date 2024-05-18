@@ -25,6 +25,16 @@ export const inputValidators: Record<string, ValidatorProps> = {
       /^(?=.*[A-Z])(?=.*\d)(?=.*[~!@#$%^&*()\-_=+{};:,<.>])[a-zA-Z\d~!@#$%^&*()\-_=+{};:,<.>]{8,40}$/,
     errorText: '8 to 40 chars: cap letter, spec char and number',
   },
+  newPassword: {
+    regExp:
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[~!@#$%^&*()\-_=+{};:,<.>])[a-zA-Z\d~!@#$%^&*()\-_=+{};:,<.>]{8,40}$/,
+    errorText: '8 to 40 chars: cap letter, spec char and number',
+  },
+  oldPassword: {
+    regExp:
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[~!@#$%^&*()\-_=+{};:,<.>])[a-zA-Z\d~!@#$%^&*()\-_=+{};:,<.>]{8,40}$/,
+    errorText: '8 to 40 chars: cap letter, spec char and number',
+  },
   email: {
     regExp: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
     errorText: 'Enter correct e-mail',
@@ -43,6 +53,7 @@ const useDirty = () => {
   return {
     isDirty,
     onBlur,
+    setDirty,
   }
 }
 
@@ -62,7 +73,6 @@ export const useValidationForm = (
 ) => {
   let valid: Record<string, any> = {}
   const [form, setForm] = useState(data)
-
   for (const key in data) {
     valid = {
       ...valid,
@@ -75,8 +85,9 @@ export const useValidationForm = (
       },
     }
   }
-  const formIsValid = Object.values(valid).every(
-    item => item.valid.isValid === true
-  )
+  const formIsValid = Object.keys(valid)
+    .filter(item => item !== 'avatar')
+    .every(item => valid[item].valid.isValid === true)
+
   return { valid, setForm, form, formIsValid }
 }

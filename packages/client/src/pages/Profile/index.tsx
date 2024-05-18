@@ -32,13 +32,8 @@ function ProfilePage() {
     form: profile,
     setForm: setProfile,
     valid,
+    formIsValid,
   } = useValidationForm(initialData)
-  const formIsValid =
-    !valid.first_name.valid.isValid ||
-    !valid.second_name.valid.isValid ||
-    !valid.login.valid.isValid ||
-    !valid.email.valid.isValid ||
-    !valid.phone.valid.isValid
 
   useEffect(() => {
     ;(async function () {
@@ -52,23 +47,7 @@ function ProfilePage() {
   }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
-    switch (e.target.name) {
-      case 'first_name':
-        setProfile({ ...profile, first_name: e.target?.value })
-        break
-      case 'second_name':
-        setProfile({ ...profile, second_name: e.target?.value })
-        break
-      case 'login':
-        setProfile({ ...profile, login: e.target?.value })
-        break
-      case 'email':
-        setProfile({ ...profile, email: e.target?.value })
-        break
-      case 'phone':
-        setProfile({ ...profile, phone: e.target?.value })
-        break
-    }
+    setProfile({ ...profile, [e.target.name]: e.target?.value })
   }
 
   const handleSubmitData = async (e: React.FormEvent) => {
@@ -109,7 +88,7 @@ function ProfilePage() {
                           helperText={isHelperText}
                           onBlur={valid[key].blur.onBlur}
                           sx={{ width: '45%' }}
-                          label="First name"
+                          label={fields[key]}
                           value={profile[key]}
                           name={field}></TextField>
                       </Box>
@@ -125,7 +104,7 @@ function ProfilePage() {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    disabled={formIsValid}>
+                    disabled={!formIsValid}>
                     SAVE CHANGES
                   </Button>
                 </Grid>
