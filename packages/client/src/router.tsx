@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import Discovery from './pages/Discovery'
 import Leaderboard from './pages/Leaderboard'
 import RegisterPage from './pages/registration/RegisterPage'
+import Login from './pages/Login'
 import Forum from './pages/Forum'
 import MainMenu from './pages/MainMenu'
 import Game from './pages/Game'
@@ -38,7 +39,7 @@ const router = createBrowserRouter(
     },
     {
       path: '/signin',
-      element: <div>Sign in!</div>,
+      element: <Login />,
     },
     {
       path: '/signup',
