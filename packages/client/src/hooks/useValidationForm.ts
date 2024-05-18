@@ -10,27 +10,28 @@ type ValidatorProps = {
 export const inputValidators: Record<string, ValidatorProps> = {
   first_name: {
     regExp: /^([А-ЯЁA-Z][а-яёa-z]+-?[А-ЯЁA-Zа-яёa-z]*)$/,
-    errorText: 'С большой буквы и не короче 2 символов!',
+    errorText: 'Capitalized and no shorter than 2 chars!',
   },
   second_name: {
     regExp: /^([А-ЯЁA-Z][а-яёa-z]+-?[А-ЯЁA-Zа-яёa-z]*)$/,
-    errorText: 'С большой буквы и не короче 2 символов!',
+    errorText: 'Capitalized and no shorter than 2 chars!',
   },
   login: {
     regExp: /^(?=.*[a-zA-Z])[a-zA-Z0-9_-]{3,20}$/,
-    errorText: 'От 3 до 20 символов, без пробелов и спецсимволов!',
+    errorText: '8 to 40 chars, without space and spec chars',
   },
   password: {
-    regExp: /^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,40}$/,
-    errorText: 'От 8 до 40 символом, не забудь про заглавную букву и цифру!',
+    regExp:
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[~!@#$%^&*()\-_=+{};:,<.>])[a-zA-Z\d~!@#$%^&*()\-_=+{};:,<.>]{8,40}$/,
+    errorText: '8 to 40 chars: cap letter, spec char and number',
   },
   email: {
     regExp: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-    errorText: 'Укажи корректную почту',
+    errorText: 'Enter correct e-mail',
   },
   phone: {
     regExp: /^\+?\d{10,15}$/,
-    errorText: 'Номер должен быть от 10 до 15 цифр',
+    errorText: '10 to 15 numbers',
   },
 }
 
@@ -74,5 +75,8 @@ export const useValidationForm = (
       },
     }
   }
-  return { valid, setForm, form }
+  const formIsValid = Object.values(valid).every(
+    item => item.valid.isValid === true
+  )
+  return { valid, setForm, form, formIsValid }
 }

@@ -2,9 +2,7 @@ import { Box, Button, Grid, TextField, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useValidationForm } from '../../hooks/useValidationForm'
 import style from './styles.module.scss'
-import { SignUpData } from '../../api/basic/auth'
-
-const BASE_URL = 'https://ya-praktikum.tech/api/v2'
+import { SignUpData, signUp } from '../../api/basic/auth'
 
 const fields: SignUpData = {
   first_name: 'First name',
@@ -28,51 +26,18 @@ function RegisterPage() {
     form: dataForm,
     setForm: setDataForm,
     valid,
+    formIsValid,
   } = useValidationForm(initialData)
-  const formIsValid =
-    !valid.first_name.valid.isValid ||
-    !valid.second_name.valid.isValid ||
-    !valid.login.valid.isValid ||
-    !valid.email.valid.isValid ||
-    !valid.phone.valid.isValid ||
-    !valid.password.valid.isValid
+
   const navigate = useNavigate()
   const handleChange = (event: React.ChangeEvent<HTMLFormElement>) => {
-    switch (event.target.name) {
-      case 'first_name':
-        setDataForm({ ...dataForm, first_name: event.target.value })
-        break
-      case 'second_name':
-        setDataForm({ ...dataForm, second_name: event.target.value })
-        break
-      case 'email':
-        setDataForm({ ...dataForm, email: event.target.value })
-        break
-      case 'phone':
-        setDataForm({ ...dataForm, phone: event.target.value })
-        break
-      case 'login':
-        setDataForm({ ...dataForm, login: event.target.value })
-        break
-      case 'password':
-        setDataForm({ ...dataForm, password: event.target.value })
-        break
-    }
+    setDataForm({ ...dataForm, [event.target.name]: event.target.value })
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     try {
       e.preventDefault()
-      const response = await fetch(`${BASE_URL}/auth/signup`, {
-        method: 'POST',
-        body: JSON.stringify(dataForm),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      if (!response.ok) {
-        throw new Error(`Network response with status ${response.status}`)
-      }
+      await signUp(dataForm as SignUpData)
       setDataForm(initialData)
       navigate('/signin')
     } catch (error) {
@@ -130,7 +95,7 @@ function RegisterPage() {
                       variant="contained"
                       type="submit"
                       color="primary"
-                      disabled={formIsValid}>
+                      disabled={!formIsValid}>
                       SIGN UP
                     </Button>
                   </Box>
