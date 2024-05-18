@@ -3,11 +3,12 @@ import styles from './styles.module.scss'
 import AvatarLoad from '../../components/AvatarLoad/AvatarLoad'
 import PreviousPageBtn from '../../components/PreviousPageBtn'
 import PasswordChange from './PasswordChange'
-import { getUserInfo } from '../../api/basic/auth'
-import { changeUserProfile } from '../../api/basic/users'
 import { useEffect, useState } from 'react'
 import { User } from '../../api/basic/types'
 import { RESOURCES_URL } from '../../api/basic/basicInstance'
+import { RootState } from '../../store'
+import { useSelector, useDispatch } from 'react-redux'
+import { changeProfile, fetchUser } from '../../store/slices/userSlice'
 
 const initialData = {
   first_name: '',
@@ -27,43 +28,25 @@ const fields: Partial<User> = {
 }
 
 function ProfilePage() {
+  const user = useSelector((state: RootState) => state.user.user)
+  const dispatch = useDispatch<any>()
   const [profile, setProfile] = useState<Partial<User>>(initialData)
 
   useEffect(() => {
-    ;(async function () {
-      try {
-        const data = await getUserInfo()
-        setProfile(data)
-      } catch (error) {
-        alert(error)
-      }
-    })()
+    dispatch(fetchUser())
   }, [])
 
+  useEffect(() => {
+    setProfile(user)
+  }, [user])
+
   const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
-    switch (e.target.name) {
-      case 'first_name':
-        setProfile({ ...profile, first_name: e.target?.value })
-        break
-      case 'second_name':
-        setProfile({ ...profile, second_name: e.target?.value })
-        break
-      case 'login':
-        setProfile({ ...profile, login: e.target?.value })
-        break
-      case 'email':
-        setProfile({ ...profile, email: e.target?.value })
-        break
-      case 'phone':
-        setProfile({ ...profile, phone: e.target?.value })
-        break
-    }
+    setProfile({ ...profile, [e.target.name]: e.target.value })
   }
 
   const handleSubmitData = async (e: React.FormEvent) => {
     e.preventDefault()
-    const response = await changeUserProfile(profile)
-    setProfile(response)
+    dispatch(changeProfile(profile))
   }
 
   return (
@@ -74,7 +57,7 @@ function ProfilePage() {
             <PreviousPageBtn className={styles.buttonPrev} />
             <Grid container gap={'3.8rem'} justifyContent={'center'}>
               <AvatarLoad
-                src={`${RESOURCES_URL}${profile.avatar}`}
+                src={`${RESOURCES_URL}${user.avatar}`}
                 onChange={() => console.log('submit avatar')}
                 className={styles.avatar}></AvatarLoad>
               <form
