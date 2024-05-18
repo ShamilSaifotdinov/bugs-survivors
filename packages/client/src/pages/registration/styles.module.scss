@@ -1,0 +1,39 @@
+.registration {
+  height: 100%;
+  background-image: url('/images/BugsSurvivorsBGt.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  image-rendering: pixelated;
+  justify-content: right;
+}
+
+.gridItem {
+  background-color: #2f464ab2;
+  height: 100vh;
+  align-items: center;
+  display: flex;
+  input {
+    font-family: var(--secondary-font);
+    border-radius: 0.25rem;
+  }
+}
+
+.title {
+  text-align: center;
+  background: linear-gradient(
+    180deg,
+    #ff5c00 50%,
+    #ffffff 67.91%,
+    #4396b5 89.37%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.containerButton {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}

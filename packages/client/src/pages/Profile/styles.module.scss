@@ -1,0 +1,66 @@
+.profile {
+  height: 100%;
+  background-image: url('/images/BugsSurvivorsBGt.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  image-rendering: pixelated;
+  justify-content: right;
+}
+
+.gridItem {
+  background-color: #2f464ab2;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+
+  input {
+    font-family: var(--secondary-font);
+    border-radius: 0.25rem;
+  }
+  .avatar {
+    height: 10rem;
+    width: 10rem;
+    opacity: 90%;
+  }
+}
+
+.buttonClose {
+  font-family: '"Press Start 2P"', 'sans-serif';
+  width: 1rem;
+  height: 1rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid #c1e0df;
+  position: absolute;
+  right: -1.9rem;
+  background-color: white;
+  cursor: pointer;
+}
+
+.containerInputPass {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  position: relative;
+}
+
+.fieldItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 0.6rem;
+}
+
+.buttonPrev {
+  &:before {
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 2rem;
+    position: absolute;
+    top: -4.5rem;
+  }
+}

@@ -7,14 +7,6 @@ import Enemies from './Enemies'
 import Exps from './Exp'
 import Bullets from './Bullets'
 
-// interface GameStage {
-//   pause: boolean
-//   spawnRate: number
-//   minEnemyLevel: number
-//   maxEnemyLevel: number
-//   bossChance: number
-// }
-
 const Timer = {
   seconds: 0,
   minutes: 0,
