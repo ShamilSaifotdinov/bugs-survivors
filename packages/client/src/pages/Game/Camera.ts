@@ -1,10 +1,4 @@
 import { Game } from '.'
-
-// interface Camera {
-//   x: number
-//   y: number
-// }
-
 class Camera {
   x = 0
   y = 0
