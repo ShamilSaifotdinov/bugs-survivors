@@ -2,7 +2,8 @@ import { Button, FormHelperText, TextField, Typography } from '@mui/material'
 import style from './styles.module.scss'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { signIn } from '../../api/basic/auth'
+import { SignInData, signIn } from '../../api/basic/auth'
+import { useValidationForm } from '../../hooks/useValidationForm'
 
 function Login() {
   const navigate = useNavigate()
@@ -11,9 +12,17 @@ function Login() {
     login: '',
     password: '',
   }
-
-  const [dataForm, setDataForm] = useState(initialData)
+  const {
+    form: dataForm,
+    setForm: setDataForm,
+    valid,
+  } = useValidationForm(initialData)
   const [loginError, setLoginError] = useState('')
+  const formIsValid =
+    !valid.login.valid.isValid || !valid.password.valid.isValid
+  const loginErr = !valid.login.valid.isValid && valid.login.blur.isDirty
+  const passwordError =
+    !valid.password.valid.isValid && valid.password.blur.isDirty
 
   const handleChange = (event: React.ChangeEvent<HTMLFormElement>) => {
     switch (event.target.name) {
@@ -30,7 +39,7 @@ function Login() {
     e.preventDefault()
     setLoginError('')
 
-    signIn(dataForm)
+    signIn(dataForm as SignInData)
       .then(() => navigate('/'))
       .catch(error => setLoginError(error.message))
   }
@@ -52,16 +61,28 @@ function Login() {
             onChange={handleChange}
             className={style.form}>
             <Typography variant="h5">Sign In</Typography>
-            <TextField value={dataForm.login} name="login" label="Login" />
+            <TextField
+              value={dataForm.login}
+              name="login"
+              label="Login"
+              error={loginErr}
+              onBlur={valid.login.blur.onBlur}
+            />
             <TextField
               value={dataForm.password}
               type="password"
               name="password"
               label="Password"
+              error={passwordError}
+              onBlur={valid.password.blur.onBlur}
             />
             <FormHelperText children={loginError} error={!!loginError.length} />
             <div className={style.button_container}>
-              <Button type="submit" variant="contained" color="secondary">
+              <Button
+                type="submit"
+                variant="contained"
+                color="secondary"
+                disabled={formIsValid}>
                 SIGN IN
               </Button>
               <Button
