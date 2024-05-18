@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import userReducer from './slices/userSlice'
 
 export type RootState = {
-  user: Record<string, any>
+  [key in string]: any
 }
 
 const store = configureStore({
