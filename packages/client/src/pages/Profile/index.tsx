@@ -63,7 +63,7 @@ function ProfilePage() {
             <PreviousPageBtn className={styles.buttonPrev} />
             <Grid container gap={'3.8rem'} justifyContent={'center'}>
               <AvatarLoad
-                src={profile.avatar}
+                src={profile.avatar as string}
                 className={styles.avatar}></AvatarLoad>
               <form
                 className={styles.form}
