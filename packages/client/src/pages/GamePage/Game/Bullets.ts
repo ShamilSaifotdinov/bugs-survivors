@@ -26,7 +26,7 @@ class Bullets {
     this.game = game
 
     this.sprite = new Image()
-    this.sprite.src = 'src/pages/GamePage/assets/bullet.png'
+    this.sprite.src = '/images/game/bullet.png'
 
     this.sprite.onload = () => {
       this.spriteIsLoaded = true

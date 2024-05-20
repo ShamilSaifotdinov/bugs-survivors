@@ -25,7 +25,7 @@ class Enemies {
     this.game = game
 
     this.sprite = new Image()
-    this.sprite.src = 'src/pages/GamePage/assets/enemy.png'
+    this.sprite.src = '/images/game/enemy.png'
 
     this.sprite.onload = () => {
       this.spriteIsLoaded = true

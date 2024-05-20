@@ -1,22 +1,6 @@
 import { useEffect, useState } from 'react'
 import styles from './style.module.scss'
-
-function generateRandomNumbers(min: number, max: number): number[] {
-  const result: number[] = []
-  const numbers: number[] = []
-
-  for (let i = min; i <= max; i++) {
-    numbers.push(i)
-  }
-
-  for (let i = 0; i < 3; i++) {
-    const randomIndex = Math.floor(Math.random() * numbers.length)
-    result.push(numbers[randomIndex])
-    numbers.splice(randomIndex, 1)
-  }
-
-  return result
-}
+import { generateRandomNumbers } from '../../util'
 
 interface CardDescription {
   id: number

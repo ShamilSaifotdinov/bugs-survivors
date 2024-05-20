@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import Camera from './Camera'
 import TextParticles from './TextParticles'
 import Player from './Player'
@@ -30,6 +29,8 @@ class Game {
   Exp: Exps
   Bullets: Bullets
 
+  destroyers: Array<() => void> = []
+
   constructor(
     public setShowCards: React.Dispatch<React.SetStateAction<boolean>>,
     public gameOver: () => void
@@ -43,134 +44,131 @@ class Game {
   }
 
   init() {
-    this.initAnimate()
+    Promise.all(
+      [this.Player, this.Enemies, this.Bullets, this.Exp].map(
+        component =>
+          new Promise(resolve => {
+            component.spriteIsLoaded = true
+            component.sprite.onload = resolve
+          })
+      )
+    ).then(() => {
+      const destroyAnimate = this.initAnimate()
 
-    this.initLinter()
-
-    this.initTimer()
+      if (destroyAnimate !== undefined) {
+        this.destroyers.push(
+          destroyAnimate,
+          this.initLinter(),
+          this.initTimer()
+        )
+      }
+    })
   }
 
-  initAnimate = () => {
-    useEffect(() => {
-      const canvas = this.CanvasRef?.current
-      if (!canvas) return
+  initAnimate() {
+    const canvas = this.CanvasRef?.current
+    if (!canvas) return
 
-      const ctx = canvas.getContext('2d')
-      if (!ctx) return
-      ctx.imageSmoothingEnabled = false
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+    ctx.imageSmoothingEnabled = false
 
-      let animationFrameId: number
-      let lastFrameTime = performance.now()
-      const fpsInterval = 1000 / 60
+    let animationFrameId: number
+    let lastFrameTime = performance.now()
+    const fpsInterval = 1000 / 60
 
-      const animate = (timestamp: number) => {
-        animationFrameId = requestAnimationFrame(animate)
-
-        const elapsed = timestamp - lastFrameTime
-
-        if (elapsed > fpsInterval) {
-          lastFrameTime = timestamp - (elapsed % fpsInterval)
-          console.log(this.pause)
-
-          if (!this.pause) {
-            this.clearCanvas(ctx, canvas)
-            this.Bullets.renderBullet(ctx)
-            this.Bullets.createBullet()
-            this.Enemies.renderEnemies(ctx)
-            this.Exp.renderExp(ctx)
-            this.Camera.cameraMovement()
-            this.Player.renderPlayer(ctx)
-            this.TextParticles.renderTextParticles(ctx)
-            this.Enemies.createEnemy()
-            this.drawTimer(ctx)
-
-            this.GameTick++
-          }
-        }
-      }
-
+    const animate = (timestamp: number) => {
       animationFrameId = requestAnimationFrame(animate)
 
-      return () => cancelAnimationFrame(animationFrameId)
-    }, [
-      this.CanvasRef,
-      this.Player.spriteIsLoaded,
-      this.Enemies.spriteIsLoaded,
-      this.Bullets.spriteIsLoaded,
-      this.Exp.spriteIsLoaded,
-    ])
+      const elapsed = timestamp - lastFrameTime
+
+      if (elapsed > fpsInterval) {
+        lastFrameTime = timestamp - (elapsed % fpsInterval)
+
+        if (!this.pause) {
+          this.clearCanvas(ctx, canvas)
+          this.render(ctx)
+        }
+      }
+    }
+
+    animationFrameId = requestAnimationFrame(animate)
+
+    return () => cancelAnimationFrame(animationFrameId)
   }
 
   initLinter() {
     // Создание листнера для отслеживания нажатых клавиш
-    useEffect(() => {
-      const pressedKeys: Record<string, boolean> = {}
+    const pressedKeys: Record<string, boolean> = {}
 
-      const handleKeyDown = (event: KeyboardEvent) => {
-        pressedKeys[event.code] = true
-        updatePlayerVelocity()
-      }
+    const handleKeyDown = (event: KeyboardEvent) => {
+      pressedKeys[event.code] = true
+      updatePlayerVelocity()
+    }
 
-      const handleKeyUp = (event: KeyboardEvent) => {
-        pressedKeys[event.code] = false
-        updatePlayerVelocity()
-      }
+    const handleKeyUp = (event: KeyboardEvent) => {
+      pressedKeys[event.code] = false
+      updatePlayerVelocity()
+    }
 
-      const updatePlayerVelocity = () => {
-        this.Player.vx =
-          (pressedKeys['KeyD'] ? this.Player.speed : 0) -
-          (pressedKeys['KeyA'] ? this.Player.speed : 0)
-        this.Player.vy =
-          (pressedKeys['KeyS'] ? this.Player.speed : 0) -
-          (pressedKeys['KeyW'] ? this.Player.speed : 0)
-      }
+    const updatePlayerVelocity = () => {
+      this.Player.vx =
+        (pressedKeys['KeyD'] ? this.Player.speed : 0) -
+        (pressedKeys['KeyA'] ? this.Player.speed : 0)
+      this.Player.vy =
+        (pressedKeys['KeyS'] ? this.Player.speed : 0) -
+        (pressedKeys['KeyW'] ? this.Player.speed : 0)
+    }
 
-      document.addEventListener('keydown', handleKeyDown)
-      document.addEventListener('keyup', handleKeyUp)
+    document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener('keyup', handleKeyUp)
 
-      return () => {
-        document.removeEventListener('keydown', handleKeyDown)
-        document.removeEventListener('keyup', handleKeyUp)
-      }
-    }, [
-      this.CanvasRef,
-      this.Player.spriteIsLoaded,
-      this.Enemies.spriteIsLoaded,
-      this.Bullets.spriteIsLoaded,
-      this.Exp.spriteIsLoaded,
-    ])
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener('keyup', handleKeyUp)
+    }
   }
 
   initTimer() {
     //таймер
-    useEffect(() => {
-      const intervalId = setInterval(() => {
-        if (!this.pause) {
-          Timer.seconds++
-          if (this.bossChance > 10) {
-            this.bossChance -= 2
-          }
-          if (Timer.seconds == 60) {
-            Timer.minutes++
-            Timer.seconds = 0
-            if (this.maxEnemyLevel < 4) {
-              if (Timer.minutes % 2 == 0) {
-                this.maxEnemyLevel += 1
-              }
-            }
-
-            this.spawnRate = Math.floor(this.spawnRate / 1.2) + 1
-          }
+    const intervalId = setInterval(() => {
+      if (!this.pause) {
+        Timer.seconds++
+        if (this.bossChance > 10) {
+          this.bossChance -= 2
         }
-      }, 1000)
-      return () => clearInterval(intervalId)
-    }, [
-      this.CanvasRef,
-      this.Player.spriteIsLoaded,
-      this.Enemies.spriteIsLoaded,
-      this.Bullets.spriteIsLoaded,
-      this.Exp.spriteIsLoaded,
-    ])
+        if (Timer.seconds == 60) {
+          Timer.minutes++
+          Timer.seconds = 0
+          if (this.maxEnemyLevel < 4) {
+            if (Timer.minutes % 2 == 0) {
+              this.maxEnemyLevel += 1
+            }
+          }
+
+          this.spawnRate = Math.floor(this.spawnRate / 1.2) + 1
+        }
+      }
+    }, 1000)
+    return () => clearInterval(intervalId)
+  }
+
+  render(ctx: CanvasRenderingContext2D) {
+    this.Bullets.renderBullet(ctx)
+    this.Bullets.createBullet()
+    this.Enemies.renderEnemies(ctx)
+    this.Exp.renderExp(ctx)
+    this.Camera.cameraMovement()
+    this.Player.renderPlayer(ctx)
+    this.TextParticles.renderTextParticles(ctx)
+    this.Enemies.createEnemy()
+    this.drawTimer(ctx)
+
+    this.GameTick++
+  }
+
+  destroy() {
+    this.destroyers.forEach(func => func())
   }
 
   clearCanvas(ctx: CanvasRenderingContext2D, cnv: HTMLCanvasElement) {
@@ -181,7 +179,6 @@ class Game {
     this.pause = false
     this.setShowCards(false)
     this.Player.upgrade(id)
-    console.log(this.pause)
   }
 
   drawTimer(ctx: CanvasRenderingContext2D) {

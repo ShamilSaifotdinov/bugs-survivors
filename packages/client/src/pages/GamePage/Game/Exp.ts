@@ -26,7 +26,7 @@ class Exps {
     this.game = game
 
     this.sprite = new Image()
-    this.sprite.src = 'src/pages/GamePage/assets/exp.png'
+    this.sprite.src = '/images/game/exp.png'
 
     this.sprite.onload = () => {
       this.spriteIsLoaded = true

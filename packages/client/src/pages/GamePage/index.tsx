@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Cards from './Game/Cards'
 import styles from './styles.module.scss'
 import Game from './Game'
@@ -14,15 +14,20 @@ function GamePage() {
 
   const game = new Game(setShowCards, gameOver)
   game.CanvasRef = useRef<HTMLCanvasElement>(null)
-  game.init()
 
-  function upgrade(id: number) {
-    game.handleUpgrade(id)
-  }
+  useEffect(() => {
+    if (game.CanvasRef?.current) {
+      game.init()
+    }
+
+    return () => game.destroy()
+  }, [game.CanvasRef])
+
+  const handleUpgrade = useCallback((id: number) => game.handleUpgrade(id), [])
 
   return (
     <div className={styles.canvas_container}>
-      {showCards && <Cards upgradePick={upgrade} />}
+      {showCards && <Cards upgradePick={handleUpgrade} />}
       <canvas
         ref={game.CanvasRef}
         width={game.CanvasWidth}

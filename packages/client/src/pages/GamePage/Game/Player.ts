@@ -33,7 +33,7 @@ class Player {
     this.game = game
 
     this.sprite = new Image()
-    this.sprite.src = 'src/pages/GamePage/assets/player.png'
+    this.sprite.src = '/images/game/player.png'
 
     this.sprite.onload = () => {
       this.spriteIsLoaded = true
