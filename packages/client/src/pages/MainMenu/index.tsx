@@ -19,7 +19,7 @@ const MainMenu = () => (
       BUGS SURVIVORS
     </Typography>
     <div className={styles['main-menu_buttons']}>
-      <Button href="#" variant="contained">
+      <Button href="/game" variant="contained">
         Start Game
       </Button>
       <Button href="/profile" variant="contained" color="secondary">

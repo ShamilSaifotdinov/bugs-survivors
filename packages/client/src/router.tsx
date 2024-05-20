@@ -11,6 +11,7 @@ import ErrorPage404 from './pages/ErrorPage404'
 import ErrorPage from './pages/Error'
 import ErrorPage500 from './pages/Error500'
 import GameOver from './pages/GameOver'
+import GamePage from './pages/GamePage'
 
 const errorBoundary = <ErrorPage title="Something went wrong :( Try later." />
 
@@ -63,6 +64,10 @@ const router = createBrowserRouter(
           ],
         },
       ],
+    },
+    {
+      path: '/game',
+      element: <GamePage />,
     },
     {
       path: '/gameOver',

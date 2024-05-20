@@ -76,7 +76,8 @@ const GameOver = () => {
         }}
         type="submit"
         variant="contained"
-        color="primary">
+        color="primary"
+        href="/game">
         Restart
       </Button>
       <Button type="submit" variant="contained" color="secondary">

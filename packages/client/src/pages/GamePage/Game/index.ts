@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
-import styles from './styles.module.scss'
+import { useEffect } from 'react'
 import Camera from './Camera'
 import TextParticles from './TextParticles'
 import Player from './Player'
@@ -12,7 +11,7 @@ const Timer = {
   minutes: 0,
 }
 
-export class Game {
+class Game {
   CanvasRef?: React.RefObject<HTMLCanvasElement>
   CanvasWidth = window.innerWidth
   CanvasHeight = window.innerHeight
@@ -30,16 +29,17 @@ export class Game {
   Enemies: Enemies
   Exp: Exps
   Bullets: Bullets
-  setShowCards: React.Dispatch<React.SetStateAction<boolean>>
 
-  constructor(setShowCards: React.Dispatch<React.SetStateAction<boolean>>) {
+  constructor(
+    public setShowCards: React.Dispatch<React.SetStateAction<boolean>>,
+    public gameOver: () => void
+  ) {
     this.Camera = new Camera(this)
     this.TextParticles = new TextParticles(this)
     this.Player = new Player(this)
     this.Enemies = new Enemies(this)
     this.Exp = new Exps(this)
     this.Bullets = new Bullets(this)
-    this.setShowCards = setShowCards
   }
 
   init() {
@@ -50,7 +50,7 @@ export class Game {
     this.initTimer()
   }
 
-  initAnimate() {
+  initAnimate = () => {
     useEffect(() => {
       const canvas = this.CanvasRef?.current
       if (!canvas) return
@@ -201,24 +201,4 @@ export class Game {
   }
 }
 
-function layout() {
-  const [showCards, setShowCards] = useState(false)
-  const game = new Game(setShowCards)
-  game.CanvasRef = useRef<HTMLCanvasElement>(null)
-  game.init()
-
-  function upgrade(id: number) {
-    game.handleUpgrade(id)
-  }
-
-  return (
-    <div className={styles.canvas_container}>
-      <canvas
-        ref={game.CanvasRef}
-        width={game.CanvasWidth}
-        height={game.CanvasHeight}></canvas>
-    </div>
-  )
-}
-
-export default layout
+export default Game

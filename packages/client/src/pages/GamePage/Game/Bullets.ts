@@ -1,5 +1,5 @@
-import { Game } from '.'
-import { rand } from './util'
+import Game from '.'
+import { rand } from '../util'
 
 interface Bullet {
   width: number
@@ -26,7 +26,7 @@ class Bullets {
     this.game = game
 
     this.sprite = new Image()
-    this.sprite.src = 'src/pages/Game/assets/bullet.png'
+    this.sprite.src = 'src/pages/GamePage/assets/bullet.png'
 
     this.sprite.onload = () => {
       this.spriteIsLoaded = true

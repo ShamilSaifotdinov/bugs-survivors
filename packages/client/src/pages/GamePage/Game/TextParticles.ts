@@ -1,4 +1,4 @@
-import { Game } from '.'
+import Game from '.'
 
 interface TextParticle {
   text: string
