@@ -47,8 +47,12 @@ class Player {
         this.deadless--
       }
 
-      ctx.fillStyle = 'pink'
-      ctx.fillRect(
+      ctx.drawImage(
+        this.sprite,
+        this.frame,
+        this.frameLine,
+        this.frameSize,
+        this.frameSize,
         Math.floor(this.x + this.game.Camera.x),
         Math.floor(this.y + this.game.Camera.y),
         this.width,
