@@ -1,5 +1,5 @@
 import Game from '.'
-import { isPointInsideCircle } from '../util'
+import { isPointInsideCircle } from '../utils'
 
 class Player {
   game: Game
@@ -148,6 +148,7 @@ class Player {
         this.exp = 0
         this.level++
         this.nextExp += (this.level + 1) / 2
+        this.game.canvas?.pause()
         this.game.pause = true
       }
     }

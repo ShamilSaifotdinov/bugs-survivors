@@ -1,5 +1,5 @@
 import Game from '.'
-import { isPointInsideCircle, rand } from '../util'
+import { isPointInsideCircle, rand } from '../utils'
 
 interface Exp {
   width: number

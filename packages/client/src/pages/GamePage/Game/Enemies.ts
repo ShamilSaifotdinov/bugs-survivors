@@ -1,5 +1,5 @@
 import Game from '.'
-import { rand } from '../util'
+import { rand } from '../utils'
 
 interface Enemy {
   width: number

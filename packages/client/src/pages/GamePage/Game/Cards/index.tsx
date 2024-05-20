@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import styles from './style.module.scss'
-import { generateRandomNumbers } from '../../util'
+import { generateRandomNumbers } from '../../utils'
 
 interface CardDescription {
   id: number

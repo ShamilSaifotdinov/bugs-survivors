@@ -4,17 +4,18 @@ import Player from './Player'
 import Enemies from './Enemies'
 import Exps from './Exp'
 import Bullets from './Bullets'
+import CanvasController from '../../../components/Canvas/controller'
+import { IGame } from '../../../components/Canvas/interfaces'
 
-const Timer = {
-  seconds: 0,
-  minutes: 0,
-}
-
-class Game {
-  CanvasRef?: React.RefObject<HTMLCanvasElement>
+class Game implements IGame {
+  canvas?: CanvasController
   CanvasWidth = window.innerWidth
   CanvasHeight = window.innerHeight
   GameTick = 0
+  Timer = {
+    seconds: 0,
+    minutes: 0,
+  }
 
   pause = false
   spawnRate = 100
@@ -66,35 +67,11 @@ class Game {
   }
 
   initAnimate() {
-    const canvas = this.CanvasRef?.current
-    if (!canvas) return
-
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-    ctx.imageSmoothingEnabled = false
-
-    let animationFrameId: number
-    let lastFrameTime = performance.now()
-    const fpsInterval = 1000 / 60
-
-    const animate = (timestamp: number) => {
-      animationFrameId = requestAnimationFrame(animate)
-
-      const elapsed = timestamp - lastFrameTime
-
-      if (elapsed > fpsInterval) {
-        lastFrameTime = timestamp - (elapsed % fpsInterval)
-
-        if (!this.pause) {
-          this.clearCanvas(ctx, canvas)
-          this.render(ctx)
-        }
-      }
+    if (this.canvas) {
+      this.canvas.canvas.width = this.CanvasWidth
+      this.canvas.canvas.height = this.CanvasHeight
+      return this.canvas.animate()
     }
-
-    animationFrameId = requestAnimationFrame(animate)
-
-    return () => cancelAnimationFrame(animationFrameId)
   }
 
   initLinter() {
@@ -133,15 +110,15 @@ class Game {
     //таймер
     const intervalId = setInterval(() => {
       if (!this.pause) {
-        Timer.seconds++
+        this.Timer.seconds++
         if (this.bossChance > 10) {
           this.bossChance -= 2
         }
-        if (Timer.seconds == 60) {
-          Timer.minutes++
-          Timer.seconds = 0
+        if (this.Timer.seconds == 60) {
+          this.Timer.minutes++
+          this.Timer.seconds = 0
           if (this.maxEnemyLevel < 4) {
-            if (Timer.minutes % 2 == 0) {
+            if (this.Timer.minutes % 2 == 0) {
               this.maxEnemyLevel += 1
             }
           }
@@ -171,19 +148,18 @@ class Game {
     this.destroyers.forEach(func => func())
   }
 
-  clearCanvas(ctx: CanvasRenderingContext2D, cnv: HTMLCanvasElement) {
-    ctx.clearRect(0, 0, cnv.width, cnv.height)
-  }
-
   handleUpgrade(id: number) {
     this.pause = false
+    this.canvas?.resume()
     this.setShowCards(false)
     this.Player.upgrade(id)
   }
 
   drawTimer(ctx: CanvasRenderingContext2D) {
-    const minutes = Timer.minutes < 10 ? '0' + Timer.minutes : Timer.minutes
-    const seconds = Timer.seconds < 10 ? '0' + Timer.seconds : Timer.seconds
+    const minutes =
+      this.Timer.minutes < 10 ? '0' + this.Timer.minutes : this.Timer.minutes
+    const seconds =
+      this.Timer.seconds < 10 ? '0' + this.Timer.seconds : this.Timer.seconds
     ctx.save()
     ctx.strokeStyle = 'white'
     ctx.fillStyle = '#242424'
