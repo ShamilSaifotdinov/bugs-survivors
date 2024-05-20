@@ -63,27 +63,89 @@ test('allows the user to fill out the form', () => {
 })
 
 describe('Validation checks', () => {
-  test.skip('displays error when fields are empty and submit button is clicked', () => {
-    fireEvent.click(screen.getByRole('button', { name: /SIGN IN/i }))
-
-    expect(screen.getByText(/all fields are required/i)).toBeInTheDocument()
-  })
-
-  test.skip('submits the form when all fields are filled out', () => {
-    fireEvent.change(screen.getByLabelText(/username/i), {
-      target: { value: 'john_doe' },
+  test('Check successful submit form', () => {
+    fireEvent.change(screen.getByLabelText(/First name/i), {
+      target: { value: 'Jason' },
     })
-    fireEvent.change(screen.getByLabelText(/Password/i), {
-      target: { value: 'password123' },
+    fireEvent.change(screen.getByLabelText(/Second name/i), {
+      target: { value: 'Statham' },
     })
     fireEvent.change(screen.getByLabelText(/E-mail/i), {
       target: { value: 'john@example.com' },
     })
-
-    fireEvent.click(screen.getByRole('button', { name: /SIGN IN/i }))
+    fireEvent.change(screen.getByLabelText(/Phone/i), {
+      target: { value: '+74834343435' },
+    })
+    fireEvent.change(screen.getByLabelText(/Login/i), {
+      target: { value: 'john' },
+    })
+    fireEvent.change(screen.getByLabelText(/Password/i), {
+      target: { value: 'password123' },
+    })
 
     expect(
-      screen.queryByText(/all fields are required/i)
+      screen.getByLabelText(/Capitalized and no shorter than 2 chars!/i)
     ).not.toBeInTheDocument()
+    expect(
+      screen.getByLabelText(/8 to 40 chars, without space and spec chars/i)
+    ).not.toBeInTheDocument()
+    expect(
+      screen.getByLabelText(/8 to 40 chars: cap letter, spec char and number/i)
+    ).not.toBeInTheDocument()
+    expect(
+      screen.getByLabelText(/Enter correct e-mail/i)
+    ).not.toBeInTheDocument()
+    expect(screen.getByLabelText(/10 to 15 numbers/i)).not.toBeInTheDocument()
+  })
+
+  test('Check First Name error message', () => {
+    fireEvent.change(screen.getByLabelText(/First name/i), {
+      target: { value: 'j' },
+    })
+
+    expect(
+      screen.getByLabelText(/Capitalized and no shorter than 2 chars!/i)
+    ).toBeInTheDocument()
+  })
+  test('Check Second Name error message', () => {
+    fireEvent.change(screen.getByLabelText(/Second name/i), {
+      target: { value: 's' },
+    })
+
+    expect(
+      screen.getByLabelText(/Capitalized and no shorter than 2 chars!/i)
+    ).toBeInTheDocument()
+  })
+  test('Check E-mail error message', () => {
+    fireEvent.change(screen.getByLabelText(/E-mail/i), {
+      target: { value: 'john.com' },
+    })
+
+    expect(screen.getByLabelText(/Enter correct e-mail/i)).toBeInTheDocument()
+  })
+  test('Check Phone error message', () => {
+    fireEvent.change(screen.getByLabelText(/Phone/i), {
+      target: { value: '74834343435' },
+    })
+
+    expect(screen.getByLabelText(/10 to 15 numbers/i)).toBeInTheDocument()
+  })
+  test('Check Login error message', () => {
+    fireEvent.change(screen.getByLabelText(/Login/i), {
+      target: { value: 'jj' },
+    })
+
+    expect(
+      screen.getByLabelText(/8 to 40 chars, without space and spec chars/i)
+    ).toBeInTheDocument()
+  })
+  test('Check Password error message', () => {
+    fireEvent.change(screen.getByLabelText(/Password/i), {
+      target: { value: 'password123' },
+    })
+
+    expect(
+      screen.getByLabelText(/8 to 40 chars: cap letter, spec char and number/i)
+    ).toBeInTheDocument()
   })
 })
