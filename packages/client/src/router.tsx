@@ -6,6 +6,7 @@ import RegisterPage from './pages/registration/RegisterPage'
 import Login from './pages/Login'
 import Forum from './pages/Forum'
 import MainMenu from './pages/MainMenu'
+import Game from './pages/Game'
 import ProfilePage from './pages/Profile'
 import ErrorPage404 from './pages/ErrorPage404'
 import ErrorPage from './pages/Error'
@@ -27,6 +28,10 @@ const router = createBrowserRouter(
     {
       path: '/',
       element: <Discovery />,
+    },
+    {
+      path: '/game',
+      element: <Game />,
     },
     {
       path: '/main_menu',

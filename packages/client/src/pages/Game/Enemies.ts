@@ -17,6 +17,7 @@ interface Enemy {
 class Enemies {
   game: Game
   state: Enemy[] = []
+  diedEnemies = 0
 
   sprite: HTMLImageElement
   spriteIsLoaded = false
@@ -81,6 +82,8 @@ class Enemies {
             this.state[i].level * this.state[i].level
           )
           this.state.splice(i, 1)
+
+          this.diedEnemies += 1
         }
       }
     }
