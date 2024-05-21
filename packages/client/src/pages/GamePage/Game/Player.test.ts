@@ -1,8 +1,8 @@
-import Player from '../../Player'
-import { isPointInsideCircle } from '../../util'
-import { Game } from '../../'
+import Player from './Player'
+import { isPointInsideCircle } from '../utils'
+import Game from './'
 
-jest.mock('../../util', () => ({
+jest.mock('../utils', () => ({
   isPointInsideCircle: jest.fn(),
 }))
 

@@ -1,5 +1,5 @@
-import Bullets from '../../Bullets'
-import { Game } from '../../'
+import Bullets from './Bullets'
+import Game from './'
 
 // Мокаем CanvasRenderingContext2D
 import 'jest-canvas-mock'

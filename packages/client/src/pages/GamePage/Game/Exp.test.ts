@@ -1,5 +1,5 @@
-import Exps from '../../Exp'
-import { Game } from '../../'
+import Exps from './Exp'
+import Game from './'
 
 describe('Exps', () => {
   let mockGame: Game

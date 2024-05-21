@@ -1,5 +1,5 @@
-import Camera from '../../Camera'
-import { Game } from '../../'
+import Camera from './Camera'
+import Game from './'
 
 describe('Camera', () => {
   let camera: Camera

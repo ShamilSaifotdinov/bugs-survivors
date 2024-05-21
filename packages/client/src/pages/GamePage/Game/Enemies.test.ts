@@ -1,5 +1,5 @@
-import Enemies from '../../Enemies'
-import { Game } from '../../'
+import Enemies from './Enemies'
+import Game from './'
 
 describe('Enemies', () => {
   let mockGame: Game
