@@ -142,11 +142,6 @@ class Player {
         }
       }
 
-      if (this.hp <= 0) {
-        alert('YOU DEAD!!!')
-        this.hp = 3
-      }
-
       if (this.exp >= this.nextExp) {
         this.game.setShowCards(true)
         this.exp = 0

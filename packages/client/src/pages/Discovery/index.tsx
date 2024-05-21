@@ -19,18 +19,20 @@ const Discovery = () => {
             color="text.secondary">
             By StathamGames
           </Typography>
-          <Button variant="contained">Play game</Button>
+          <Button variant="contained" href="/game">
+            Play game
+          </Button>
           <ul className={styles.links}>
             <li>
-              <Link color="secondary" href={`/forum`}>
+              <Link color="secondary" href="/forum">
                 Forum
               </Link>
             </li>
             <li>
-              <Link href={`/leaderboard`}>Leaderboard</Link>
+              <Link href="/leaderboard">Leaderboard</Link>
             </li>
             <li>
-              <Link href={`/profile`}>Profile</Link>
+              <Link href="/profile">Profile</Link>
             </li>
           </ul>
         </div>

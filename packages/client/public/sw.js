@@ -4,7 +4,7 @@ const manifest = self.__WB_MANIFEST
 
 const cacheEntries = []
 
-manifest.forEach(
+manifest?.forEach(
   (entry) => {
     const url = new URL(entry.url, self.location)
     cacheEntries.push(new Request(url.href))
