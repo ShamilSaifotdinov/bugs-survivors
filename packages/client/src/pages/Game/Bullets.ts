@@ -107,37 +107,37 @@ class Bullets {
 
   createBullet() {
     if (this.game.GameTick % this.game.Player.reloadTime == 0) {
-      this.state.push({
-        width: 70,
-        height: 70,
-        x: this.game.Player.x,
-        y: this.game.Player.y,
-        vx: this.game.Player.lastDirectionX,
-        vy: this.game.Player.lastDirectionY,
-        damage: this.game.Player.damage,
-        speed: 5 + this.game.Player.speed,
-        frameSize: 16,
-        frameLine: 0,
-        frame: 0,
-      })
-    }
+      if (this.game.Player.flameThrow <= 0) {
+        this.state.push({
+          width: 70,
+          height: 70,
+          x: this.game.Player.x,
+          y: this.game.Player.y,
+          vx: this.game.Player.lastDirectionX,
+          vy: this.game.Player.lastDirectionY,
+          damage: this.game.Player.damage,
+          speed: 5 + this.game.Player.speed,
+          frameSize: 16,
+          frameLine: 0,
+          frame: 0,
+        })
+      } else {
+        this.state.push({
+          width: 85,
+          height: 85,
+          x: this.game.Player.x,
+          y: this.game.Player.y,
+          vx: this.game.Player.lastDirectionX,
+          vy: this.game.Player.lastDirectionY,
+          damage: 6,
+          speed: 8 + this.game.Player.speed,
+          frameSize: 16,
+          frameLine: 0,
+          frame: 0,
+        })
 
-    if (this.game.Player.flameThrow > 0) {
-      this.state.push({
-        width: 85,
-        height: 85,
-        x: this.game.Player.x,
-        y: this.game.Player.y,
-        vx: this.game.Player.lastDirectionX,
-        vy: this.game.Player.lastDirectionY,
-        damage: 6,
-        speed: 8 + this.game.Player.speed,
-        frameSize: 16,
-        frameLine: 0,
-        frame: 0,
-      })
-
-      this.game.Player.flameThrow--
+        this.game.Player.flameThrow--
+      }
     }
   }
 }
