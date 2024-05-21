@@ -1,6 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
 
-import Discovery from './pages/Discovery'
 import Leaderboard from './pages/Leaderboard'
 import RegisterPage from './pages/registration/RegisterPage'
 import Login from './pages/Login'
@@ -26,15 +25,11 @@ const router = createBrowserRouter(
       element: <ErrorPage404 />,
     },
     {
-      path: '/',
-      element: <Discovery />,
-    },
-    {
       path: '/main_menu',
       element: <MainMenu />,
     },
     {
-      path: '/signin',
+      path: '/',
       element: <Login />,
     },
     {

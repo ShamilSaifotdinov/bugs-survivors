@@ -40,7 +40,7 @@ function Login() {
     setLoginError('')
 
     signIn(dataForm as SignInData)
-      .then(() => navigate('/'))
+      .then(() => navigate('/main_menu'))
       .catch(error => setLoginError(error.message))
   }
 
@@ -93,6 +93,9 @@ function Login() {
               </Button>
             </div>
           </form>
+          <Button href="/game" variant="contained" color="primary">
+            Demo
+          </Button>
         </div>
       </div>
     </section>

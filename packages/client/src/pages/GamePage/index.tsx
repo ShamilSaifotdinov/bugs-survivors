@@ -4,6 +4,7 @@ import styles from './styles.module.scss'
 import Game from './Game'
 import { useNavigate } from 'react-router-dom'
 import Canvas from '../../components/Canvas'
+import { Button } from '@mui/material'
 
 function GamePage() {
   const [showCards, setShowCards] = useState(false)
@@ -23,6 +24,13 @@ function GamePage() {
     <div className={styles.canvas_container}>
       {showCards && <Cards upgradePick={handleUpgrade} />}
       {game && <Canvas game={game} />}
+      <Button
+        className={styles.game_exit}
+        href="/main_menu"
+        variant="contained"
+        color="primary">
+        Exit
+      </Button>
     </div>
   )
 }
