@@ -19,8 +19,8 @@ class Player {
   frame = 0
   lastDirectionX = 0
   lastDirectionY = 1
-  reloadTime = 30
-  damage = 5 //max damage 11
+  reloadTime = 65
+  damage = 1 //max damage 11
   level = 0
   exp = 0
   nextExp = 2

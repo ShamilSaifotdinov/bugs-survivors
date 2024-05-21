@@ -4,7 +4,8 @@ export class SoundPlayer {
   private gainNode: GainNode
 
   constructor() {
-    this.audioContext = new AudioContext()
+    this.audioContext = new (AudioContext ||
+      (window as any).webkitAudioContext)()
     this.oscillator = null
     this.gainNode = this.audioContext.createGain()
     this.gainNode.connect(this.audioContext.destination)
