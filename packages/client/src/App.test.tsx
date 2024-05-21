@@ -1,8 +1,6 @@
 import App from './App'
 import { render, screen } from '@testing-library/react'
 
-const titleText = 'Bugs Survivors'
-
 // @ts-ignore
 global.fetch = jest.fn(() =>
   Promise.resolve({ json: () => Promise.resolve('hey') })
@@ -10,5 +8,5 @@ global.fetch = jest.fn(() =>
 
 test('Example test', async () => {
   render(<App />)
-  expect(screen.getByText(titleText)).toBeDefined()
+  expect(screen.getByText('Sign In')).toBeDefined()
 })
