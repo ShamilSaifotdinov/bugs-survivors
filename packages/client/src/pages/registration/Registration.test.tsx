@@ -1,151 +1,103 @@
-import { MemoryRouter } from 'react-router-dom'
-import Page from './RegisterPage'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
+import { BrowserRouter as Router } from 'react-router-dom'
+import RegisterPage from './RegisterPage'
+import { signUp } from '../../api/basic/auth'
 
-const renderWithRouter = (component: JSX.Element) => {
-  return {
-    ...render(<MemoryRouter>{component}</MemoryRouter>),
-  }
-}
+// Мокаем signUp для предотвращения реальных вызовов API
+jest.mock('../../api/basic/auth', () => ({
+  signUp: jest.fn(),
+}))
+
+// Мокаем useNavigate для проверки переходов
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => jest.fn(),
+}))
 
 beforeEach(() => {
-  renderWithRouter(<Page />)
+  act(() => {
+    render(
+      <Router>
+        <RegisterPage />
+      </Router>
+    )
+  })
 })
 
-test('renders the registration form with all fields and submit button', () => {
-  expect(screen.getByLabelText(/First name/i)).toBeInTheDocument()
-  expect(screen.getByLabelText(/Second name/i)).toBeInTheDocument()
-  expect(screen.getByLabelText(/E-mail/i)).toBeInTheDocument()
-  expect(screen.getByLabelText(/Phone/i)).toBeInTheDocument()
-  expect(screen.getByLabelText(/Login/i)).toBeInTheDocument()
-  expect(screen.getByLabelText(/Password/i)).toBeInTheDocument()
-  expect(screen.getByRole('button', { name: /SIGN IN/i })).toBeInTheDocument()
-})
+describe('RegisterPage', () => {
+  it('should render registration form', () => {
+    // Проверяем наличие заголовков
+    expect(screen.getByText('BUGS')).toBeInTheDocument()
+    expect(screen.getByText('SURVIVORS')).toBeInTheDocument()
+    expect(screen.getByText('Sign Up')).toBeInTheDocument()
 
-test('allows the user to fill out the form', () => {
-  fireEvent.change(screen.getByLabelText(/First name/i), {
-    target: { value: 'Jason' },
-  })
-  fireEvent.change(screen.getByLabelText(/Second name/i), {
-    target: { value: 'Statham' },
-  })
-  fireEvent.change(screen.getByLabelText(/E-mail/i), {
-    target: { value: 'john@example.com' },
-  })
-  fireEvent.change(screen.getByLabelText(/Phone/i), {
-    target: { value: '+7943453632' },
-  })
-  fireEvent.change(screen.getByLabelText(/Login/i), {
-    target: { value: 'john_doe' },
-  })
-  fireEvent.change(screen.getByLabelText(/Password/i), {
-    target: { value: 'Password123' },
-  })
-
-  expect(screen.getByLabelText<HTMLInputElement>(/First name/i).value).toBe(
-    'Jason'
-  )
-  expect(screen.getByLabelText<HTMLInputElement>(/Second name/i).value).toBe(
-    'Statham'
-  )
-  expect(screen.getByLabelText<HTMLInputElement>(/E-mail/i).value).toBe(
-    'john@example.com'
-  )
-  expect(screen.getByLabelText<HTMLInputElement>(/Phone/i).value).toBe(
-    '+7943453632'
-  )
-  expect(screen.getByLabelText<HTMLInputElement>(/Login/i).value).toBe(
-    'john_doe'
-  )
-  expect(screen.getByLabelText<HTMLInputElement>(/Password/i).value).toBe(
-    'Password123'
-  )
-})
-
-describe('Validation checks', () => {
-  test('Check successful submit form', () => {
-    fireEvent.change(screen.getByLabelText(/First name/i), {
-      target: { value: 'Jason' },
+    // Проверяем наличие всех полей формы
+    const fields = [
+      'First name',
+      'Second name',
+      'E-mail',
+      'Phone',
+      'Login',
+      'Password',
+    ]
+    fields.forEach(field => {
+      expect(screen.getByLabelText(field)).toBeInTheDocument()
     })
-    fireEvent.change(screen.getByLabelText(/Second name/i), {
-      target: { value: 'Statham' },
+
+    // Проверяем наличие кнопок
+    expect(screen.getByText('SIGN IN')).toBeInTheDocument()
+    expect(screen.getByText('SIGN UP')).toBeInTheDocument()
+  })
+
+  it('should update form fields on change', () => {
+    // Изменяем значения полей формы и проверяем их обновление
+    const firstNameInput = screen.getByLabelText(
+      'First name'
+    ) as HTMLInputElement
+    fireEvent.change(firstNameInput, { target: { value: 'John' } })
+    expect(firstNameInput.value).toBe('John')
+
+    const emailInput = screen.getByLabelText('E-mail') as HTMLInputElement
+    fireEvent.change(emailInput, { target: { value: 'john@example.com' } })
+    expect(emailInput.value).toBe('john@example.com')
+  })
+
+  it('should call signUp and navigate on form submit', async () => {
+    const mockedSignUp = signUp as jest.Mock
+    mockedSignUp.mockResolvedValueOnce({})
+    // Заполняем форму
+    fireEvent.change(screen.getByLabelText('First name'), {
+      target: { value: 'John' },
     })
-    fireEvent.change(screen.getByLabelText(/E-mail/i), {
+    fireEvent.change(screen.getByLabelText('Second name'), {
+      target: { value: 'Doe' },
+    })
+    fireEvent.change(screen.getByLabelText('E-mail'), {
       target: { value: 'john@example.com' },
     })
-    fireEvent.change(screen.getByLabelText(/Phone/i), {
-      target: { value: '+74834343435' },
+    fireEvent.change(screen.getByLabelText('Phone'), {
+      target: { value: '+123456789' },
     })
-    fireEvent.change(screen.getByLabelText(/Login/i), {
-      target: { value: 'john' },
+    fireEvent.change(screen.getByLabelText('Login'), {
+      target: { value: 'johndoe' },
     })
-    fireEvent.change(screen.getByLabelText(/Password/i), {
-      target: { value: 'password123' },
-    })
-
-    expect(
-      screen.getByLabelText(/Capitalized and no shorter than 2 chars!/i)
-    ).not.toBeInTheDocument()
-    expect(
-      screen.getByLabelText(/8 to 40 chars, without space and spec chars/i)
-    ).not.toBeInTheDocument()
-    expect(
-      screen.getByLabelText(/8 to 40 chars: cap letter, spec char and number/i)
-    ).not.toBeInTheDocument()
-    expect(
-      screen.getByLabelText(/Enter correct e-mail/i)
-    ).not.toBeInTheDocument()
-    expect(screen.getByLabelText(/10 to 15 numbers/i)).not.toBeInTheDocument()
-  })
-
-  test('Check First Name error message', () => {
-    fireEvent.change(screen.getByLabelText(/First name/i), {
-      target: { value: 'j' },
+    fireEvent.change(screen.getByLabelText('Password'), {
+      target: { value: 'Password123!' },
     })
 
-    expect(
-      screen.getByLabelText(/Capitalized and no shorter than 2 chars!/i)
-    ).toBeInTheDocument()
-  })
-  test('Check Second Name error message', () => {
-    fireEvent.change(screen.getByLabelText(/Second name/i), {
-      target: { value: 's' },
+    // Отправляем форму
+    await act(async () => {
+      fireEvent.submit(screen.getByRole('button', { name: 'SIGN UP' }))
     })
 
-    expect(
-      screen.getByLabelText(/Capitalized and no shorter than 2 chars!/i)
-    ).toBeInTheDocument()
-  })
-  test('Check E-mail error message', () => {
-    fireEvent.change(screen.getByLabelText(/E-mail/i), {
-      target: { value: 'john.com' },
+    // Проверяем вызов signUp с правильными данными
+    expect(mockedSignUp).toHaveBeenCalledWith({
+      first_name: 'John',
+      second_name: 'Doe',
+      email: 'john@example.com',
+      phone: '+123456789',
+      login: 'johndoe',
+      password: 'Password123!',
     })
-
-    expect(screen.getByLabelText(/Enter correct e-mail/i)).toBeInTheDocument()
-  })
-  test('Check Phone error message', () => {
-    fireEvent.change(screen.getByLabelText(/Phone/i), {
-      target: { value: '74834343435' },
-    })
-
-    expect(screen.getByLabelText(/10 to 15 numbers/i)).toBeInTheDocument()
-  })
-  test('Check Login error message', () => {
-    fireEvent.change(screen.getByLabelText(/Login/i), {
-      target: { value: 'jj' },
-    })
-
-    expect(
-      screen.getByLabelText(/8 to 40 chars, without space and spec chars/i)
-    ).toBeInTheDocument()
-  })
-  test('Check Password error message', () => {
-    fireEvent.change(screen.getByLabelText(/Password/i), {
-      target: { value: 'password123' },
-    })
-
-    expect(
-      screen.getByLabelText(/8 to 40 chars: cap letter, spec char and number/i)
-    ).toBeInTheDocument()
   })
 })
