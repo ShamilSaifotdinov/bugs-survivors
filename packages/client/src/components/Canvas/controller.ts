@@ -4,9 +4,12 @@ class CanvasController {
   animationFrameId?: number
   isPause = false
 
-  constructor(public canvas: HTMLCanvasElement, public game: IGame) {}
+  constructor(public canvas: HTMLCanvasElement, private game: IGame) {
+    this.game.canvas = this
+    this.game.init()
+  }
 
-  animate() {
+  initAnimate() {
     const ctx = this.canvas.getContext('2d')
     if (!ctx) {
       return
@@ -32,17 +35,16 @@ class CanvasController {
     }
 
     this.animationFrameId = requestAnimationFrame(animate)
-
-    return () => this.stop()
   }
 
-  clearCanvas(ctx: CanvasRenderingContext2D) {
+  private clearCanvas(ctx: CanvasRenderingContext2D) {
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
   }
 
   stop() {
     if (this.animationFrameId) {
       cancelAnimationFrame(this.animationFrameId)
+      this.game.destroy()
     }
   }
 

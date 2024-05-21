@@ -7,11 +7,9 @@ export default function Canvas({ game }: { game: IGame }) {
 
   useEffect(() => {
     if (canvasRef.current) {
-      game.canvas = new CanvasController(canvasRef.current, game)
+      const canvas = new CanvasController(canvasRef.current, game)
 
-      game.init()
-
-      return () => game.destroy()
+      return () => canvas.stop()
     }
   }, [canvasRef])
 

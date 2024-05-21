@@ -54,11 +54,9 @@ class Game implements IGame {
           })
       )
     ).then(() => {
-      const destroyAnimate = this.initAnimate()
+      this.initAnimate()
 
-      if (destroyAnimate !== undefined) {
-        this.destroyers.push(destroyAnimate, this.initLinter())
-      }
+      this.destroyers.push(this.initLinter())
 
       this.lastTimerUpdate = performance.now()
       this.updateTimer()
@@ -69,7 +67,7 @@ class Game implements IGame {
     if (this.canvas) {
       this.canvas.canvas.width = this.CanvasWidth
       this.canvas.canvas.height = this.CanvasHeight
-      return this.canvas.animate()
+      this.canvas.initAnimate()
     }
   }
 
