@@ -21,7 +21,6 @@ export class Game {
   Bullets: Bullets
   CanvasRef?: React.RefObject<HTMLCanvasElement>
   setShowCards: React.Dispatch<React.SetStateAction<boolean>>
-  navigate: NavigateFunction
 
   CanvasWidth = window.innerWidth
   CanvasHeight = window.innerHeight
@@ -35,7 +34,7 @@ export class Game {
 
   constructor(
     setShowCards: React.Dispatch<React.SetStateAction<boolean>>,
-    navigate: NavigateFunction
+    public navigate: NavigateFunction
   ) {
     this.Camera = new Camera(this)
     this.TextParticles = new TextParticles(this)
@@ -44,7 +43,6 @@ export class Game {
     this.Exp = new Exps(this)
     this.Bullets = new Bullets(this)
     this.setShowCards = setShowCards
-    this.navigate = navigate
   }
 
   init() {
