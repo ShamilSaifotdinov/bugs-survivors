@@ -10,12 +10,8 @@ function GamePage() {
   const navigate = useNavigate()
   const [game, setGame] = useState<Game | null>(null)
 
-  function gameOver() {
-    navigate('/gameOver')
-  }
-
   if (game === null) {
-    setGame(new Game(setShowCards, gameOver))
+    setGame(new Game(setShowCards, navigate))
   }
 
   const handleUpgrade = useCallback(

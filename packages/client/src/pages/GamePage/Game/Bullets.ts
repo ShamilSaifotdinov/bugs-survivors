@@ -36,8 +36,12 @@ class Bullets {
   renderBullet(ctx: CanvasRenderingContext2D) {
     if (this.spriteIsLoaded) {
       for (let i = 0; i < this.state.length; i++) {
-        ctx.fillStyle = 'yellow'
-        ctx.fillRect(
+        ctx.drawImage(
+          this.sprite,
+          this.state[i].frame,
+          this.state[i].frameLine + (this.state[i].damage - 1) * 16,
+          this.state[i].frameSize,
+          this.state[i].frameSize,
           Math.floor(this.state[i].x + this.game.Camera.x),
           Math.floor(this.state[i].y + this.game.Camera.y),
           this.state[i].width,

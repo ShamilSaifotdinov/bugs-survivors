@@ -48,8 +48,12 @@ class Player {
         this.deadless--
       }
 
-      ctx.fillStyle = 'pink'
-      ctx.fillRect(
+      ctx.drawImage(
+        this.sprite,
+        this.frame,
+        this.frameLine,
+        this.frameSize,
+        this.frameSize,
         Math.floor(this.x + this.game.Camera.x),
         Math.floor(this.y + this.game.Camera.y),
         this.width,
@@ -137,10 +141,6 @@ class Player {
           this.deadless = 200
           this.game.Camera.y -= 20
         }
-      }
-
-      if (this.hp <= 0) {
-        this.game.gameOver()
       }
 
       if (this.exp >= this.nextExp) {

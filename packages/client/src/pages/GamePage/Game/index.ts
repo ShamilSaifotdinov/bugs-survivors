@@ -1,28 +1,15 @@
+import { NavigateFunction } from 'react-router-dom'
+import CanvasController from '../../../components/Canvas/controller'
+import { IGame } from '../../../components/Canvas/interfaces'
+import convertSeconds from '../../../helpers/convertSeconds'
 import Camera from './Camera'
 import TextParticles from './TextParticles'
 import Player from './Player'
 import Enemies from './Enemies'
 import Exps from './Exp'
 import Bullets from './Bullets'
-import CanvasController from '../../../components/Canvas/controller'
-import { IGame } from '../../../components/Canvas/interfaces'
 
 class Game implements IGame {
-  canvas?: CanvasController
-  CanvasWidth = window.innerWidth
-  CanvasHeight = window.innerHeight
-  GameTick = 0
-  Timer = {
-    seconds: 0,
-    minutes: 0,
-  }
-
-  pause = false
-  spawnRate = 100
-  minEnemyLevel = 1
-  maxEnemyLevel = 1
-  bossChance = 1000
-
   Camera: Camera
   TextParticles: TextParticles
   Player: Player
@@ -30,11 +17,24 @@ class Game implements IGame {
   Exp: Exps
   Bullets: Bullets
 
+  canvas?: CanvasController
+  CanvasWidth = window.innerWidth
+  CanvasHeight = window.innerHeight
+  GameTick = 0
+  timer = 0
+  lastTimerUpdate?: number // Время последнего обновления таймера
+
+  pause = false
+  spawnRate = 100
+  minEnemyLevel = 1
+  maxEnemyLevel = 1
+  bossChance = 1000
+
   destroyers: Array<() => void> = []
 
   constructor(
     public setShowCards: React.Dispatch<React.SetStateAction<boolean>>,
-    public gameOver: () => void
+    public navigate: NavigateFunction
   ) {
     this.Camera = new Camera(this)
     this.TextParticles = new TextParticles(this)
@@ -57,16 +57,15 @@ class Game implements IGame {
       const destroyAnimate = this.initAnimate()
 
       if (destroyAnimate !== undefined) {
-        this.destroyers.push(
-          destroyAnimate,
-          this.initLinter(),
-          this.initTimer()
-        )
+        this.destroyers.push(destroyAnimate, this.initLinter())
       }
+
+      this.lastTimerUpdate = performance.now()
+      this.updateTimer()
     })
   }
 
-  initAnimate() {
+  private initAnimate() {
     if (this.canvas) {
       this.canvas.canvas.width = this.CanvasWidth
       this.canvas.canvas.height = this.CanvasHeight
@@ -74,7 +73,7 @@ class Game implements IGame {
     }
   }
 
-  initLinter() {
+  private initLinter() {
     // Создание листнера для отслеживания нажатых клавиш
     const pressedKeys: Record<string, boolean> = {}
 
@@ -106,28 +105,24 @@ class Game implements IGame {
     }
   }
 
-  initTimer() {
-    //таймер
-    const intervalId = setInterval(() => {
-      if (!this.pause) {
-        this.Timer.seconds++
+  private updateTimer() {
+    if (!this.pause && this.lastTimerUpdate) {
+      const now = performance.now()
+      if (now - this.lastTimerUpdate >= 1000) {
+        this.lastTimerUpdate = now
+        this.timer++
+
         if (this.bossChance > 10) {
           this.bossChance -= 2
         }
-        if (this.Timer.seconds == 60) {
-          this.Timer.minutes++
-          this.Timer.seconds = 0
-          if (this.maxEnemyLevel < 4) {
-            if (this.Timer.minutes % 2 == 0) {
-              this.maxEnemyLevel += 1
-            }
+        if (this.timer % 60 === 0) {
+          if (this.timer % 120 === 0 && this.maxEnemyLevel < 4) {
+            this.maxEnemyLevel += 1
           }
-
           this.spawnRate = Math.floor(this.spawnRate / 1.2) + 1
         }
       }
-    }, 1000)
-    return () => clearInterval(intervalId)
+    }
   }
 
   render(ctx: CanvasRenderingContext2D) {
@@ -140,6 +135,11 @@ class Game implements IGame {
     this.TextParticles.renderTextParticles(ctx)
     this.Enemies.createEnemy()
     this.drawTimer(ctx)
+    this.updateTimer()
+
+    if (this.Player.hp === 0) {
+      this.finishGame()
+    }
 
     this.GameTick++
   }
@@ -155,22 +155,28 @@ class Game implements IGame {
     this.Player.upgrade(id)
   }
 
-  drawTimer(ctx: CanvasRenderingContext2D) {
-    const minutes =
-      this.Timer.minutes < 10 ? '0' + this.Timer.minutes : this.Timer.minutes
-    const seconds =
-      this.Timer.seconds < 10 ? '0' + this.Timer.seconds : this.Timer.seconds
+  private drawTimer(ctx: CanvasRenderingContext2D) {
     ctx.save()
     ctx.strokeStyle = 'white'
     ctx.fillStyle = '#242424'
     ctx.font = '24px pixel'
-    ctx.fillText(minutes + ':' + seconds, this.CanvasWidth / 2 - 40, 50)
-    ctx.strokeText(minutes + ':' + seconds, this.CanvasWidth / 2 - 40, 50)
+    ctx.fillText(convertSeconds(this.timer), this.CanvasWidth / 2 - 40, 50)
+    ctx.strokeText(convertSeconds(this.timer), this.CanvasWidth / 2 - 40, 50)
     ctx.fillText('HP: ' + this.Player.hp, this.CanvasWidth - 85, 50)
     ctx.strokeText('HP: ' + this.Player.hp, this.CanvasWidth - 85, 50)
     ctx.fillText('LVL: ' + this.Player.level, 8, 50)
     ctx.strokeText('LVL: ' + this.Player.level, 8, 50)
     ctx.restore()
+  }
+
+  private finishGame() {
+    this.navigate('/gameOver', {
+      state: {
+        time: this.timer,
+        level: this.Player.level,
+        diedEnemies: this.Enemies.diedEnemies,
+      },
+    })
   }
 }
 
