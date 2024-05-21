@@ -36,8 +36,14 @@ class Enemies {
   renderEnemies(ctx: CanvasRenderingContext2D) {
     if (this.spriteIsLoaded) {
       for (let i = 0; i < this.state.length; i++) {
-        ctx.fillStyle = 'red'
-        ctx.fillRect(
+        const side = this.state[i].x > this.game.Player.x ? 16 : 0
+
+        ctx.drawImage(
+          this.sprite,
+          this.state[i].frame,
+          this.state[i].frameLine + side + (this.state[i].level - 1) * 32,
+          this.state[i].frameSize,
+          this.state[i].frameSize,
           Math.floor(this.state[i].x + this.game.Camera.x),
           Math.floor(this.state[i].y + this.game.Camera.y),
           this.state[i].width,
