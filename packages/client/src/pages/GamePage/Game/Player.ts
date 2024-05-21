@@ -1,5 +1,6 @@
-import { Game } from '.'
-import { isPointInsideCircle } from './util'
+import Game from '.'
+import { isPointInsideCircle } from '../utils'
+
 class Player {
   game: Game
 
@@ -32,7 +33,7 @@ class Player {
     this.game = game
 
     this.sprite = new Image()
-    this.sprite.src = 'src/pages/Game/assets/player.png'
+    this.sprite.src = '/images/game/player.png'
 
     this.sprite.onload = () => {
       this.spriteIsLoaded = true
@@ -147,7 +148,8 @@ class Player {
         this.exp = 0
         this.level++
         this.nextExp += (this.level + 1) / 2
-        // this.game.pause = true
+        this.game.canvas?.pause()
+        this.game.pause = true
       }
     }
   }

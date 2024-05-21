@@ -16,9 +16,9 @@ export default defineConfig({
     react(),
     VitePWA({
       strategies: 'injectManifest',
-      includeAssets: ['fonts/*.ttf', 'images/*.png'],
+      includeAssets: ['images/**/*.png', 'svg/*.svg'],
       injectManifest: {
-        globPatterns: ['**/*.{js,css,html,svg}'],
+        globPatterns: ['**/*.{js,css,html,ttf}'],
       },
     }),
   ],

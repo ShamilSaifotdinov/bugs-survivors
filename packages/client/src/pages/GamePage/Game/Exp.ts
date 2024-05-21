@@ -1,5 +1,5 @@
-import { Game } from '.'
-import { isPointInsideCircle, rand } from './util'
+import Game from '.'
+import { isPointInsideCircle, rand } from '../utils'
 
 interface Exp {
   width: number
@@ -26,7 +26,7 @@ class Exps {
     this.game = game
 
     this.sprite = new Image()
-    this.sprite.src = 'src/pages/Game/assets/exp.png'
+    this.sprite.src = '/images/game/exp.png'
 
     this.sprite.onload = () => {
       this.spriteIsLoaded = true

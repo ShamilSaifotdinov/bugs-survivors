@@ -1,4 +1,5 @@
-import { Game } from '.'
+import Game from '.'
+
 class Camera {
   x = 0
   y = 0
