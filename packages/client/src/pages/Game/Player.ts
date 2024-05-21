@@ -1,5 +1,9 @@
 import { Game } from '.'
 import { isPointInsideCircle } from './util'
+import { SoundPlayer } from './SoundPlayer'
+
+const soundPlayer = new SoundPlayer()
+soundPlayer.setVolume(0.2)
 class Player {
   game: Game
 
@@ -15,8 +19,8 @@ class Player {
   frame = 0
   lastDirectionX = 0
   lastDirectionY = 1
-  reloadTime = 60
-  damage = 1 //max damage 11
+  reloadTime = 30
+  damage = 5 //max damage 11
   level = 0
   exp = 0
   nextExp = 2
@@ -139,6 +143,7 @@ class Player {
           this.hp--
           this.deadless = 200
           this.game.Camera.y -= 20
+          soundPlayer.playSound(100, 0.03, 'square')
         }
       }
 

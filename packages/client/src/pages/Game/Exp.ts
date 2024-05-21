@@ -1,6 +1,9 @@
 import { Game } from '.'
 import { isPointInsideCircle, rand } from './util'
+import { SoundPlayer } from './SoundPlayer'
 
+const soundPlayer = new SoundPlayer()
+soundPlayer.setVolume(0.2)
 interface Exp {
   width: number
   height: number
@@ -90,6 +93,7 @@ class Exps {
         ) {
           this.state.splice(i, 1)
           this.game.Player.exp++
+          soundPlayer.playSound(500 + rand(100, 250), 0.02, 'triangle')
           this.game.TextParticles.createTextParticles(
             '+1',
             this.game.Player.x + this.game.Player.width / 2,

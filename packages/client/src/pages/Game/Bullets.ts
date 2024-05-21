@@ -1,5 +1,9 @@
 import { Game } from '.'
 import { rand } from './util'
+import { SoundPlayer } from './SoundPlayer'
+
+const soundPlayer = new SoundPlayer()
+soundPlayer.setVolume(0.05)
 
 interface Bullet {
   width: number
@@ -87,6 +91,11 @@ class Bullets {
                 this.game.Enemies.state[j].y +
                   this.game.Enemies.state[j].height / 2
             ) {
+              soundPlayer.playSound(
+                this.state[i].damage * 100,
+                0.02,
+                'sawtooth'
+              )
               this.game.Enemies.state[j].hp -= this.state[i].damage
               this.game.TextParticles.createTextParticles(
                 '-' + this.state[i].damage,
@@ -120,6 +129,8 @@ class Bullets {
         frameLine: 0,
         frame: 0,
       })
+
+      soundPlayer.playSound(100 + rand(50, 100), 0.02, 'square')
     }
 
     if (this.game.Player.flameThrow > 0) {

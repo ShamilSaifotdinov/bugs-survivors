@@ -1,5 +1,9 @@
 import { Game } from '.'
 import { rand } from './util'
+import { SoundPlayer } from './SoundPlayer'
+
+const soundPlayer = new SoundPlayer()
+soundPlayer.setVolume(0.1)
 
 interface Enemy {
   width: number

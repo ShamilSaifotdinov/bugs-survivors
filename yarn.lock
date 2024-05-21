@@ -3810,11 +3810,15 @@ cli-width@^3.0.0:
   resolved "https://registry.npmjs.org/cli-width/-/cli-width-3.0.0.tgz"
   integrity sha512-FxqpkPPwu1HjuN93Omfm4h8uIanXofW0RxVEW3k5RKx+mJJYSthzNhp32Kzxxy3YAEZ/Dc/EWN1vZRY0+kOhbw==
 
-"client@file:D:\\yndex_project\\StathamGames\\packages\\client":
+"client@file:D:\\bugs-survivors\\packages\\client":
   version "0.0.0"
   resolved "file:packages/client"
   dependencies:
+    "@emoji-mart/data" "^1.2.1"
+    "@emoji-mart/react" "^1.1.1"
+    "@types/emoji-mart" "^3.0.14"
     dotenv "^16.0.2"
+    emoji-mart "^5.6.0"
     eslint-config-prettier "^8.5.0"
     prettier "^2.7.1"
     react "^18.2.0"
@@ -8627,7 +8631,7 @@ serve-static@1.15.0:
     parseurl "~1.3.3"
     send "0.18.0"
 
-"server@file:D:\\yndex_project\\StathamGames\\packages\\server":
+"server@file:D:\\bugs-survivors\\packages\\server":
   version "1.0.0"
   resolved "file:packages/server"
   dependencies:
