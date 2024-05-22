@@ -64,7 +64,8 @@ function ProfilePage() {
             <Grid container gap={'3.8rem'} justifyContent={'center'}>
               <AvatarLoad
                 src={profile.avatar as string}
-                className={styles.avatar}></AvatarLoad>
+                className={styles.avatar}
+              />
               <form
                 className={styles.form}
                 onSubmit={handleSubmitData}
