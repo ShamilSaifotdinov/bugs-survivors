@@ -1,6 +1,6 @@
 import { Button, Grid, TextField, Typography, Box } from '@mui/material'
 import styles from './styles.module.scss'
-import AvatarLoad from '../../components/AvatarLoad/AvatarLoad'
+import AvatarLoad from '../../components/AvatarLoad'
 import PreviousPageBtn from '../../components/PreviousPageBtn'
 import PasswordChange from './PasswordChange'
 import { getUserInfo } from '../../api/basic/auth'

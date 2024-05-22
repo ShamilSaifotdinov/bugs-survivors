@@ -3,7 +3,7 @@ import { Avatar, styled } from '@mui/material'
 import styles from './styles.module.scss'
 import React, { useCallback, useEffect, useState } from 'react'
 import { changeUserAvatar } from '../../api/basic/users'
-import { RESOURCES_URL } from '../../api/basic/basicInstance'
+import getAvatarSrc from '../../helpers/getAvatarSrc'
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -24,7 +24,7 @@ type AvatarLoadProps = {
 
 function AvatarLoad({ src, className }: AvatarLoadProps) {
   const [avatar, setAvatar] = useState(src)
-  const defaultAvatar = 'images/defaultAvatar.png'
+
   const handleAvatar = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       const formData = new FormData()
@@ -55,9 +55,7 @@ function AvatarLoad({ src, className }: AvatarLoadProps) {
         borderRadius: '50%',
       }}
       tabIndex={-10}>
-      <Avatar
-        className={className}
-        src={avatar ? `${RESOURCES_URL}${avatar}` : defaultAvatar}></Avatar>
+      <Avatar className={className} src={getAvatarSrc(avatar)} />
       <div className={styles.layout}>Load avatar</div>
       <VisuallyHiddenInput
         accept="image/*"
