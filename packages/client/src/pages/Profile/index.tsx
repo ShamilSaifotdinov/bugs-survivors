@@ -43,7 +43,7 @@ function ProfilePage() {
         alert(error)
       }
     })()
-  }, [])
+  }, [setProfile])
 
   const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
     setProfile({ ...profile, [e.target.name]: e.target?.value })
@@ -63,7 +63,7 @@ function ProfilePage() {
             <PreviousPageBtn className={styles.buttonPrev} />
             <Grid container gap={'3.8rem'} justifyContent={'center'}>
               <AvatarLoad
-                src={profile.avatar as string}
+                src={typeof profile.avatar === 'string' ? profile.avatar : ''}
                 className={styles.avatar}
               />
               <form
@@ -89,7 +89,8 @@ function ProfilePage() {
                           sx={{ width: '45%' }}
                           label={fields[key]}
                           value={profile[key]}
-                          name={field}></TextField>
+                          name={field}
+                        />
                       </Box>
                     )
                   })}
