@@ -15,6 +15,13 @@
   }
 }
 
+.create_btns {
+  display: flex;
+  margin-top: 8px;
+  gap: 16px;
+  justify-content: space-between;
+}
+
 .pagination {
   margin-top: 2.5rem;
   overflow: initial !important;

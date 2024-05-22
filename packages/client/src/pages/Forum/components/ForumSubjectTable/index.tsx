@@ -9,12 +9,14 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  TextField,
   Typography,
 } from '@mui/material'
 import mockData from '../../../../../mockData.json'
 import { useNavigate, useParams } from 'react-router-dom'
 import { clsx } from 'clsx'
 import { forumSubjectColumns } from '../constants'
+import ButtonModal from '../../../../components/ButtonModal/ButtonModal'
 
 export default function ForumSubjectTable() {
   const [isPending, startTransition] = useTransition()
@@ -22,6 +24,11 @@ export default function ForumSubjectTable() {
   const navigate = useNavigate()
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
+
+  const [open, setOpen] = useState(false)
+  const handleClose = () => {
+    setOpen(false)
+  }
 
   const tableRowsData =
     mockData?.forum
@@ -90,9 +97,23 @@ export default function ForumSubjectTable() {
   return (
     <>
       <div className={styles.button_container}>
-        <Button variant="contained" className={styles.create_topic_button}>
-          CREATE TOPIC
-        </Button>
+        <ButtonModal
+          variant="contained"
+          label="CREATE TOPIC"
+          color="secondary"
+          open={open}
+          handleOpen={() => setOpen(true)}
+          handleClose={handleClose}>
+          <TextField label="Name"></TextField>
+          <div className={styles.create_btns}>
+            <Button variant="contained" onClick={handleClose} color="secondary">
+              Cancel
+            </Button>
+            <Button onClick={handleClose} variant="contained">
+              CREATE
+            </Button>
+          </div>
+        </ButtonModal>
       </div>
       <div className={styles.table}>
         <Table>
