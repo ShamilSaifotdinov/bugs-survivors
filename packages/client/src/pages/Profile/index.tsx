@@ -6,9 +6,8 @@ import PasswordChange from './PasswordChange'
 import { useEffect, useState } from 'react'
 import { User } from '../../api/basic/types'
 import { RESOURCES_URL } from '../../api/basic/basicInstance'
-import { RootState } from '../../store'
-import { useSelector, useDispatch } from 'react-redux'
 import { changeProfile, fetchUser } from '../../store/slices/userSlice'
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 
 const initialData = {
   first_name: '',
@@ -28,8 +27,8 @@ const fields: Partial<User> = {
 }
 
 function ProfilePage() {
-  const user = useSelector((state: RootState) => state.user.user)
-  const dispatch = useDispatch<any>()
+  const user = useAppSelector(state => state.user.user)
+  const dispatch = useAppDispatch()
   const [profile, setProfile] = useState<Partial<User>>(initialData)
 
   useEffect(() => {
