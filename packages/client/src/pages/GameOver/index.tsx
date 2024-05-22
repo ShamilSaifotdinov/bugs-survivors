@@ -3,8 +3,10 @@ import { Button, Grid, Link, List, ListItem, Typography } from '@mui/material'
 import LayoutWithBgImage from '../../components/LayoutWithBgImage'
 import styles from './styles.module.scss'
 import convertSeconds from '../../helpers/convertSeconds'
+import { useLoggedInUser } from '../../hooks/useLoggedInUser'
 
 const GameOver = () => {
+  useLoggedInUser()
   const location = useLocation()
   const { time, level, diedEnemies } = location.state
 

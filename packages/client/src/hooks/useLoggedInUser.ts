@@ -14,7 +14,7 @@ export function useLoggedInUser() {
       setLoggedInUser(userInfo)
     } catch (error) {
       console.error(error)
-      navigate('/signin/')
+      navigate('/')
     }
   }, [])
 
