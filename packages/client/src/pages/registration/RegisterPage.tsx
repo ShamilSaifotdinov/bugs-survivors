@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useValidationForm } from '../../hooks/useValidationForm'
 import style from './styles.module.scss'
 import { SignUpData, signUp } from '../../api/basic/auth'
+import { useLoggedInUser } from '../../hooks/useLoggedInUser'
 
 const fields: SignUpData = {
   first_name: 'First name',
@@ -14,6 +15,7 @@ const fields: SignUpData = {
 }
 
 function RegisterPage() {
+  useLoggedInUser()
   const initialData = {
     first_name: '',
     second_name: '',

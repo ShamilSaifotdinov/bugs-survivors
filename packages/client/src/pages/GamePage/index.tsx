@@ -5,10 +5,8 @@ import Game from './Game'
 import { useNavigate } from 'react-router-dom'
 import Canvas from '../../components/Canvas'
 import { Button } from '@mui/material'
-import { useLoggedInUser } from '../../hooks/useLoggedInUser'
 
 function GamePage() {
-  useLoggedInUser()
   const [showCards, setShowCards] = useState(false)
   const navigate = useNavigate()
   const [game, setGame] = useState<Game | null>(null)
