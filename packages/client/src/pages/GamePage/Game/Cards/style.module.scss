@@ -1,0 +1,72 @@
+.cards_container {
+  font-family: 'pixel';
+  text-align: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(0, 0, 0, 0.5);
+  position: absolute;
+  animation: opacity 0.9s ease-in-out forwards;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .card {
+    width: 22vh;
+    height: 30vh;
+    background: white;
+    padding-top: 2vh;
+    font-size: 1.6vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 2vh;
+    box-shadow: 0 0 0 5px #323232;
+    color: #323232;
+    transition: 0.3s;
+
+    p {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding-inline: 2vh;
+    }
+
+    .card_image {
+      min-width: 18vh;
+      min-height: 18vh;
+      background-color: #323232;
+      background-image: url('/images/game/upgrades.png');
+      background-size: cover;
+      image-rendering: pixelated;
+    }
+
+    &:first-child {
+      rotate: (-15deg);
+    }
+
+    &:last-child {
+      rotate: (15deg);
+    }
+
+    &:nth-child(2) {
+      translate: 0 -5vh;
+    }
+
+    &:hover {
+      transform: translateY(-6vh) scale(1.1);
+      cursor: pointer;
+      box-shadow: 0 0 0 5px #323232, 0 0 10vh #fff;
+    }
+  }
+}
+
+@keyframes opacity {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

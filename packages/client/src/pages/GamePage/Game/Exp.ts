@@ -1,7 +1,6 @@
-import { Game } from '.'
-import { isPointInsideCircle, rand } from './util'
+import Game from '.'
+import { isPointInsideCircle, rand } from '../utils'
 import { SoundPlayer } from './SoundPlayer'
-
 interface Exp {
   width: number
   height: number
@@ -30,7 +29,7 @@ class Exps {
     this.soundPlayer.setVolume(0.2)
 
     this.sprite = new Image()
-    this.sprite.src = 'src/pages/Game/assets/exp.png'
+    this.sprite.src = '/images/game/exp.png'
 
     this.sprite.onload = () => {
       this.spriteIsLoaded = true

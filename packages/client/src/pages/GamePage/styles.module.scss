@@ -5,7 +5,13 @@
   background-color: rgb(54, 90, 54);
 }
 
+.game_exit {
+  position: absolute !important;
+  bottom: 40px;
+  right: 76px;
+}
+
 @font-face {
   font-family: 'pixel';
-  src: url('./assets/pixel.TTF') format('truetype');
+  src: url('/font/pixel.ttf') format('truetype');
 }

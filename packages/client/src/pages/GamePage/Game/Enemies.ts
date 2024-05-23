@@ -1,7 +1,6 @@
-import { Game } from '.'
-import { rand } from './util'
+import Game from '.'
+import { rand } from '../utils'
 import { SoundPlayer } from './SoundPlayer'
-
 interface Enemy {
   width: number
   height: number
@@ -31,7 +30,7 @@ class Enemies {
     this.soundPlayer.setVolume(0.1)
 
     this.sprite = new Image()
-    this.sprite.src = 'src/pages/Game/assets/enemy.png'
+    this.sprite.src = '/images/game/enemy.png'
 
     this.sprite.onload = () => {
       this.spriteIsLoaded = true
