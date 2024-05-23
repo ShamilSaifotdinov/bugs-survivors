@@ -3,12 +3,12 @@ import styles from './styles.module.scss'
 import AvatarLoad from '../../components/AvatarLoad/AvatarLoad'
 import PreviousPageBtn from '../../components/PreviousPageBtn'
 import PasswordChange from './PasswordChange'
-import { getUserInfo } from '../../api/basic/auth'
 import { changeUserProfile } from '../../api/basic/users'
 import { useEffect } from 'react'
 import { User } from '../../api/basic/types'
 import { RESOURCES_URL } from '../../api/basic/basicInstance'
 import { useValidationForm } from '../../hooks/useValidationForm'
+import { useLoggedInUser } from '../../hooks/useLoggedInUser'
 
 const initialData = {
   first_name: '',
@@ -35,16 +35,13 @@ function ProfilePage() {
     formIsValid,
   } = useValidationForm(initialData)
 
+  const loggedInUser = useLoggedInUser()
+
   useEffect(() => {
-    ;(async function () {
-      try {
-        const data = await getUserInfo()
-        setProfile(data)
-      } catch (error) {
-        alert(error)
-      }
-    })()
-  }, [])
+    if (loggedInUser) {
+      setProfile(loggedInUser)
+    }
+  }, [loggedInUser])
 
   const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
     setProfile({ ...profile, [e.target.name]: e.target?.value })
