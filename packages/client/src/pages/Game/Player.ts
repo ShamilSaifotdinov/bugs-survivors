@@ -2,10 +2,9 @@ import { Game } from '.'
 import { isPointInsideCircle } from './util'
 import { SoundPlayer } from './SoundPlayer'
 
-const soundPlayer = new SoundPlayer()
-soundPlayer.setVolume(0.2)
 class Player {
   game: Game
+  soundPlayer: SoundPlayer
 
   width = 70
   height = 70
@@ -34,6 +33,8 @@ class Player {
 
   constructor(game: Game) {
     this.game = game
+    this.soundPlayer = new SoundPlayer(this.game.audioContext)
+    this.soundPlayer.setVolume(0.2)
 
     this.sprite = new Image()
     this.sprite.src = 'src/pages/Game/assets/player.png'
@@ -143,7 +144,7 @@ class Player {
           this.hp--
           this.deadless = 200
           this.game.Camera.y -= 20
-          soundPlayer.playSound(100, 0.03, 'square')
+          this.soundPlayer.playSound(100, 0.03, 'square')
         }
       }
 

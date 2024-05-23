@@ -2,9 +2,6 @@ import { Game } from '.'
 import { rand } from './util'
 import { SoundPlayer } from './SoundPlayer'
 
-const soundPlayer = new SoundPlayer()
-soundPlayer.setVolume(0.05)
-
 interface Bullet {
   width: number
   height: number
@@ -21,6 +18,7 @@ interface Bullet {
 
 class Bullets {
   game: Game
+  soundPlayer: SoundPlayer
   state: Bullet[] = []
 
   sprite: HTMLImageElement
@@ -28,6 +26,8 @@ class Bullets {
 
   constructor(game: Game) {
     this.game = game
+    this.soundPlayer = new SoundPlayer(this.game.audioContext)
+    this.soundPlayer.setVolume(0.05)
 
     this.sprite = new Image()
     this.sprite.src = 'src/pages/Game/assets/bullet.png'
@@ -91,7 +91,7 @@ class Bullets {
                 this.game.Enemies.state[j].y +
                   this.game.Enemies.state[j].height / 2
             ) {
-              soundPlayer.playSound(
+              this.soundPlayer.playSound(
                 this.state[i].damage * 100,
                 0.02,
                 'sawtooth'
@@ -130,7 +130,7 @@ class Bullets {
         frame: 0,
       })
 
-      soundPlayer.playSound(100 + rand(50, 100), 0.02, 'square')
+      this.soundPlayer.playSound(100 + rand(50, 100), 0.02, 'square')
     }
 
     if (this.game.Player.flameThrow > 0) {

@@ -2,8 +2,6 @@ import { Game } from '.'
 import { isPointInsideCircle, rand } from './util'
 import { SoundPlayer } from './SoundPlayer'
 
-const soundPlayer = new SoundPlayer()
-soundPlayer.setVolume(0.2)
 interface Exp {
   width: number
   height: number
@@ -20,6 +18,7 @@ interface Exp {
 
 class Exps {
   game: Game
+  soundPlayer: SoundPlayer
   state: Exp[] = []
 
   sprite: HTMLImageElement
@@ -27,6 +26,8 @@ class Exps {
 
   constructor(game: Game) {
     this.game = game
+    this.soundPlayer = new SoundPlayer(this.game.audioContext)
+    this.soundPlayer.setVolume(0.2)
 
     this.sprite = new Image()
     this.sprite.src = 'src/pages/Game/assets/exp.png'
@@ -93,7 +94,7 @@ class Exps {
         ) {
           this.state.splice(i, 1)
           this.game.Player.exp++
-          soundPlayer.playSound(500 + rand(100, 250), 0.02, 'triangle')
+          this.soundPlayer.playSound(500 + rand(100, 250), 0.02, 'triangle')
           this.game.TextParticles.createTextParticles(
             '+1',
             this.game.Player.x + this.game.Player.width / 2,

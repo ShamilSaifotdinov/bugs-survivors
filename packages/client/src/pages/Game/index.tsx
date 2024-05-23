@@ -19,6 +19,7 @@ export class Game {
   Enemies: Enemies
   Exp: Exps
   Bullets: Bullets
+  audioContext: AudioContext
   CanvasRef?: React.RefObject<HTMLCanvasElement>
   setShowCards: React.Dispatch<React.SetStateAction<boolean>>
 
@@ -36,6 +37,7 @@ export class Game {
     setShowCards: React.Dispatch<React.SetStateAction<boolean>>,
     public navigate: NavigateFunction
   ) {
+    this.audioContext = new AudioContext()
     this.Camera = new Camera(this)
     this.TextParticles = new TextParticles(this)
     this.Player = new Player(this)
