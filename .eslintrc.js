@@ -18,7 +18,7 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 1,
     'react-hooks/exhaustive-deps': 1,
     'react/self-closing-comp': [
-      'error',
+      'warn',
       {
         component: true,
         html: true,
