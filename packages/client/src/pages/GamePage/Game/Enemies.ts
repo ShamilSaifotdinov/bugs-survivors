@@ -1,6 +1,7 @@
 import Game from '.'
 import { rand } from '../utils'
 import { SoundPlayer } from './SoundPlayer'
+
 interface Enemy {
   width: number
   height: number

@@ -1,6 +1,7 @@
 import Game from '.'
 import { isPointInsideCircle } from '../utils'
 import { SoundPlayer } from './SoundPlayer'
+
 class Player {
   game: Game
   soundPlayer: SoundPlayer

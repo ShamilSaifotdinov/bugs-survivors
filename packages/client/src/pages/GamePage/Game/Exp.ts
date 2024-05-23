@@ -1,6 +1,7 @@
 import Game from '.'
 import { isPointInsideCircle, rand } from '../utils'
 import { SoundPlayer } from './SoundPlayer'
+
 interface Exp {
   width: number
   height: number

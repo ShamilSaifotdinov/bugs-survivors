@@ -1,5 +1,4 @@
 export class SoundPlayer {
-  // private audioContext: AudioContext
   private oscillator: OscillatorNode | null
   private gainNode: GainNode
 
