@@ -159,6 +159,10 @@ class Player {
   }
 
   upgrade(id: number) {
+    this.soundPlayer.playSound(450, 0.05, 'triangle')
+    setTimeout(() => {
+      this.soundPlayer.playSound(650, 0.05, 'triangle')
+    }, 50)
     switch (id) {
       //increase speed
       case 0:
