@@ -1,5 +1,6 @@
 import Game from '.'
 import { rand } from '../utils'
+import { SoundPlayer } from './SoundPlayer'
 
 interface Enemy {
   width: number
@@ -16,6 +17,7 @@ interface Enemy {
 
 class Enemies {
   game: Game
+  soundPlayer: SoundPlayer
   state: Enemy[] = []
   diedEnemies = 0
 
@@ -24,6 +26,9 @@ class Enemies {
 
   constructor(game: Game) {
     this.game = game
+
+    this.soundPlayer = new SoundPlayer(this.game.audioContext)
+    this.soundPlayer.setVolume(0.1)
 
     this.sprite = new Image()
     this.sprite.src = '/images/game/enemy.png'

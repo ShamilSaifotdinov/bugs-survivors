@@ -1,8 +1,10 @@
 import Game from '.'
 import { isPointInsideCircle } from '../utils'
+import { SoundPlayer } from './SoundPlayer'
 
 class Player {
   game: Game
+  soundPlayer: SoundPlayer
 
   width = 70
   height = 70
@@ -16,7 +18,7 @@ class Player {
   frame = 0
   lastDirectionX = 0
   lastDirectionY = 1
-  reloadTime = 60
+  reloadTime = 65
   damage = 1 //max damage 11
   level = 0
   exp = 0
@@ -31,6 +33,8 @@ class Player {
 
   constructor(game: Game) {
     this.game = game
+    this.soundPlayer = new SoundPlayer(this.game.audioContext)
+    this.soundPlayer.setVolume(0.2)
 
     this.sprite = new Image()
     this.sprite.src = '/images/game/player.png'
@@ -140,6 +144,7 @@ class Player {
           this.hp--
           this.deadless = 200
           this.game.Camera.y -= 20
+          this.soundPlayer.playSound(100, 0.03, 'square')
         }
       }
 
@@ -155,6 +160,10 @@ class Player {
   }
 
   upgrade(id: number) {
+    this.soundPlayer.playSound(450, 0.05, 'triangle')
+    setTimeout(() => {
+      this.soundPlayer.playSound(650, 0.05, 'triangle')
+    }, 50)
     switch (id) {
       //increase speed
       case 0:

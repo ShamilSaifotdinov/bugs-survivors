@@ -1,5 +1,6 @@
 import Game from '.'
 import { rand } from '../utils'
+import { SoundPlayer } from './SoundPlayer'
 
 interface Bullet {
   width: number
@@ -17,6 +18,7 @@ interface Bullet {
 
 class Bullets {
   game: Game
+  soundPlayer: SoundPlayer
   state: Bullet[] = []
 
   sprite: HTMLImageElement
@@ -24,6 +26,8 @@ class Bullets {
 
   constructor(game: Game) {
     this.game = game
+    this.soundPlayer = new SoundPlayer(this.game.audioContext)
+    this.soundPlayer.setVolume(0.05)
 
     this.sprite = new Image()
     this.sprite.src = '/images/game/bullet.png'
@@ -87,6 +91,11 @@ class Bullets {
                 this.game.Enemies.state[j].y +
                   this.game.Enemies.state[j].height / 2
             ) {
+              this.soundPlayer.playSound(
+                this.state[i].damage * 100,
+                0.02,
+                'sawtooth'
+              )
               this.game.Enemies.state[j].hp -= this.state[i].damage
               this.game.TextParticles.createTextParticles(
                 '-' + this.state[i].damage,
@@ -120,6 +129,8 @@ class Bullets {
         frameLine: 0,
         frame: 0,
       })
+
+      this.soundPlayer.playSound(100 + rand(50, 100), 0.02, 'square')
     }
 
     if (this.game.Player.flameThrow > 0) {

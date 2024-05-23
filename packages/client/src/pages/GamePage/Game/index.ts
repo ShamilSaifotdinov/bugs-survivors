@@ -16,7 +16,7 @@ class Game implements IGame {
   Enemies: Enemies
   Exp: Exps
   Bullets: Bullets
-
+  audioContext: AudioContext
   canvas?: CanvasController
   CanvasWidth = window.innerWidth
   CanvasHeight = window.innerHeight
@@ -36,6 +36,7 @@ class Game implements IGame {
     public setShowCards: React.Dispatch<React.SetStateAction<boolean>>,
     public navigate: NavigateFunction
   ) {
+    this.audioContext = new AudioContext()
     this.Camera = new Camera(this)
     this.TextParticles = new TextParticles(this)
     this.Player = new Player(this)
