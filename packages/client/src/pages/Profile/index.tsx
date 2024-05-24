@@ -3,11 +3,12 @@ import styles from './styles.module.scss'
 import AvatarLoad from '../../components/AvatarLoad/AvatarLoad'
 import PreviousPageBtn from '../../components/PreviousPageBtn'
 import PasswordChange from './PasswordChange'
-import { getUserInfo } from '../../api/basic/auth'
 import { changeUserProfile } from '../../api/basic/users'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { User } from '../../api/basic/types'
 import { RESOURCES_URL } from '../../api/basic/basicInstance'
+import { useValidationForm } from '../../hooks/useValidationForm'
+import { useLoggedInUser } from '../../hooks/useLoggedInUser'
 
 const initialData = {
   first_name: '',
@@ -27,37 +28,23 @@ const fields: Partial<User> = {
 }
 
 function ProfilePage() {
-  const [profile, setProfile] = useState<Partial<User>>(initialData)
+  const {
+    form: profile,
+    setForm: setProfile,
+    valid,
+    formIsValid,
+  } = useValidationForm(initialData)
+
+  const loggedInUser = useLoggedInUser()
 
   useEffect(() => {
-    ;(async function () {
-      try {
-        const data = await getUserInfo()
-        setProfile(data)
-      } catch (error) {
-        alert(error)
-      }
-    })()
-  }, [])
+    if (loggedInUser) {
+      setProfile(loggedInUser)
+    }
+  }, [loggedInUser])
 
   const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
-    switch (e.target.name) {
-      case 'first_name':
-        setProfile({ ...profile, first_name: e.target?.value })
-        break
-      case 'second_name':
-        setProfile({ ...profile, second_name: e.target?.value })
-        break
-      case 'login':
-        setProfile({ ...profile, login: e.target?.value })
-        break
-      case 'email':
-        setProfile({ ...profile, email: e.target?.value })
-        break
-      case 'phone':
-        setProfile({ ...profile, phone: e.target?.value })
-        break
-    }
+    setProfile({ ...profile, [e.target.name]: e.target?.value })
   }
 
   const handleSubmitData = async (e: React.FormEvent) => {
@@ -84,12 +71,21 @@ function ProfilePage() {
                 <Grid container gap="1rem" justifyContent={'center'}>
                   {Object.keys(fields).map(field => {
                     const key = field as keyof User
+                    const isError =
+                      !valid[key].valid.isValid && valid[key].blur.isDirty
+                    const isHelperText =
+                      !valid[key].valid.isValid && valid[key].blur.isDirty
+                        ? valid[key].valid.errorText
+                        : ' '
                     return (
                       <Box key={key} className={styles.fieldItem}>
                         <Typography>{fields[key]}</Typography>
                         <TextField
+                          error={isError}
+                          helperText={isHelperText}
+                          onBlur={valid[key].blur.onBlur}
                           sx={{ width: '45%' }}
-                          label="First name"
+                          label={fields[key]}
                           value={profile[key]}
                           name={field}></TextField>
                       </Box>
@@ -101,7 +97,11 @@ function ProfilePage() {
                     <Typography>Password</Typography>
                     <PasswordChange />
                   </Box>
-                  <Button type="submit" variant="contained" color="primary">
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    disabled={!formIsValid}>
                     SAVE CHANGES
                   </Button>
                 </Grid>
