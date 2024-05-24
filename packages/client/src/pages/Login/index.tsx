@@ -4,8 +4,10 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SignInData, signIn } from '../../api/basic/auth'
 import { useValidationForm } from '../../hooks/useValidationForm'
+import { useLoggedInUser } from '../../hooks/useLoggedInUser'
 
 function Login() {
+  useLoggedInUser()
   const navigate = useNavigate()
 
   const initialData = {
@@ -88,7 +90,7 @@ function Login() {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => navigate('/signup/')}>
+                onClick={() => navigate('/signup')}>
                 SIGN UP
               </Button>
             </div>
