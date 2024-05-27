@@ -8,8 +8,10 @@ import mockData from '../../../mockData.json'
 import ForumSubjectTable from './components/ForumSubjectTable'
 import { useEffect } from 'react'
 import ForumTopicTable from './components/ForumTopicTable'
+import { useLoggedInUser } from '../../hooks/useLoggedInUser'
 
 const Forum = () => {
+  useLoggedInUser()
   const { forumId, topicId } = useParams()
 
   const name = topicId

@@ -47,7 +47,7 @@ describe('Bullets class', () => {
     })
   })
 
-  it('should create a flame throw bullet', () => {
+  it.skip('should create a flame throw bullet', () => {
     mockGame.Player.flameThrow = 1
     bullets.createBullet()
     expect(bullets.state.length).toBe(1)

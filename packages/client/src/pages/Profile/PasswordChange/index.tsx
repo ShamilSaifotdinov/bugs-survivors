@@ -63,7 +63,7 @@ function PasswordChange() {
             }
             type="password"
             label="Old password"
-            name="old_password"
+            name="oldPassword"
             error={oldPassword.blur.isDirty && !oldPassword.valid.isValid}
             onBlur={oldPassword.blur.onBlur}
             value={passwords.oldPassword}
@@ -79,7 +79,7 @@ function PasswordChange() {
             }
             type="password"
             label="New password"
-            name="password"
+            name="newPassword"
             error={newPassword.blur.isDirty && !newPassword.valid.isValid}
             onBlur={newPassword.blur.onBlur}
             value={passwords.newPassword}
