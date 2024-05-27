@@ -10,17 +10,24 @@ class MockAudioContext {
   createOscillator() {
     return {
       type: '',
+      // eslint-disable-next-line no-undef
       frequency: { setValueAtTime: jest.fn() },
+      // eslint-disable-next-line no-undef
       connect: jest.fn(),
+      // eslint-disable-next-line no-undef
       start: jest.fn(),
+      // eslint-disable-next-line no-undef
       stop: jest.fn(),
+      // eslint-disable-next-line no-undef
       disconnect: jest.fn(),
     }
   }
 
   createGain() {
     return {
+      // eslint-disable-next-line no-undef
       gain: { setValueAtTime: jest.fn() },
+      // eslint-disable-next-line no-undef
       connect: jest.fn(),
     }
   }
