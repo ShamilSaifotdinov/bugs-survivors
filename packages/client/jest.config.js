@@ -12,6 +12,6 @@ export default {
   moduleNameMapper: {
     '\\.(css|scss)$': 'identity-obj-proxy',
   },
-  setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   setupFiles: ['jest-canvas-mock'],
 }

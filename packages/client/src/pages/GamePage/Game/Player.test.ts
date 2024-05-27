@@ -1,18 +1,19 @@
 import Player from './Player'
 import { isPointInsideCircle } from '../utils'
-import Game from './'
+import mockGame from './'
 
 jest.mock('../utils', () => ({
   isPointInsideCircle: jest.fn(),
 }))
 
 describe('Player', () => {
-  let game: Game
+  let mockGame: mockGame
   let player: Player
   let ctx: CanvasRenderingContext2D
 
   beforeEach(() => {
-    game = {
+    mockGame = {
+      audioContext: new AudioContext(),
       CanvasWidth: 800,
       CanvasHeight: 600,
       Player: {
@@ -32,9 +33,9 @@ describe('Player', () => {
         createTextParticles: jest.fn(),
       },
       setShowCards: jest.fn(),
-    } as unknown as Game
+    } as unknown as mockGame
 
-    player = new Player(game)
+    player = new Player(mockGame)
     player.spriteIsLoaded = true
     ctx = document
       .createElement('canvas')
@@ -59,12 +60,12 @@ describe('Player', () => {
     expect(player.exp).toBe(0)
     expect(player.level).toBe(1)
     expect(player.nextExp).toBeCloseTo(3)
-    expect(game.setShowCards).toHaveBeenCalledWith(true)
+    expect(mockGame.setShowCards).toHaveBeenCalledWith(true)
   })
 
   test('should decrease hp and set deadless when colliding with enemy', () => {
     player.deadless = 0
-    game.Enemies.state.push({
+    mockGame.Enemies.state.push({
       x: 50,
       y: 50,
       width: 30,
@@ -88,7 +89,7 @@ describe('Player', () => {
     player.upgrade(0)
 
     expect(player.speed).toBe(4)
-    expect(game.TextParticles.createTextParticles).toHaveBeenCalledWith(
+    expect(mockGame.TextParticles.createTextParticles).toHaveBeenCalledWith(
       '+1 speed',
       player.x + player.width / 2,
       player.y + player.height / 2,
@@ -101,7 +102,7 @@ describe('Player', () => {
     player.upgrade(1)
 
     expect(player.hp).toBe(4)
-    expect(game.TextParticles.createTextParticles).toHaveBeenCalledWith(
+    expect(mockGame.TextParticles.createTextParticles).toHaveBeenCalledWith(
       '+1 hp',
       player.x + player.width / 2,
       player.y + player.height / 2,
@@ -114,7 +115,7 @@ describe('Player', () => {
     player.upgrade(2)
 
     expect(player.damage).toBe(2)
-    expect(game.TextParticles.createTextParticles).toHaveBeenCalledWith(
+    expect(mockGame.TextParticles.createTextParticles).toHaveBeenCalledWith(
       '+1 damage',
       player.x + player.width / 2,
       player.y + player.height / 2,
@@ -127,7 +128,7 @@ describe('Player', () => {
     player.upgrade(3)
 
     expect(player.reloadTime).toBe(48)
-    expect(game.TextParticles.createTextParticles).toHaveBeenCalledWith(
+    expect(mockGame.TextParticles.createTextParticles).toHaveBeenCalledWith(
       '-25% reload time',
       player.x + player.width / 2,
       player.y + player.height / 2,
@@ -140,7 +141,7 @@ describe('Player', () => {
     player.upgrade(4)
 
     expect(player.expRadius).toBe(120)
-    expect(game.TextParticles.createTextParticles).toHaveBeenCalledWith(
+    expect(mockGame.TextParticles.createTextParticles).toHaveBeenCalledWith(
       '+20% magnet radius',
       player.x + player.width / 2,
       player.y + player.height / 2,
@@ -149,7 +150,7 @@ describe('Player', () => {
   })
 
   test('should kill all enemies', () => {
-    game.Enemies.state.push(
+    mockGame.Enemies.state.push(
       {
         hp: 10,
         x: 0,
@@ -178,9 +179,9 @@ describe('Player', () => {
 
     player.upgrade(5)
 
-    expect(game.Enemies.state[0].hp).toBe(0)
-    expect(game.Enemies.state[1].hp).toBe(10) // Second enemy remains unaffected
-    expect(game.TextParticles.createTextParticles).toHaveBeenCalledWith(
+    expect(mockGame.Enemies.state[0].hp).toBe(0)
+    expect(mockGame.Enemies.state[1].hp).toBe(10) // Second enemy remains unaffected
+    expect(mockGame.TextParticles.createTextParticles).toHaveBeenCalledWith(
       'ULTRA KILL',
       player.x + player.width / 2,
       player.y + player.height / 2,
@@ -193,7 +194,7 @@ describe('Player', () => {
     player.upgrade(6)
 
     expect(player.flameThrow).toBe(500)
-    expect(game.TextParticles.createTextParticles).toHaveBeenCalledWith(
+    expect(mockGame.TextParticles.createTextParticles).toHaveBeenCalledWith(
       'FLAMETHROW',
       player.x + player.width / 2,
       player.y + player.height / 2,
@@ -206,7 +207,7 @@ describe('Player', () => {
     player.upgrade(7)
 
     expect(player.deadless).toBe(900)
-    expect(game.TextParticles.createTextParticles).toHaveBeenCalledWith(
+    expect(mockGame.TextParticles.createTextParticles).toHaveBeenCalledWith(
       'DEADLESS',
       player.x + player.width / 2,
       player.y + player.height / 2,

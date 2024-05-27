@@ -7,6 +7,7 @@ describe('Exps', () => {
 
   beforeEach(() => {
     mockGame = {
+      audioContext: new AudioContext(),
       CanvasWidth: 800,
       CanvasHeight: 600,
       GameTick: 0,
