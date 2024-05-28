@@ -18,7 +18,7 @@ export const inputValidators: Record<string, ValidatorProps> = {
   },
   login: {
     regExp: /^(?=.*[a-zA-Z])[a-zA-Z0-9_-]{3,20}$/,
-    errorText: '8 to 40 chars, without space and spec chars',
+    errorText: '3 to 20 chars, without space and spec chars',
   },
   password: {
     regExp:
