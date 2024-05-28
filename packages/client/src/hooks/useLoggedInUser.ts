@@ -1,22 +1,29 @@
-import { useState } from 'react'
-import { getUserInfo } from '../api/basic/auth'
 import { useAsyncEffect } from './useAsyncEffect'
-import { User } from '../api/basic/types'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useAppDispatch } from './reduxHooks'
+import { fetchUser } from '../store/slices/userSlice'
 
 export function useLoggedInUser() {
-  const [loggedInUser, setLoggedInUser] = useState<User | null>(null)
   const navigate = useNavigate()
+  const location = useLocation()
+  const dispatch = useAppDispatch()
 
   useAsyncEffect(async () => {
     try {
-      const userInfo = await getUserInfo()
-      setLoggedInUser(userInfo)
+      await dispatch(fetchUser()).unwrap()
+      if (location.pathname === '/' || location.pathname === '/signup') {
+        navigate('/main_menu')
+      }
     } catch (error) {
       console.error(error)
-      navigate('/signin/')
+      if (
+        location.pathname !== '/' &&
+        location.pathname !== '/signup' &&
+        location.pathname !== '/game' &&
+        location.pathname !== '/gameOver'
+      ) {
+        navigate('/')
+      }
     }
   }, [])
-
-  return loggedInUser
 }

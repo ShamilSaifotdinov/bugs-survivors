@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { VitePWA } from 'vite-plugin-pwa'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -11,7 +12,16 @@ export default defineConfig({
   define: {
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
-  plugins: [react()],
+  plugins: [
+    react(),
+    VitePWA({
+      strategies: 'injectManifest',
+      includeAssets: ['images/**/*.png', 'svg/*.svg'],
+      injectManifest: {
+        globPatterns: ['**/*.{js,css,html,ttf}'],
+      },
+    }),
+  ],
   css: {
     preprocessorOptions: {
       scss: {

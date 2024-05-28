@@ -3,11 +3,13 @@ import styles from './styles.module.scss'
 import AvatarLoad from '../../components/AvatarLoad/AvatarLoad'
 import PreviousPageBtn from '../../components/PreviousPageBtn'
 import PasswordChange from './PasswordChange'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { User } from '../../api/basic/types'
 import { RESOURCES_URL } from '../../api/basic/basicInstance'
-import { changeProfile, fetchUser } from '../../store/slices/userSlice'
+import { useValidationForm } from '../../hooks/useValidationForm'
+import { useLoggedInUser } from '../../hooks/useLoggedInUser'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
+import { changeProfile } from '../../store/slices/userSlice'
 
 const initialData = {
   first_name: '',
@@ -27,27 +29,30 @@ const fields: Partial<User> = {
 }
 
 function ProfilePage() {
+  const {
+    form: profile,
+    setForm: setProfile,
+    valid,
+    formIsValid,
+  } = useValidationForm(initialData)
+
+  useLoggedInUser()
+
   const user = useAppSelector(state => state.user.user)
   const dispatch = useAppDispatch()
-  const [profile, setProfile] = useState<Partial<User>>(initialData)
-
-  useEffect(() => {
-    dispatch(fetchUser())
-  }, [])
 
   useEffect(() => {
     setProfile(user)
   }, [user])
 
   const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
-    setProfile({ ...profile, [e.target.name]: e.target.value })
+    setProfile({ ...profile, [e.target.name]: e.target?.value })
   }
 
   const handleSubmitData = async (e: React.FormEvent) => {
     e.preventDefault()
     dispatch(changeProfile(profile))
   }
-
   return (
     <Grid container className={styles.profile}>
       <Grid item xs={12} md={6} xl={4} className={styles.gridItem}>
@@ -56,7 +61,7 @@ function ProfilePage() {
             <PreviousPageBtn className={styles.buttonPrev} />
             <Grid container gap={'3.8rem'} justifyContent={'center'}>
               <AvatarLoad
-                src={`${RESOURCES_URL}${user.avatar}`}
+                src={`${RESOURCES_URL}${profile.avatar}`}
                 onChange={() => console.log('submit avatar')}
                 className={styles.avatar}></AvatarLoad>
               <form
@@ -66,12 +71,21 @@ function ProfilePage() {
                 <Grid container gap="1rem" justifyContent={'center'}>
                   {Object.keys(fields).map(field => {
                     const key = field as keyof User
+                    const isError =
+                      !valid[key].valid.isValid && valid[key].blur.isDirty
+                    const isHelperText =
+                      !valid[key].valid.isValid && valid[key].blur.isDirty
+                        ? valid[key].valid.errorText
+                        : ' '
                     return (
                       <Box key={key} className={styles.fieldItem}>
                         <Typography>{fields[key]}</Typography>
                         <TextField
+                          error={isError}
+                          helperText={isHelperText}
+                          onBlur={valid[key].blur.onBlur}
                           sx={{ width: '45%' }}
-                          label="First name"
+                          label={fields[key]}
                           value={profile[key]}
                           name={field}></TextField>
                       </Box>
@@ -83,7 +97,11 @@ function ProfilePage() {
                     <Typography>Password</Typography>
                     <PasswordChange />
                   </Box>
-                  <Button type="submit" variant="contained" color="primary">
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    disabled={!formIsValid}>
                     SAVE CHANGES
                   </Button>
                 </Grid>

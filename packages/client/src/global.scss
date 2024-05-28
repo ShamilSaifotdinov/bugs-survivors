@@ -1,6 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&family=Press+Start+2P&display=swap');
 @import './src/assets/scss/variables';
 @import './src/assets/scss/reset';
+
+@font-face {
+  font-family: 'Press Start 2P';
+  src: url('/font/PressStart2P-Regular.TTF') format('truetype');
+}
 
 *,
 *:before,

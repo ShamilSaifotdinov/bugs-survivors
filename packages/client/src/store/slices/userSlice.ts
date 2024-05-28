@@ -76,7 +76,6 @@ const userSlice = createSlice({
       .addCase(fetchUser.rejected, (state, action) => {
         state.status = 'rejected'
         state.error = action.payload
-        alert(action.payload)
       }),
       builder
         .addCase(changeProfile.pending, state => {

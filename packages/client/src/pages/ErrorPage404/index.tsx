@@ -6,7 +6,7 @@ function ErrorPage404() {
     <div className={styles.container}>
       <Button
         type="button"
-        href="/"
+        href="/main_menu"
         sx={{ marginBottom: '16vh', position: 'absolute' }}
         variant="contained">
         BACK TO MAIN MENU
