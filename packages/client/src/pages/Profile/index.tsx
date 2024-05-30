@@ -1,12 +1,11 @@
 import { Button, Grid, TextField, Typography, Box } from '@mui/material'
 import styles from './styles.module.scss'
-import AvatarLoad from '../../components/AvatarLoad/AvatarLoad'
+import AvatarLoad from '../../components/AvatarLoad'
 import PreviousPageBtn from '../../components/PreviousPageBtn'
 import PasswordChange from './PasswordChange'
 import { changeUserProfile } from '../../api/basic/users'
 import { useEffect } from 'react'
 import { User } from '../../api/basic/types'
-import { RESOURCES_URL } from '../../api/basic/basicInstance'
 import { useValidationForm } from '../../hooks/useValidationForm'
 import { useLoggedInUser } from '../../hooks/useLoggedInUser'
 
@@ -61,9 +60,9 @@ function ProfilePage() {
             <PreviousPageBtn className={styles.buttonPrev} />
             <Grid container gap={'3.8rem'} justifyContent={'center'}>
               <AvatarLoad
-                src={`${RESOURCES_URL}${profile.avatar}`}
-                onChange={() => console.log('submit avatar')}
-                className={styles.avatar}></AvatarLoad>
+                src={typeof profile.avatar === 'string' ? profile.avatar : ''}
+                className={styles.avatar}
+              />
               <form
                 className={styles.form}
                 onSubmit={handleSubmitData}
@@ -87,7 +86,8 @@ function ProfilePage() {
                           sx={{ width: '45%' }}
                           label={fields[key]}
                           value={profile[key]}
-                          name={field}></TextField>
+                          name={field}
+                        />
                       </Box>
                     )
                   })}
