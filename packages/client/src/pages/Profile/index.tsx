@@ -42,7 +42,7 @@ function ProfilePage() {
 
   useEffect(() => {
     setProfile(user)
-  }, [user])
+  }, [user, setProfile])
 
   const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
     setProfile({ ...profile, [e.target.name]: e.target?.value })

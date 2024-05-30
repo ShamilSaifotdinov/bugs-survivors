@@ -78,7 +78,8 @@ function RegisterPage() {
                     error={isError}
                     helperText={isHelperText}
                     type={field === 'password' ? 'password' : ''}
-                    onBlur={valid[key].blur.onBlur}></TextField>
+                    onBlur={valid[key].blur.onBlur}
+                  />
                 )
               })}
               <Box className={style.containerButton}>
