@@ -38,8 +38,17 @@ function ProfilePage() {
 
   useLoggedInUser()
 
-  const user = useAppSelector(state => state.user.user)
-  const dispatch = useAppDispatch()
+  // Убрать проверки после совмещения SSR и Redux
+  const user =
+    typeof window !== 'undefined'
+      ? useAppSelector(state => state.user.user)
+      : {}
+  const dispatch =
+    typeof window !== 'undefined'
+      ? useAppDispatch()
+      : (args: any) => {
+          console.log(args)
+        }
 
   useEffect(() => {
     setProfile(user)
