@@ -4,7 +4,7 @@ import {
   LinkProps as RouterLinkProps,
 } from 'react-router-dom'
 import { LinkProps } from '@mui/material/Link'
-import { ThemeOptions } from '@mui/material'
+import { createTheme } from '@mui/material'
 
 const LinkBehavior = forwardRef<
   HTMLAnchorElement,
@@ -31,7 +31,7 @@ const mediaBreakpoint = {
   xxl: '@media (max-width:1640px)',
 }
 
-export const themeOptions: ThemeOptions = {
+export const theme = createTheme({
   breakpoints: {
     values: breakpoints,
   },
@@ -225,4 +225,4 @@ export const themeOptions: ThemeOptions = {
       },
     },
   },
-}
+})
