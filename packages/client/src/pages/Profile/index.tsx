@@ -3,11 +3,12 @@ import styles from './styles.module.scss'
 import AvatarLoad from '../../components/AvatarLoad'
 import PreviousPageBtn from '../../components/PreviousPageBtn'
 import PasswordChange from './PasswordChange'
-import { changeUserProfile } from '../../api/basic/users'
 import { useEffect } from 'react'
 import { User } from '../../api/basic/types'
 import { useValidationForm } from '../../hooks/useValidationForm'
 import { useLoggedInUser } from '../../hooks/useLoggedInUser'
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
+import { changeProfile } from '../../store/slices/userSlice'
 
 const initialData = {
   first_name: '',
@@ -34,13 +35,14 @@ function ProfilePage() {
     formIsValid,
   } = useValidationForm(initialData)
 
-  const loggedInUser = useLoggedInUser()
+  useLoggedInUser()
+
+  const user = useAppSelector(state => state.user.user)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (loggedInUser) {
-      setProfile(loggedInUser)
-    }
-  }, [loggedInUser])
+    setProfile(user)
+  }, [user, setProfile])
 
   const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
     setProfile({ ...profile, [e.target.name]: e.target?.value })
@@ -48,10 +50,8 @@ function ProfilePage() {
 
   const handleSubmitData = async (e: React.FormEvent) => {
     e.preventDefault()
-    const response = await changeUserProfile(profile)
-    setProfile(response)
+    dispatch(changeProfile(profile))
   }
-
   return (
     <Grid container className={styles.profile}>
       <Grid item xs={12} md={6} xl={4} className={styles.gridItem}>
