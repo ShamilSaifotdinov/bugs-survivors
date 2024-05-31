@@ -17,14 +17,10 @@ import { theme } from './mui-workplace-preset'
 import routes from './routes'
 
 export const render = async (req: ExpressRequest) => {
-  // 1.
   const { query, dataRoutes } = createStaticHandler(routes)
-  // 2.
   const fetchRequest = createFetchRequest(req)
-  // 3.
   const context = await query(fetchRequest)
 
-  // 4.
   if (context instanceof Response) {
     throw context
   }
@@ -33,7 +29,6 @@ export const render = async (req: ExpressRequest) => {
   const { extractCriticalToChunks, constructStyleTagsFromChunks } =
     createEmotionServer(cache)
 
-  // 6.
   const router = createStaticRouter(dataRoutes, context)
 
   const html = ReactDOM.renderToString(
@@ -45,7 +40,6 @@ export const render = async (req: ExpressRequest) => {
     </CacheProvider>
   )
 
-  // Grab the CSS from emotion
   const emotionChunks = extractCriticalToChunks(html)
   const emotionCss = constructStyleTagsFromChunks(emotionChunks)
 

@@ -33,23 +33,18 @@ async function createServer() {
     const url = req.originalUrl
 
     try {
-      // Создаём переменные
       let render: (
         req: ExpressRequest
       ) => Promise<{ html: string; emotionCss: string; helmet: HelmetData }>
       let template: string
       if (vite) {
-        // Получаем файл client/index.html который мы правили ранее
         template = await fs.readFile(
           path.resolve(clientPath, 'index.html'),
           'utf-8'
         )
 
-        // Применяем встроенные HTML-преобразования vite и плагинов
         template = await vite.transformIndexHtml(url, template)
 
-        // Загружаем модуль клиента, который писали выше,
-        // он будет рендерить HTML-код
         render = (
           await vite.ssrLoadModule(
             path.join(clientPath, 'src/entry-server.tsx')
@@ -61,20 +56,16 @@ async function createServer() {
           'utf-8'
         )
 
-        // Получаем путь до модуля клиента, чтобы не тащить средства сборки клиента на сервер
         const pathToServer = path.join(
           clientPath,
           'dist/server/entry-server.js'
         )
 
-        // Импортируем этот модуль и вызываем с начальным состоянием
         render = (await import(pathToServer)).render
       }
 
-      // Получаем HTML-строку из JSX
       const { html: appHtml, emotionCss, helmet } = await render(req)
 
-      // Заменяем комментарий на сгенерированную HTML-строку
       const html = template
         .replace(
           `<!--ssr-helmet-->`,
@@ -83,7 +74,6 @@ async function createServer() {
         .replace(`<!--ssr-outlet-->`, appHtml)
         .replace(`<!--ssr-css-->`, emotionCss)
 
-      // Завершаем запрос и отдаём HTML-страницу
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {
       if (vite) {
