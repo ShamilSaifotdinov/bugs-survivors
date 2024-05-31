@@ -5,6 +5,7 @@ import fs from 'fs/promises'
 import { createServer as createViteServer, ViteDevServer } from 'vite'
 import express, { Request as ExpressRequest } from 'express'
 import path from 'path'
+import { HelmetData } from 'react-helmet'
 
 const port = process.env.PORT || 80
 const clientPath = path.join(__dirname, '..')
@@ -35,7 +36,7 @@ async function createServer() {
       // Создаём переменные
       let render: (
         req: ExpressRequest
-      ) => Promise<{ html: string; emotionCss: string }>
+      ) => Promise<{ html: string; emotionCss: string; helmet: HelmetData }>
       let template: string
       if (vite) {
         // Получаем файл client/index.html который мы правили ранее
@@ -71,17 +72,25 @@ async function createServer() {
       }
 
       // Получаем HTML-строку из JSX
-      const { html: appHtml, emotionCss } = await render(req)
+      const { html: appHtml, emotionCss, helmet } = await render(req)
 
       // Заменяем комментарий на сгенерированную HTML-строку
       const html = template
+        .replace(
+          `<!--ssr-helmet-->`,
+          `${helmet.meta.toString()} ${helmet.title.toString()} ${helmet.link.toString()}`
+        )
         .replace(`<!--ssr-outlet-->`, appHtml)
         .replace(`<!--ssr-css-->`, emotionCss)
 
       // Завершаем запрос и отдаём HTML-страницу
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {
-      vite.ssrFixStacktrace(e as Error)
+      if (vite) {
+        vite.ssrFixStacktrace(e as Error)
+      } else {
+        console.error(e)
+      }
       next(e)
     }
   })

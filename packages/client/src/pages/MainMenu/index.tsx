@@ -1,4 +1,5 @@
 import { Button, Typography } from '@mui/material'
+import { Helmet } from 'react-helmet'
 import styles from './styles.module.scss'
 import { logOut } from '../../api/basic/auth'
 import { useNavigate } from 'react-router-dom'
@@ -26,6 +27,11 @@ function MainMenu() {
   }
   return (
     <div className={styles['main-menu']}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Main menu</title>
+        <meta name="description" content="Main menu of game" />
+      </Helmet>
       <Typography
         sx={breakpointSizes}
         className={styles['main-menu_title']}

@@ -1,4 +1,5 @@
 import ReactDOM from 'react-dom/server'
+import { Helmet } from 'react-helmet'
 
 import { Request as ExpressRequest } from 'express'
 import {
@@ -48,5 +49,7 @@ export const render = async (req: ExpressRequest) => {
   const emotionChunks = extractCriticalToChunks(html)
   const emotionCss = constructStyleTagsFromChunks(emotionChunks)
 
-  return { html, emotionCss }
+  const helmet = Helmet.renderStatic()
+
+  return { html, emotionCss, helmet }
 }

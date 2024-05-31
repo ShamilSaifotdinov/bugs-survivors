@@ -1,5 +1,6 @@
 import styles from './styles.module.scss'
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material'
+import { Helmet } from 'react-helmet'
 import mockData from '../../../../../mockData.json'
 import { useNavigate } from 'react-router-dom'
 import { clsx } from 'clsx'
@@ -52,6 +53,11 @@ export default function ForumTable() {
   return (
     <>
       <div className={styles.table}>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Forum</title>
+          <meta name="description" content="Page of forums" />
+        </Helmet>
         <Table>
           <TableHead>
             <TableRow className={styles.tr}>
