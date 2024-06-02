@@ -26,5 +26,5 @@ export function useLoggedInUser() {
       console.error(error)
       navigate('/')
     }
-  }, [navigate, user.user.id])
+  }, [navigate, user?.user.id])
 }
