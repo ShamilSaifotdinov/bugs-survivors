@@ -1,4 +1,5 @@
 import { Button, Grid, TextField, Typography, Box } from '@mui/material'
+import { Helmet } from 'react-helmet'
 import styles from './styles.module.scss'
 import AvatarLoad from '../../components/AvatarLoad'
 import PreviousPageBtn from '../../components/PreviousPageBtn'
@@ -37,8 +38,17 @@ function ProfilePage() {
 
   useLoggedInUser()
 
-  const user = useAppSelector(state => state.user.user)
-  const dispatch = useAppDispatch()
+  // Убрать проверки после совмещения SSR и Redux
+  const user =
+    typeof window !== 'undefined'
+      ? useAppSelector(state => state.user.user)
+      : {}
+  const dispatch =
+    typeof window !== 'undefined'
+      ? useAppDispatch()
+      : (args: any) => {
+          console.log(args)
+        }
 
   useEffect(() => {
     setProfile(user)
@@ -54,6 +64,14 @@ function ProfilePage() {
   }
   return (
     <Grid container className={styles.profile}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Profile</title>
+        <meta
+          name="description"
+          content="Profile page with information about user"
+        />
+      </Helmet>
       <Grid item xs={12} md={6} xl={4} className={styles.gridItem}>
         <Grid container justifyContent={'center'}>
           <Grid item xs={8} sx={{ position: 'relative' }}>

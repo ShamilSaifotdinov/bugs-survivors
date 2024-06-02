@@ -1,5 +1,6 @@
 import { Button, FormHelperText, TextField, Typography } from '@mui/material'
 import style from './styles.module.scss'
+import { Helmet } from 'react-helmet'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SignInData, signIn } from '../../api/basic/auth'
@@ -78,6 +79,11 @@ function Login() {
 
   return (
     <section className={style.login}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Sign In</title>
+        <meta name="description" content="Sign In" />
+      </Helmet>
       <div className={style.container}>
         <div className={style.wrapper}>
           <div className={style.title}>

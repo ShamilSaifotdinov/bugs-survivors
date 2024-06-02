@@ -22,6 +22,9 @@
 Если вы хотите добавить dev зависимость, проделайте то же самое, но с флагом `dev`
 `yarn lerna add {your_dep} --dev --scope client`
 
+Удаление зависимости
+`yarn lerna exec 'yarn remove {your_dep}' --scope client`
+
 ### Тесты
 
 Для клиента используется [`react-testing-library`](https://testing-library.com/docs/react-testing-library/intro/)

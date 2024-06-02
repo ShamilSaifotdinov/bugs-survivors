@@ -1,4 +1,5 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
 import Cards from './Game/Cards'
 import styles from './styles.module.scss'
 import Game from './Game'
@@ -11,9 +12,11 @@ function GamePage() {
   const navigate = useNavigate()
   const [game, setGame] = useState<Game | null>(null)
 
-  if (game === null) {
-    setGame(new Game(setShowCards, navigate))
-  }
+  useEffect(() => {
+    if (game === null && typeof window !== 'undefined') {
+      setGame(new Game(setShowCards, navigate))
+    }
+  }, [game, navigate])
 
   const handleUpgrade = useCallback(
     (id: number) => game?.handleUpgrade(id),
@@ -22,6 +25,11 @@ function GamePage() {
 
   return (
     <div className={styles.canvas_container}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Bugs Survivors</title>
+        <meta name="description" content="Game Bugs Survivors" />
+      </Helmet>
       {showCards && <Cards upgradePick={handleUpgrade} />}
       {game && <Canvas game={game} />}
       <Button
