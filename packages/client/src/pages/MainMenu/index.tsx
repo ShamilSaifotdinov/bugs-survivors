@@ -1,8 +1,8 @@
 import { Button, Typography } from '@mui/material'
 import styles from './styles.module.scss'
-import { logOut } from '../../api/basic/auth'
-import { useNavigate } from 'react-router-dom'
 import { useLoggedInUser } from '../../hooks/useLoggedInUser'
+import { logOutUser } from '../../store/slices/userSlice'
+import { useAppDispatch } from '../../hooks/reduxHooks'
 
 const breakpointSizes = {
   fontSize: {
@@ -14,16 +14,16 @@ const breakpointSizes = {
 
 function MainMenu() {
   useLoggedInUser()
-  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
-  async function handleLogout() {
+  function handleLogout() {
     try {
-      await logOut()
+      dispatch(logOutUser())
     } catch (error) {
       console.error(error)
     }
-    navigate('/')
   }
+
   return (
     <div className={styles['main-menu']}>
       <Typography

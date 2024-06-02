@@ -1,14 +1,44 @@
 import { Button, FormHelperText, TextField, Typography } from '@mui/material'
 import style from './styles.module.scss'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SignInData, signIn } from '../../api/basic/auth'
 import { useValidationForm } from '../../hooks/useValidationForm'
 import { useLoggedInUser } from '../../hooks/useLoggedInUser'
+import { yandexOauth, yandexServiceId } from '../../api/basic/oauth'
+import { useAppSelector } from '../../hooks/reduxHooks'
 
 function Login() {
+  const user = useAppSelector(state => state.user)
   useLoggedInUser()
   const navigate = useNavigate()
+
+  const [serviceId, setServiceId] = useState<string | null>(null)
+
+  useEffect(() => {
+    yandexServiceId().then((data: { service_id: string }) => {
+      setServiceId(data.service_id)
+    })
+  }, [])
+
+  useEffect(() => {
+    if (![null, undefined, 'resolved'].includes(user.status)) {
+      return
+    }
+    if (user.user.id) {
+      navigate('/main_menu')
+    }
+    if (window.location.search) {
+      const code = window.location.search.substring(1).split('&')[0].slice(5)
+
+      yandexOauth({
+        code: code,
+        redirect_uri: 'http://localhost:3000',
+      })
+        .then(() => navigate('/main_menu'))
+        .catch(error => setLoginError(error.message))
+    }
+  }, [navigate, user.status, user.user.id])
 
   const initialData = {
     login: '',
@@ -95,6 +125,15 @@ function Login() {
               </Button>
             </div>
           </form>
+          {serviceId && (
+            <Button
+              href={`https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceId}&redirect_uri=http://localhost:3000`}
+              variant="contained"
+              color="primary"
+              className={style.oauth_button}>
+              Авторизоваться через Яндекс
+            </Button>
+          )}
           <Button href="/game" variant="contained" color="primary">
             Demo
           </Button>
