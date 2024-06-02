@@ -15,7 +15,12 @@ const breakpointSizes = {
 
 function MainMenu() {
   useLoggedInUser()
-  const dispatch = useAppDispatch()
+  const dispatch =
+    typeof window !== 'undefined'
+      ? useAppDispatch()
+      : (args: any) => {
+          console.log(args)
+        }
 
   function handleLogout() {
     try {
