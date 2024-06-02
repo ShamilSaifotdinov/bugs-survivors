@@ -10,7 +10,7 @@ export function useLoggedInUser() {
   const user = useAppSelector(state => state.user)
 
   useAsyncEffect(async () => {
-    if (user.user.id) {
+    if (user?.user.id) {
       if (location.pathname === '/' || location.pathname === '/signup') {
         navigate('/main_menu')
       }
@@ -26,5 +26,5 @@ export function useLoggedInUser() {
       console.error(error)
       navigate('/')
     }
-  }, [navigate, user.user.id])
+  }, [navigate, user?.user.id])
 }
