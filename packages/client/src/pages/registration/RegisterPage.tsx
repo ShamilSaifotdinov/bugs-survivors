@@ -1,4 +1,5 @@
 import { Box, Button, Grid, TextField, Typography } from '@mui/material'
+import { Helmet } from 'react-helmet'
 import { useNavigate } from 'react-router-dom'
 import { useValidationForm } from '../../hooks/useValidationForm'
 import style from './styles.module.scss'
@@ -48,6 +49,11 @@ function RegisterPage() {
   }
   return (
     <Grid container className={style.registration}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Sign Up</title>
+        <meta name="description" content="Sign Up" />
+      </Helmet>
       <Grid container className={style.registration_container}>
         <Grid container className={style.registration_content} gap={'3.8rem'}>
           <div className={style.title}>

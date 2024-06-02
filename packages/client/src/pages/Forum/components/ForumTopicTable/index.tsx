@@ -10,6 +10,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material'
+import { Helmet } from 'react-helmet'
 import mockData from '../../../../../mockData.json'
 import { useParams } from 'react-router-dom'
 import EmojiPicker from '@emoji-mart/react'
@@ -25,26 +26,27 @@ export default function ForumTopicTable() {
   const [textareaText, setTextareaText] = useState('')
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 
+  const topicData = mockData?.forum
+    .find(item => item.id === forumId)
+    ?.data.find(item => item.id === topicId)
+
   const tableRowsData =
-    mockData?.forum
-      .find(item => item.id === forumId)
-      ?.data.find(item => item.id === topicId)
-      ?.answers?.map(item => ({
-        id: item.id,
-        answer: item.answer,
-        author: (
-          <div className={styles.user}>
-            <Avatar
-              className={styles.avatar}
-              alt={item.author.name}
-              src={item.author.avatar}
-            />
-            <Typography variant="body1" fontSize="0.75rem">
-              {item.author.name}
-            </Typography>
-          </div>
-        ),
-      })) ?? []
+    topicData?.answers?.map(item => ({
+      id: item.id,
+      answer: item.answer,
+      author: (
+        <div className={styles.user}>
+          <Avatar
+            className={styles.avatar}
+            alt={item.author.name}
+            src={item.author.avatar}
+          />
+          <Typography variant="body1" fontSize="0.75rem">
+            {item.author.name}
+          </Typography>
+        </div>
+      ),
+    })) ?? []
 
   const tableRows = useMemo(
     () =>
@@ -105,6 +107,11 @@ export default function ForumTopicTable() {
 
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{topicData?.name}</title>
+        <meta name="description" content={topicData?.name} />
+      </Helmet>
       <div className={styles.table}>
         <Table>
           <TableBody>{tableRows}</TableBody>

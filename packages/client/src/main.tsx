@@ -1,19 +1,29 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
-import { ThemeProvider, createTheme } from '@mui/material'
-import { themeOptions } from './mui-workplace-preset'
+import './global.scss'
+import { ThemeProvider } from '@mui/material'
+import { theme } from './mui-workplace-preset'
+import CssBaseline from '@mui/material/CssBaseline'
+import { createEmotionCache } from './entry-server.utils'
+import { CacheProvider } from '@emotion/react'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import routes from './routes'
 import store from './store/index'
 import { Provider } from 'react-redux'
 
-const theme = createTheme(themeOptions)
+const cache = createEmotionCache()
+const router = createBrowserRouter(routes)
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.hydrateRoot(
+  document.getElementById('root') as HTMLElement,
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </ThemeProvider>
+    <CacheProvider value={cache}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
+      </ThemeProvider>
+    </CacheProvider>
   </React.StrictMode>
 )

@@ -12,6 +12,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
+import { Helmet } from 'react-helmet'
 import mockData from '../../../../../mockData.json'
 import { useNavigate, useParams } from 'react-router-dom'
 import { clsx } from 'clsx'
@@ -30,24 +31,24 @@ export default function ForumSubjectTable() {
     setOpen(false)
   }
 
+  const forumData = mockData?.forum.find(item => item.id === forumId)
+
   const tableRowsData =
-    mockData?.forum
-      .find(item => item.id === forumId)
-      ?.data?.map(item => ({
-        id: item.id,
-        name: item.name,
-        creator: (
-          <div className={styles.user}>
-            <Avatar
-              className={styles.avatar}
-              alt={item.creator.name}
-              src={item.creator.avatar}
-            />
-            <Typography variant="body1">{item.creator.name}</Typography>
-          </div>
-        ),
-        answers_count: item.answers.length,
-      })) ?? []
+    forumData?.data?.map(item => ({
+      id: item.id,
+      name: item.name,
+      creator: (
+        <div className={styles.user}>
+          <Avatar
+            className={styles.avatar}
+            alt={item.creator.name}
+            src={item.creator.avatar}
+          />
+          <Typography variant="body1">{item.creator.name}</Typography>
+        </div>
+      ),
+      answers_count: item.answers.length,
+    })) ?? []
 
   const tableRows = useMemo(
     () =>
@@ -96,6 +97,11 @@ export default function ForumSubjectTable() {
 
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{forumData?.name}</title>
+        <meta name="description" content={forumData?.name} />
+      </Helmet>
       <div className={styles.button_container}>
         <ButtonModal
           variant="contained"

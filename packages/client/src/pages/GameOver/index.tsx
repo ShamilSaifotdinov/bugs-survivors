@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom'
 import { Button, Grid, Link, List, ListItem, Typography } from '@mui/material'
+import { Helmet } from 'react-helmet'
 import LayoutWithBgImage from '../../components/LayoutWithBgImage'
 import styles from './styles.module.scss'
 import convertSeconds from '../../helpers/convertSeconds'
@@ -10,6 +11,11 @@ const GameOver = () => {
 
   return (
     <LayoutWithBgImage>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Result</title>
+        <meta name="description" content="Result of attempt" />
+      </Helmet>
       <Grid item className={styles.title}>
         <Typography variant="h1" component="h1">
           BUGS
