@@ -8,6 +8,7 @@ jest.mock('../../api/basic/auth', () => ({
   signUp: jest.fn(),
 }))
 
+// Мокаем проверку авторизованности пользователя
 jest.mock('../../hooks/useLoggedInUser', () => ({
   useLoggedInUser: jest.fn(),
 }))

@@ -26,7 +26,14 @@ export function useLoggedInUser() {
         }
       } catch (error) {
         console.error(error)
-        navigate('/')
+        if (
+          location.pathname !== '/' &&
+          location.pathname !== '/signup' &&
+          location.pathname !== '/game' &&
+          location.pathname !== '/gameOver'
+        ) {
+          navigate('/')
+        }
       }
     }, [navigate, user?.user.id])
   }

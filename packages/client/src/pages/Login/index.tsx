@@ -16,7 +16,7 @@ function Login() {
       ? useAppSelector(state => state.user)
       : {
           user: {
-            id: 0,
+            id: undefined,
             first_name: '',
             second_name: '',
             login: '',
@@ -54,7 +54,7 @@ function Login() {
         .then(() => navigate('/main_menu'))
         .catch(error => setLoginError(error.message))
     }
-  }, [navigate, user.status, user.user.id])
+  }, [navigate, user])
 
   const initialData = {
     login: '',
@@ -151,9 +151,8 @@ function Login() {
               href={`https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceId}&redirect_uri=http://localhost:3000`}
               variant="contained"
               color="primary"
-              className={style.oauth_button}>
-              Авторизоваться через Яндекс
-            </Button>
+              className={style.oauth_button}
+            />
           )}
           <Button href="/game" variant="contained" color="primary">
             Demo

@@ -11,7 +11,7 @@ type UserData = {
 
 const initialData: UserData = {
   user: {
-    id: 0,
+    id: undefined,
     first_name: '',
     second_name: '',
     login: '',
@@ -36,13 +36,12 @@ export const fetchUser = createAsyncThunk<
 })
 
 export const logOutUser = createAsyncThunk<
-  unknown,
+  undefined,
   undefined,
   { rejectValue: string }
 >('user/logOutUser', async (_, { rejectWithValue }) => {
   try {
-    const response = await logOut()
-    return response
+    await logOut()
   } catch (error) {
     return rejectWithValue((error as Error).message)
   }
@@ -97,7 +96,7 @@ const userSlice = createSlice({
           state.status = 'loading'
           state.error = null
         })
-        .addCase(logOutUser.fulfilled, (state, action) => {
+        .addCase(logOutUser.fulfilled, state => {
           state.status = 'resolved'
           state.user = initialData.user
         })

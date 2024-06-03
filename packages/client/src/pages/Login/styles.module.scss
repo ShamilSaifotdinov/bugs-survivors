@@ -55,5 +55,10 @@
 }
 
 .oauth_button {
-  text-align: center;
+  width: 4.25rem;
+  height: 2.5rem;
+  background-image: url('/svg/yandex.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: var(--primary-color-light);
 }
