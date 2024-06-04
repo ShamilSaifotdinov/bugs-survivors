@@ -8,6 +8,11 @@ jest.mock('../../api/basic/auth', () => ({
   signUp: jest.fn(),
 }))
 
+// Мокаем проверку авторизованности пользователя
+jest.mock('../../hooks/useLoggedInUser', () => ({
+  useLoggedInUser: jest.fn(),
+}))
+
 // Мокаем useNavigate для проверки переходов
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
