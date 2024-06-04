@@ -1,5 +1,10 @@
 import { Request as ExpressRequest } from 'express'
 import createCache from '@emotion/cache'
+import { PageInitContext } from './routes'
+
+export const createContext = (req: ExpressRequest): PageInitContext => ({
+  clientToken: req.cookies.token,
+})
 
 export function createEmotionCache() {
   return createCache({ key: 'ssr-css' })

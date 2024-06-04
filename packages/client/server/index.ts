@@ -6,6 +6,8 @@ import { createServer as createViteServer, ViteDevServer } from 'vite'
 import express, { Request as ExpressRequest } from 'express'
 import path from 'path'
 import { HelmetData } from 'react-helmet'
+import serialize from 'serialize-javascript'
+import cookieParser from 'cookie-parser'
 
 const port = process.env.PORT || 80
 const clientPath = path.join(__dirname, '..')
@@ -13,6 +15,8 @@ const isDev = process.env.NODE_ENV === 'development'
 
 async function createServer() {
   const app = express()
+
+  app.use(cookieParser())
 
   let vite: ViteDevServer | undefined
   if (isDev) {
@@ -33,9 +37,12 @@ async function createServer() {
     const url = req.originalUrl
 
     try {
-      let render: (
-        req: ExpressRequest
-      ) => Promise<{ html: string; emotionCss: string; helmet: HelmetData }>
+      let render: (req: ExpressRequest) => Promise<{
+        html: string
+        emotionCss: string
+        helmet: HelmetData
+        initialState: unknown
+      }>
       let template: string
       if (vite) {
         template = await fs.readFile(
@@ -64,7 +71,12 @@ async function createServer() {
         render = (await import(pathToServer)).render
       }
 
-      const { html: appHtml, emotionCss, helmet } = await render(req)
+      const {
+        html: appHtml,
+        emotionCss,
+        helmet,
+        initialState,
+      } = await render(req)
 
       const html = template
         .replace(
@@ -73,6 +85,12 @@ async function createServer() {
         )
         .replace(`<!--ssr-outlet-->`, appHtml)
         .replace(`<!--ssr-css-->`, emotionCss)
+        .replace(
+          `<!--ssr-initial-state-->`,
+          `<script>window.APP_INITIAL_STATE = ${serialize(initialState, {
+            isJSON: true,
+          })}</script>`
+        )
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {

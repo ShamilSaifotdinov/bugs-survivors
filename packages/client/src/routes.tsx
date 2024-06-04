@@ -9,6 +9,23 @@ import ErrorPage from './pages/Error'
 import ErrorPage500 from './pages/Error500'
 import GameOver from './pages/GameOver'
 import GamePage from './pages/GamePage'
+import { AppDispatch, RootState } from './store'
+
+export type PageInitArgs = {
+  dispatch: AppDispatch
+  state: RootState
+  ctx: PageInitContext
+}
+
+type Route = {
+  path: string
+  element: JSX.Element
+  errorElement?: JSX.Element
+  fetchData?: (args: PageInitArgs) => Promise<unknown>
+}
+export type PageInitContext = {
+  clientToken?: string
+}
 
 const errorBoundary = <ErrorPage title="Something went wrong :( Try later." />
 
@@ -65,6 +82,12 @@ const routes = [
     path: '/gameOver',
     element: <GameOver />,
   },
-].map(item => ({ ...item, errorElement: errorBoundary }))
+].map((item: Route) => ({
+  ...item,
+  // TODO: Заменить на нужных страницах fetchData для загрузки данных с сервера
+  //       для отображения данных на странице при первом рендеринге
+  fetchData: item?.fetchData ? item.fetchData : () => Promise.resolve(),
+  errorElement: errorBoundary,
+}))
 
 export default routes
