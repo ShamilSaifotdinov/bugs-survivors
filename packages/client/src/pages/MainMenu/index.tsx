@@ -15,13 +15,7 @@ const breakpointSizes = {
 
 function MainMenu() {
   useLoggedInUser()
-  // Убрать проверки после совмещения SSR и Redux
-  const dispatch =
-    typeof window !== 'undefined'
-      ? useAppDispatch()
-      : (args: any) => {
-          console.log(args)
-        }
+  const dispatch = useAppDispatch()
 
   function handleLogout() {
     try {
