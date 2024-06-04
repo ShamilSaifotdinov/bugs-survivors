@@ -103,7 +103,7 @@ function ProfilePage() {
                           onBlur={valid[key].blur.onBlur}
                           sx={{ width: '45%' }}
                           label={fields[key]}
-                          value={profile[key]}
+                          value={profile[key] ?? ''}
                           name={field}
                         />
                       </Box>
