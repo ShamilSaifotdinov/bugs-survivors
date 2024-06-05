@@ -23,7 +23,7 @@ function Login() {
   }, [])
 
   useEffect(() => {
-    if (![null, undefined, 'resolved'].includes(user.status)) {
+    if (![null, undefined, 'resolved', 'rejected'].includes(user.status)) {
       return
     }
     if (user.user.id) {

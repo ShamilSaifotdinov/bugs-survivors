@@ -57,7 +57,6 @@ export const render = async (req: ExpressRequest) => {
   ] = foundRoutes
 
   try {
-    console.log(routes, url, foundRoutes, fetchData)
     if (fetchData) {
       await fetchData({
         dispatch: store.dispatch,
@@ -66,7 +65,7 @@ export const render = async (req: ExpressRequest) => {
       })
     }
   } catch (e) {
-    console.log('Инициализация страницы произошла с ошибкой', e)
+    console.error('Инициализация страницы произошла с ошибкой', e)
   }
 
   store.dispatch(setPageHasBeenInitializedOnServer(true))
