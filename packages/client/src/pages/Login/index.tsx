@@ -10,22 +10,7 @@ import { yandexOauth, yandexServiceId } from '../../api/basic/oauth'
 import { useAppSelector } from '../../hooks/reduxHooks'
 
 function Login() {
-  // Убрать проверки после совмещения SSR и Redux
-  const user =
-    typeof window !== 'undefined'
-      ? useAppSelector(state => state.user)
-      : {
-          user: {
-            id: undefined,
-            first_name: '',
-            second_name: '',
-            login: '',
-            email: '',
-            phone: '',
-          },
-          status: null,
-          error: null,
-        }
+  const user = useAppSelector(state => state.user)
   useLoggedInUser()
   const navigate = useNavigate()
 
@@ -38,7 +23,7 @@ function Login() {
   }, [])
 
   useEffect(() => {
-    if (![null, undefined, 'resolved'].includes(user.status)) {
+    if (![null, undefined, 'resolved', 'rejected'].includes(user.status)) {
       return
     }
     if (user.user.id) {

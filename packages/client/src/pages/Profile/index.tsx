@@ -38,11 +38,8 @@ function ProfilePage() {
 
   useLoggedInUser()
 
-  // Убрать проверки после совмещения SSR и Redux
-  const user =
-    typeof window !== 'undefined'
-      ? useAppSelector(state => state.user.user)
-      : {}
+  const user = useAppSelector(state => state.user.user)
+
   const dispatch =
     typeof window !== 'undefined'
       ? useAppDispatch()
