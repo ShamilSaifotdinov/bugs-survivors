@@ -5,3 +5,5 @@ declare global {
     APP_INITIAL_STATE: RootState
   }
 }
+
+export {}
