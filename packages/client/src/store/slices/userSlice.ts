@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { getUserInfo } from '../../api/basic/auth'
+import { getUserInfo, logOut } from '../../api/basic/auth'
 import { User } from '../../api/basic/types'
 import { changeUserAvatar, changeUserProfile } from '../../api/basic/users'
 
@@ -11,6 +11,7 @@ type UserData = {
 
 const initialData: UserData = {
   user: {
+    id: undefined,
     first_name: '',
     second_name: '',
     login: '',
@@ -33,6 +34,19 @@ export const fetchUser = createAsyncThunk<
     return rejectWithValue((error as Error).message)
   }
 })
+
+export const logOutUser = createAsyncThunk<
+  undefined,
+  undefined,
+  { rejectValue: string }
+>('user/logOutUser', async (_, { rejectWithValue }) => {
+  try {
+    await logOut()
+  } catch (error) {
+    return rejectWithValue((error as Error).message)
+  }
+})
+
 export const changeProfile = createAsyncThunk<
   User,
   Partial<User>,
@@ -77,6 +91,19 @@ const userSlice = createSlice({
         state.status = 'rejected'
         state.error = action.payload
       }),
+      builder
+        .addCase(logOutUser.pending, state => {
+          state.status = 'loading'
+          state.error = null
+        })
+        .addCase(logOutUser.fulfilled, state => {
+          state.status = 'resolved'
+          state.user = initialData.user
+        })
+        .addCase(logOutUser.rejected, (state, action) => {
+          state.status = 'rejected'
+          state.error = action.payload
+        }),
       builder
         .addCase(changeProfile.pending, state => {
           state.status = 'loading'

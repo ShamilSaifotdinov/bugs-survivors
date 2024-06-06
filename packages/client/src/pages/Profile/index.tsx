@@ -38,11 +38,8 @@ function ProfilePage() {
 
   useLoggedInUser()
 
-  // Убрать проверки после совмещения SSR и Redux
-  const user =
-    typeof window !== 'undefined'
-      ? useAppSelector(state => state.user.user)
-      : {}
+  const user = useAppSelector(state => state.user.user)
+
   const dispatch =
     typeof window !== 'undefined'
       ? useAppDispatch()
@@ -103,7 +100,7 @@ function ProfilePage() {
                           onBlur={valid[key].blur.onBlur}
                           sx={{ width: '45%' }}
                           label={fields[key]}
-                          value={profile[key]}
+                          value={profile[key] ?? ''}
                           name={field}
                         />
                       </Box>
