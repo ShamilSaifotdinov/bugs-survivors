@@ -16,6 +16,7 @@ function GamePage() {
   const navigate = useNavigate()
   const [game, setGame] = useState<Game | null>(null)
   const { isFullScreen, toggleFullScreen } = useFullScreen()
+
   useEffect(() => {
     if (game === null && typeof window !== 'undefined') {
       setGame(new Game(setShowCards, navigate))
@@ -26,6 +27,7 @@ function GamePage() {
     (id: number) => game?.handleUpgrade(id),
     [game]
   )
+
   return (
     <div className={styles.canvas_container}>
       <Helmet>
