@@ -5,9 +5,9 @@ export const useFullScreen = () => {
 
   useEffect(() => {
     return () => {
-      exitFullscreen()
+      if (isFullScreen) exitFullscreen()
     }
-  }, [])
+  }, [isFullScreen])
 
   const exitFullscreen = () => {
     if (document.exitFullscreen) {
