@@ -6,11 +6,16 @@ import Game from './Game'
 import { useNavigate } from 'react-router-dom'
 import Canvas from '../../components/Canvas'
 import { Button } from '@mui/material'
+import IconButton from '@mui/material/IconButton'
+import FullscreenIcon from '@mui/icons-material/Fullscreen'
+import FullscreenExitIcon from '@mui/icons-material/FullscreenExit'
+import { useFullScreen } from '../../hooks/useFullScreen'
 
 function GamePage() {
   const [showCards, setShowCards] = useState(false)
   const navigate = useNavigate()
   const [game, setGame] = useState<Game | null>(null)
+  const { isFullScreen, toggleFullScreen } = useFullScreen()
 
   useEffect(() => {
     if (game === null && typeof window !== 'undefined') {
@@ -32,13 +37,21 @@ function GamePage() {
       </Helmet>
       {showCards && <Cards upgradePick={handleUpgrade} />}
       {game && <Canvas game={game} />}
-      <Button
-        className={styles.game_exit}
-        href="/main_menu"
-        variant="contained"
-        color="primary">
-        Exit
-      </Button>
+      <div className={styles.button_container}>
+        <IconButton
+          onClick={toggleFullScreen}
+          disableRipple={true}
+          sx={{ padding: '0.3rem', marginRight: '1rem' }}>
+          {isFullScreen ? (
+            <FullscreenExitIcon fontSize="large" />
+          ) : (
+            <FullscreenIcon fontSize="large" />
+          )}
+        </IconButton>
+        <Button href="/main_menu" variant="contained" color="primary">
+          Exit
+        </Button>
+      </div>
     </div>
   )
 }
