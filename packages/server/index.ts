@@ -4,7 +4,7 @@ import express from 'express'
 dotenv.config({ path: '../../.env' })
 
 import { connectPostgres } from './postgres'
-import { connectMongo } from './mongo'
+// import { connectMongo } from './mongo'
 
 const app = express()
 app.use(cors())
@@ -19,17 +19,19 @@ async function getAllUsersPostgres() {
   const users = await db?.query('SELECT * FROM users')
   return users
 }
-async function getAllUsersMongo() {
-  const db = await connectMongo()
-  const users = await db?.collection('users').find({}).toArray()
-  return users
-}
+
+// TODO: fix mongo db
+// async function getAllUsersMongo() {
+//   const db = await connectMongo()
+//   const users = await db?.collection('users').find({}).toArray()
+//   return users
+// }
 
 app.get('/testUsers', async (_, res) => {
   const usersPostgres = await getAllUsersPostgres()
-  const usersMongo = await getAllUsersMongo()
+  // const usersMongo = await getAllUsersMongo()
 
-  res.json({ usersPostgres: usersPostgres, usersMongo: usersMongo })
+  res.json({ usersPostgres: usersPostgres })
 })
 
 app.listen(port, () => {
