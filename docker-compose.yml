@@ -3,9 +3,6 @@ version: '3.9'
 services:
   client:
     container_name: prakticum-client
-    image: prakticum-client
-    env_file:
-      - './.env'
     build:
       context: .
       dockerfile: Dockerfile.client
@@ -14,13 +11,14 @@ services:
     restart: always
     ports:
       - '${CLIENT_PORT}:${CLIENT_PORT}'
+    environment:
+      - CLIENT_PORT=${CLIENT_PORT}
+      - SERVER_PORT=${SERVER_PORT}
     depends_on:
-      - postgres
       - server
 
   server:
     container_name: prakticum-server
-    image: prackicum-server
     env_file:
       - './.env'
     build:
