@@ -1,11 +1,11 @@
 import { Client } from 'pg'
 
-const { HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
+const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
   process.env
 
 const client = new Client({
   user: POSTGRES_USER,
-  host: HOST,
+  host: 'postgres',
   database: POSTGRES_DB,
   password: POSTGRES_PASSWORD,
   port: Number(POSTGRES_PORT),
