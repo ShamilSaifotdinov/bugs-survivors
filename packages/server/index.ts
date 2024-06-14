@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 import cors from 'cors'
 import express from 'express'
-dotenv.config({ path: '../../.env' })
+dotenv.config()
 
 import { connectPostgres } from './postgres'
 

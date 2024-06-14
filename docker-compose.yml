@@ -1,16 +1,22 @@
 version: '3.9'
 
 services:
-  postgres:
-    image: postgres:14
+  client:
+    container_name: prakticum-client
+    image: prakticum-client
     env_file:
       - './.env'
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+      args:
+        CLIENT_PORT: ${CLIENT_PORT}
+    restart: always
     ports:
-      - '${POSTGRES_PORT}:${POSTGRES_PORT}'
-    volumes:
-      - ./tmp/pgdata:/var/lib/postgresql/data
-    networks:
-      - awesome
+      - '${CLIENT_PORT}:${CLIENT_PORT}'
+    depends_on:
+      - postgres
+      - server
 
   server:
     container_name: prakticum-server
@@ -30,22 +36,16 @@ services:
     networks:
       - awesome
 
-  client:
-    container_name: prakticum-client
-    image: prakticum-client
+  postgres:
+    image: postgres:14
     env_file:
       - './.env'
-    build:
-      context: .
-      dockerfile: Dockerfile.client
-      args:
-        CLIENT_PORT: ${CLIENT_PORT}
-    restart: always
     ports:
-      - '${CLIENT_PORT}:${CLIENT_PORT}'
-    depends_on:
-      - postgres
-      - server
+      - '${POSTGRES_PORT}:${POSTGRES_PORT}'
+    volumes:
+      - ./tmp/pgdata:/var/lib/postgresql/data
+    networks:
+      - awesome
 
 networks:
   awesome:
