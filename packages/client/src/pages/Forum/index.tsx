@@ -15,7 +15,7 @@ const Forum = () => {
   const { forumId, topicId } = useParams()
 
   useEffect(() => {
-    fetch('/api/testUsers')
+    fetch('/api/v2/test')
       .then(res => res.json())
       .then(data => {
         console.log(data)
