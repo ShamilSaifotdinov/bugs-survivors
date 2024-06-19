@@ -71,10 +71,10 @@ export default function ForumTopicTable() {
                       column.className ? styles[column.className] : ''
                     )}>
                     {value}
+                    {column.className === 'answer_cell' ? <PickEmoji /> : null}
                   </TableCell>
                 )
               })}
-              <PickEmoji />
             </TableRow>
           )
         }),

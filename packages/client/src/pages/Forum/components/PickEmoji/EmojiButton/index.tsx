@@ -6,7 +6,7 @@ import data from '@emoji-mart/data'
 import clsx, { ClassValue } from 'clsx'
 
 type EmojiButtonProps = {
-  onEmojiSelect: (e: any) => void
+  onEmojiSelect: (e: string) => void
   classNameBtn?: ClassValue
   classNamePicker?: ClassValue
 }
@@ -28,17 +28,19 @@ function EmojiButton({
       <IconButton
         className={clsx(styles.emojiButton, classNameBtn)}
         onClick={toggleEmojiBar}
-        sx={{ padding: 0 }}>
-        <div className={styles.emojiButton} />
-      </IconButton>
+        sx={{
+          borderRadius: '0.4rem',
+          margin: '0 0 0.3rem 0.7rem',
+        }}
+      />
       {isPickerVisible ? (
         <div className={clsx(styles.pickerWrapper, classNamePicker)}>
           <EmojiPicker
             dynamicWidth={true}
             data={data}
             previewPosition="none"
-            onEmojiSelect={(e: any) => {
-              onEmojiSelect(e.native)
+            onEmojiSelect={({ native }: { native: string }) => {
+              onEmojiSelect(native)
               toggleEmojiBar()
             }}
           />
