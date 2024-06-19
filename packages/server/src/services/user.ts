@@ -5,7 +5,6 @@ class UserService {
     if (data.avatar === undefined) {
       data.avatar = null
     }
-    // const [instance, created] =
     await User.upsert(data)
   }
 }
