@@ -1,0 +1,136 @@
+openapi: 3.0.3
+info:
+  title: Bug Survivors Backend
+  description: |-
+    Backend API for Bug Survivors
+  version: 0.0.1
+externalDocs:
+  description: API of ya-praktikum.tech
+  url: https://ya-praktikum.tech/api/v2/swagger/
+servers:
+  - url: http://localhost:3002/api/v2
+tags:
+  - name: emoji
+    description: Emoji on topic
+paths:
+  /emoji/{topicId}:
+    get:
+      tags:
+        - emoji
+      operationId: getEmojiByTopicId
+      summary: Get topic emoji
+      description: Get emoji by topic ID
+      parameters:
+        - name: topicId
+          in: path
+          description: 'The topic which need fetch emoji'
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmojiOfTopic'
+        '400':
+          description: Invalid topicId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+        '403':
+          description: Forbidden (Not Authorized)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      tags:
+        - emoji
+      summary: Update topic emoji
+      description: Update topic emoji by id topic
+      operationId: updateEmoji
+      parameters:
+        - name: topicId
+          in: path
+          description: 'The topic which needs update emoji'
+          required: true
+          schema:
+            type: number
+      requestBody:
+        description: Update an existent emoji in database
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                topicId:
+                  type: number
+                  example: 1
+                emoji:
+                  $ref: '#/components/schemas/Emoji'
+        required: true
+      responses:
+        '200':
+          description: Succesful operation
+          content:
+            application/json:
+              schema:
+                type: string
+                example: OK
+        '400':
+          description: Invalid topic ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden (Not Authorized)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Emoji:
+      type: string
+      example: '😄'
+
+    EmojiOfTopic:
+      type: object
+      properties:
+        topicId:
+          type: integer
+          format: int64
+          required:
+            - topicId
+            - topicEmoji
+          example: 1
+        topicEmoji:
+          type: array
+          items:
+            $ref: '#/components/schemas/Emoji'
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
