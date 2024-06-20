@@ -39,7 +39,6 @@ async function createServer() {
       ? process.env.EXTERNAL_SERVER_URL
       : process.env.INTERNAL_SERVER_URL,
     changeOrigin: true,
-    pathRewrite: { '^/api': '' },
   })
 
   app.get('/api/*', backendProxy)
