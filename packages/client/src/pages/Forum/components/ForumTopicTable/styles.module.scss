@@ -13,6 +13,7 @@
 
 .tr {
   height: 13.375rem;
+  position: relative;
 }
 
 .tr .tc {
@@ -31,6 +32,7 @@
   vertical-align: baseline;
   background-color: var(--primary-color-light);
   color: #000;
+  position: relative;
 }
 
 .pagination {

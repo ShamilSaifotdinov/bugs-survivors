@@ -17,6 +17,7 @@ import EmojiPicker from '@emoji-mart/react'
 import emojiData from '@emoji-mart/data'
 import { clsx } from 'clsx'
 import { forumTopicColumns } from '../constants'
+import PickEmoji from '../PickEmoji'
 
 export default function ForumTopicTable() {
   const [isPending, startTransition] = useTransition()
@@ -70,6 +71,7 @@ export default function ForumTopicTable() {
                       column.className ? styles[column.className] : ''
                     )}>
                     {value}
+                    {column.className === 'answer_cell' ? <PickEmoji /> : null}
                   </TableCell>
                 )
               })}

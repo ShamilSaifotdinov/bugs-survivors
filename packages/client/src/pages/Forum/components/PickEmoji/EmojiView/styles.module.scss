@@ -1,0 +1,20 @@
+.container {
+  padding: 1px 4px 1px 4px;
+  background-color: #fff;
+  border: 1px solid var(--background-color);
+  border-radius: 30px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 0.3rem 0.7rem;
+
+  .emoji {
+    padding-bottom: 3px;
+  }
+
+  span {
+    margin-left: 5px;
+    font-size: 0.8rem;
+    color: #000;
+  }
+}

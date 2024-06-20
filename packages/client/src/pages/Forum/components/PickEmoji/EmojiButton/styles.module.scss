@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.emojiButton {
+  width: 2rem;
+  height: 2rem;
+  margin-bottom: 0.3rem;
+  background-image: url('/svg/smile.svg');
+  background-position: center;
+  background-size: 80%;
+  background-repeat: no-repeat;
+  position: absolute;
+  box-shadow: 0px 2px 2px 1px #00000024;
+}
+
+.pickerWrapper {
+  top: 3rem;
+  right: 0;
+  z-index: 10;
+  position: absolute;
+}
