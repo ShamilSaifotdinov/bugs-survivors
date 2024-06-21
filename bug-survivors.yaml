@@ -11,19 +11,19 @@ servers:
   - url: http://localhost:3002/api/v2
 tags:
   - name: emoji
-    description: Emoji on topic
+    description: Emoji on comment
 paths:
-  /emoji/{topicId}:
+  /emoji/{commentId}:
     get:
       tags:
         - emoji
-      operationId: getEmojiByTopicId
-      summary: Get topic emoji
-      description: Get emoji by topic ID
+      operationId: getEmojiByCommentId
+      summary: Get comment emoji
+      description: Get emoji by comment ID
       parameters:
-        - name: topicId
+        - name: commentId
           in: path
-          description: 'The topic which need fetch emoji'
+          description: 'The comment which need fetch emoji'
           required: true
           schema:
             type: number
@@ -33,9 +33,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EmojiOfTopic'
+                $ref: '#/components/schemas/EmojiOfComment'
         '400':
-          description: Invalid topicId
+          description: Invalid commentId
           content:
             application/json:
               schema:
@@ -57,13 +57,13 @@ paths:
     put:
       tags:
         - emoji
-      summary: Update topic emoji
-      description: Update topic emoji by id topic
+      summary: Update comment emoji
+      description: Update emoji by commentId
       operationId: updateEmoji
       parameters:
-        - name: topicId
+        - name: commentId
           in: path
-          description: 'The topic which needs update emoji'
+          description: 'The comment which needs update emoji'
           required: true
           schema:
             type: number
@@ -72,24 +72,17 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                topicId:
-                  type: number
-                  example: 1
-                emoji:
-                  $ref: '#/components/schemas/Emoji'
+              $ref: '#/components/schemas/RequestUpdateEmoji'
         required: true
       responses:
         '200':
-          description: Succesful operation
+          description: Successful operation
           content:
             application/json:
               schema:
-                type: string
-                example: OK
+                $ref: '#/components/schemas/EmojiOfComment'
         '400':
-          description: Invalid topic ID
+          description: Invalid comment ID
           content:
             application/json:
               schema:
@@ -109,28 +102,43 @@ paths:
 components:
   schemas:
     Emoji:
-      type: string
-      example: '😄'
-
-    EmojiOfTopic:
       type: object
       properties:
-        topicId:
-          type: integer
+        count:
+          type: number
           format: int64
-          required:
-            - topicId
-            - topicEmoji
-          example: 1
-        topicEmoji:
+          example: 220
+        emoji:
+          type: string
+          example: '😄'
+
+    EmojiOfComment:
+      type: array
+      items:
+        $ref: '#/components/schemas/Emoji'
+
+    RequestUpdateEmoji:
+      type: object
+      properties:
+        commentId:
+          type: number
+          format: int64
+          example: 2
+        emoji:
           type: array
           items:
-            $ref: '#/components/schemas/Emoji'
+            type: string
+            example: '😄'
 
     Error:
       type: object
       properties:
-        code:
+        status:
           type: number
+          format: int64
+          example: 400
+
         message:
           type: string
+          format: string
+          example: Something wrong...
