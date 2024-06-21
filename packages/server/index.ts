@@ -3,28 +3,31 @@ import cors from 'cors'
 import express from 'express'
 dotenv.config()
 
-import { connectPostgres } from './postgres'
+import { dbConnect } from './db'
+import router from './src/router'
 
-const app = express()
-app.use(cors())
-const port = Number(process.env.SERVER_PORT) || 3001
+async function createServer() {
+  const app = express()
+  app.use(cors())
+  app.use(express.json())
+  const port = Number(process.env.SERVER_PORT) || 3001
 
-app.get('/', (_, res) => {
-  res.json('👋 Howdy from the server :)')
-})
+  app.get('/', (_, res) => {
+    res.json('👋 Howdy from the server :)')
+  })
 
-async function getPostgres() {
-  const db = await connectPostgres()
-  const time = await db?.query('SELECT NOW()')
-  return time
+  const db = await dbConnect()
+
+  app.get('/api/v2/test', async (_, res) => {
+    const postgresData = await db?.query('SELECT NOW()')
+
+    res.json({ postgresData })
+  })
+
+  app.use('/api/v2', router)
+  app.listen(port, () => {
+    console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
+  })
 }
 
-app.get('/testUsers', async (_, res) => {
-  const postgresData = await getPostgres()
-
-  res.json({ postgresData })
-})
-
-app.listen(port, () => {
-  console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
-})
+createServer()
