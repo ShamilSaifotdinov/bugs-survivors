@@ -14,8 +14,12 @@ services:
     environment:
       - CLIENT_PORT=${CLIENT_PORT}
       - SERVER_PORT=${SERVER_PORT}
+      - EXTERNAL_SERVER_URL=${EXTERNAL_SERVER_URL}
+      - INTERNAL_SERVER_URL=${INTERNAL_SERVER_URL}
     depends_on:
       - server
+    networks:
+      - awesome
 
   server:
     container_name: prakticum-server
@@ -30,7 +34,8 @@ services:
     ports:
       - '${SERVER_PORT}:${SERVER_PORT}'
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     networks:
       - awesome
 
@@ -42,6 +47,11 @@ services:
       - '${POSTGRES_PORT}:${POSTGRES_PORT}'
     volumes:
       - ./tmp/pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
     networks:
       - awesome
 
