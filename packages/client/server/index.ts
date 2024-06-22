@@ -10,7 +10,7 @@ import serialize from 'serialize-javascript'
 import cookieParser from 'cookie-parser'
 import { createProxyMiddleware } from 'http-proxy-middleware'
 
-const port = process.env.CLIENT_PORT
+const port = process.env.CLIENT_PORT || 3000
 const clientPath = path.join(__dirname, '..')
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -41,7 +41,7 @@ async function createServer() {
     changeOrigin: true,
   })
 
-  app.get('/api/*', backendProxy)
+  app.all('/api/v2/*', backendProxy)
 
   app.get('*', async (req, res, next) => {
     const url = req.originalUrl

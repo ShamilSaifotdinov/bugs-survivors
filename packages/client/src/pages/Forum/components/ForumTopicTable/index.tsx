@@ -1,4 +1,4 @@
-import { ChangeEvent, useMemo, useState, useTransition } from 'react'
+import { ChangeEvent, useEffect, useMemo, useState, useTransition } from 'react'
 import styles from './styles.module.scss'
 import {
   Avatar,
@@ -11,72 +11,99 @@ import {
   Typography,
 } from '@mui/material'
 import { Helmet } from 'react-helmet'
-import mockData from '../../../../../mockData.json'
 import { useParams } from 'react-router-dom'
 import EmojiPicker from '@emoji-mart/react'
 import emojiData from '@emoji-mart/data'
 import { clsx } from 'clsx'
-import { forumTopicColumns } from '../constants'
+import { ForumTopicData, forumTopicColumns } from '../constants'
+import {
+  createComment,
+  getTopicComments,
+  getTopicInfo,
+} from '../../../../api/basic/forum'
+import { useAppSelector } from '../../../../hooks/reduxHooks'
 
-export default function ForumTopicTable() {
-  const [isPending, startTransition] = useTransition()
-  const { forumId, topicId } = useParams()
-  const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(2)
-  const [textareaText, setTextareaText] = useState('')
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false)
-
-  const topicData = mockData?.forum
-    .find(item => item.id === forumId)
-    ?.data.find(item => item.id === topicId)
-
-  const tableRowsData =
-    topicData?.answers?.map(item => ({
-      id: item.id,
-      answer: item.answer,
-      author: (
+function getTableRowsData(data: ForumTopicData[]) {
+  return (
+    data.map(item => ({
+      ...item,
+      creator: (
         <div className={styles.user}>
           <Avatar
             className={styles.avatar}
-            alt={item.author.name}
-            src={item.author.avatar}
+            alt={item.creator.login}
+            src={item.creator.avatar}
           />
           <Typography variant="body1" fontSize="0.75rem">
-            {item.author.name}
+            {item.creator.login}
           </Typography>
         </div>
       ),
     })) ?? []
+  )
+}
+
+export default function ForumTopicTable() {
+  const [isPending, startTransition] = useTransition()
+  const { topicId } = useParams()
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(2)
+  const [textareaText, setTextareaText] = useState('')
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+  const [commentsAmount, setCommentsAmount] = useState(0)
+  const [topicName, setTopicName] = useState('')
+  const [data, setData] = useState<ForumTopicData[]>([])
+
+  const user = useAppSelector(state => state.user.user)
+
+  function setComments() {
+    return getTopicComments(
+      Number(topicId),
+      page * rowsPerPage,
+      page * rowsPerPage + rowsPerPage
+    ).then(data => {
+      setData(data)
+    })
+  }
+
+  useEffect(() => {
+    getTopicInfo(Number(topicId)).then(data => {
+      setCommentsAmount(data.comments_count)
+      setTopicName(data.name)
+    })
+  }, [topicId])
+
+  useEffect(() => {
+    setComments()
+  }, [page, rowsPerPage, topicId])
 
   const tableRows = useMemo(
     () =>
-      tableRowsData
-        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-        .map(row => {
-          return (
-            <TableRow
-              hover
-              role="checkbox"
-              tabIndex={-1}
-              key={row.id}
-              className={styles.tr}>
-              {forumTopicColumns.map(column => {
-                const value = row[column.id]
-                return (
-                  <TableCell
-                    key={column.id}
-                    className={clsx(
-                      styles.tc,
-                      column.className ? styles[column.className] : ''
-                    )}>
-                    {value}
-                  </TableCell>
-                )
-              })}
-            </TableRow>
-          )
-        }),
-    [page, rowsPerPage]
+      getTableRowsData(data).map(row => {
+        return (
+          <TableRow
+            hover
+            role="checkbox"
+            tabIndex={-1}
+            key={row.id}
+            className={styles.tr}>
+            {forumTopicColumns.map(column => {
+              const value = row[column.id]
+              return (
+                <TableCell
+                  key={column.id}
+                  className={clsx(
+                    styles.tc,
+                    column.className ? styles[column.className] : ''
+                  )}>
+                  {value}
+                </TableCell>
+              )
+            })}
+          </TableRow>
+        )
+      }),
+    [data]
   )
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -105,12 +132,27 @@ export default function ForumTopicTable() {
     setShowEmojiPicker(false)
   }
 
+  const handleCreateComment = () => {
+    createComment({
+      topicId: Number(topicId),
+      content: textareaText,
+      creator: {
+        id: user.id,
+        login: user.login,
+        avatar: user.avatar,
+      },
+    }).then(() => {
+      setTextareaText('')
+      setComments().then(() => setCommentsAmount(commentsAmount + 1))
+    })
+  }
+
   return (
     <>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>{topicData?.name}</title>
-        <meta name="description" content={topicData?.name} />
+        <title>{topicName}</title>
+        <meta name="description" content={topicName} />
       </Helmet>
       <div className={styles.table}>
         <Table>
@@ -121,7 +163,7 @@ export default function ForumTopicTable() {
         className={styles.pagination}
         rowsPerPageOptions={[1, 2, 5, 10]}
         component="div"
-        count={tableRowsData.length}
+        count={commentsAmount}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
@@ -145,8 +187,12 @@ export default function ForumTopicTable() {
           <Button
             variant="contained"
             className={styles.emoji_button}
-            onClick={showEmojiButtonHandle}></Button>
-          <Button variant="contained" className={styles.send_button}>
+            onClick={showEmojiButtonHandle}
+          />
+          <Button
+            onClick={handleCreateComment}
+            variant="contained"
+            className={styles.send_button}>
             SEND
           </Button>
         </div>
