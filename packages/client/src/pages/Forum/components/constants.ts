@@ -55,6 +55,7 @@ export type ForumTopicData = {
   id: number
   creator: Partial<User>
   content: string
+  replies_count: number
 }
 
 type ForumTopicColumn = {

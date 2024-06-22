@@ -73,11 +73,9 @@ export default function ForumSubjectTable() {
   }
 
   function setTopics() {
-    return getTopics(page * rowsPerPage, page * rowsPerPage + rowsPerPage).then(
-      data => {
-        setData(data)
-      }
-    )
+    return getTopics(page * rowsPerPage, rowsPerPage).then(data => {
+      setData(data)
+    })
   }
 
   useEffect(() => {

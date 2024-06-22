@@ -1,29 +1,29 @@
 import { ChangeEvent, useEffect, useMemo, useState, useTransition } from 'react'
 import styles from './styles.module.scss'
-import {
-  Avatar,
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TablePagination,
-  TableRow,
-  Typography,
-} from '@mui/material'
+import { Avatar, Button, TablePagination, Typography } from '@mui/material'
 import { Helmet } from 'react-helmet'
 import { useParams } from 'react-router-dom'
 import EmojiPicker from '@emoji-mart/react'
 import emojiData from '@emoji-mart/data'
-import { clsx } from 'clsx'
-import { ForumTopicData, forumTopicColumns } from '../constants'
+import { ForumTopicData } from '../constants'
 import {
   createComment,
   getTopicComments,
   getTopicInfo,
 } from '../../../../api/basic/forum'
 import { useAppSelector } from '../../../../hooks/reduxHooks'
+import ForumTopicCommentTable from '../ForumTopicCommentTable'
 
-function getTableRowsData(data: ForumTopicData[]) {
+export type ForumTopicTableRowDataType = {
+  creator: JSX.Element
+  id: number
+  content: string | JSX.Element
+  replies_count: number
+}
+
+function getTableRowsData(
+  data: ForumTopicData[]
+): ForumTopicTableRowDataType[] {
   return (
     data.map(item => ({
       ...item,
@@ -60,7 +60,7 @@ export default function ForumTopicTable() {
     return getTopicComments(
       Number(topicId),
       page * rowsPerPage,
-      page * rowsPerPage + rowsPerPage
+      rowsPerPage
     ).then(data => {
       setData(data)
     })
@@ -79,30 +79,14 @@ export default function ForumTopicTable() {
 
   const tableRows = useMemo(
     () =>
-      getTableRowsData(data).map(row => {
-        return (
-          <TableRow
-            hover
-            role="checkbox"
-            tabIndex={-1}
-            key={row.id}
-            className={styles.tr}>
-            {forumTopicColumns.map(column => {
-              const value = row[column.id]
-              return (
-                <TableCell
-                  key={column.id}
-                  className={clsx(
-                    styles.tc,
-                    column.className ? styles[column.className] : ''
-                  )}>
-                  {value}
-                </TableCell>
-              )
-            })}
-          </TableRow>
-        )
-      }),
+      getTableRowsData(data).map(row => (
+        <ForumTopicCommentTable
+          key={row.id}
+          commentId={row.id}
+          row={row}
+          nestingLevel={0}
+        />
+      )),
     [data]
   )
 
@@ -154,11 +138,7 @@ export default function ForumTopicTable() {
         <title>{topicName}</title>
         <meta name="description" content={topicName} />
       </Helmet>
-      <div className={styles.table}>
-        <Table>
-          <TableBody>{tableRows}</TableBody>
-        </Table>
-      </div>
+      <div>{tableRows}</div>
       <TablePagination
         className={styles.pagination}
         rowsPerPageOptions={[1, 2, 5, 10]}
