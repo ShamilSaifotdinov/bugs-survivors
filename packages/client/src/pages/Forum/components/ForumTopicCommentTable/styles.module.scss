@@ -2,6 +2,10 @@
   margin-bottom: 10px;
 }
 
+.comment_table {
+  margin-bottom: 1rem;
+}
+
 .user {
   display: flex;
   flex-direction: column;
@@ -63,47 +67,4 @@
 
 .collapse_rigth {
   margin-left: auto !important;
-}
-
-.input_container {
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  gap: 0.25rem;
-  margin-bottom: 1.25rem;
-
-  .input {
-    resize: none;
-    outline: none;
-  }
-
-  .buttons_container {
-    position: relative;
-    gap: 0.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    .emoji_picker {
-      position: absolute;
-      bottom: 3rem;
-      left: 0;
-    }
-
-    .emoji_button {
-      width: 4.25rem;
-      height: 2.5rem;
-      background-image: url('/svg/smile.svg');
-      background-position: center;
-      background-repeat: no-repeat;
-      background-color: var(--primary-color-light);
-    }
-
-    .send_button {
-      width: 6.625rem;
-      height: 2.5rem;
-      background-color: var(--primary-color-light);
-      color: var(--background-color);
-    }
-  }
 }

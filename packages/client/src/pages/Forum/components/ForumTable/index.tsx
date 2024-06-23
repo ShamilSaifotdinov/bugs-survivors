@@ -1,8 +1,8 @@
 import { ChangeEvent, useEffect, useMemo, useState, useTransition } from 'react'
 import styles from './styles.module.scss'
 import {
-  Avatar,
   Button,
+  FormHelperText,
   Table,
   TableBody,
   TableCell,
@@ -10,9 +10,7 @@ import {
   TablePagination,
   TableRow,
   TextField,
-  Typography,
 } from '@mui/material'
-import { Helmet } from 'react-helmet'
 import { useNavigate } from 'react-router-dom'
 import { clsx } from 'clsx'
 import { ForumSubjectData, forumSubjectColumns } from '../constants'
@@ -23,24 +21,8 @@ import {
   getTopicsAmount,
 } from '../../../../api/basic/forum'
 import { useAppSelector } from '../../../../hooks/reduxHooks'
-
-function getTableRowsData(data: ForumSubjectData[]) {
-  return (
-    data.map(item => ({
-      ...item,
-      creator: (
-        <div className={styles.user}>
-          <Avatar
-            className={styles.avatar}
-            alt={item.creator.login}
-            src={item.creator.avatar}
-          />
-          <Typography variant="body1">{item.creator.login}</Typography>
-        </div>
-      ),
-    })) ?? []
-  )
-}
+import ForumMetaData from '../ForumMetaData'
+import ForumTableRow from './ForumTableRow'
 
 export default function ForumSubjectTable() {
   const [isPending, startTransition] = useTransition()
@@ -50,6 +32,7 @@ export default function ForumSubjectTable() {
   const [topicsAmount, setTopicsAmount] = useState(0)
   const [data, setData] = useState<ForumSubjectData[]>([])
   const [newTopicName, setNewTopicName] = useState('')
+  const [createTopicError, setCreateTopicError] = useState('')
 
   const user = useAppSelector(state => state.user.user)
 
@@ -65,15 +48,22 @@ export default function ForumSubjectTable() {
         login: user.login,
         avatar: user.avatar,
       },
-    }).then(() => {
-      setNewTopicName('')
-      setOpen(false)
-      setTopics().then(() => setTopicsAmount(topicsAmount + 1))
     })
+      .then(() => {
+        setCreateTopicError('')
+        setNewTopicName('')
+        setOpen(false)
+        setTopics().then(() => setTopicsAmount(topicsAmount + 1))
+      })
+      .catch(error => setCreateTopicError(error.message))
   }
 
   function setTopics() {
-    return getTopics(page * rowsPerPage, rowsPerPage).then(data => {
+    const sendData = {
+      offset: page * rowsPerPage,
+      limit: rowsPerPage,
+    }
+    return getTopics(sendData).then(data => {
       setData(data)
     })
   }
@@ -89,32 +79,7 @@ export default function ForumSubjectTable() {
   }, [page, rowsPerPage])
 
   const tableRows = useMemo(
-    () =>
-      getTableRowsData(data).map(row => {
-        return (
-          <TableRow
-            hover
-            role="checkbox"
-            tabIndex={-1}
-            key={row.id}
-            className={styles.tr}
-            onClick={() => navigate(`/forum/${row.id}`)}>
-            {forumSubjectColumns.map(column => {
-              const value = row[column.id]
-              return (
-                <TableCell
-                  key={column.id}
-                  className={clsx(
-                    styles.tc,
-                    column.bodyClassName ? styles[column.bodyClassName] : ''
-                  )}>
-                  {value}
-                </TableCell>
-              )
-            })}
-          </TableRow>
-        )
-      }),
+    () => <ForumTableRow data={data} />,
     [data, navigate]
   )
 
@@ -133,11 +98,7 @@ export default function ForumSubjectTable() {
 
   return (
     <>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>Форум</title>
-        <meta name="description" content={'Форум'} />
-      </Helmet>
+      <ForumMetaData title="Forum" />
       <div className={styles.button_container}>
         <ButtonModal
           variant="contained"
@@ -150,6 +111,10 @@ export default function ForumSubjectTable() {
             label="Name"
             value={newTopicName}
             onChange={event => setNewTopicName(event.target.value)}
+          />
+          <FormHelperText
+            children={createTopicError}
+            error={!!createTopicError.length}
           />
           <div className={styles.create_btns}>
             <Button variant="contained" onClick={handleClose} color="secondary">
