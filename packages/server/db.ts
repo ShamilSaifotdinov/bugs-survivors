@@ -31,7 +31,7 @@ export async function dbConnect() {
     const res = await sequelize.query('SELECT NOW()')
     // @ts-ignore
     console.log('  ➜ 🎸 Connected to the database at:', res[0][0].now)
-    await sequelize.sync()
+    await sequelize.sync({ force: true })
 
     return sequelize
   } catch (error) {
