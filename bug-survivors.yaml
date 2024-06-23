@@ -120,7 +120,7 @@ components:
     RequestUpdateEmoji:
       type: object
       properties:
-        userId:
+        creatorId:
           type: number
           format: int64
         commentId:
