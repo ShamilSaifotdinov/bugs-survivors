@@ -25,7 +25,6 @@
   object-position: center;
 }
 .wrapper {
-  background-color: var(--background-color);
   max-height: 100%;
   width: 100rem;
   max-width: 100%;
@@ -33,6 +32,14 @@
   border-radius: 0.625rem;
   display: flex;
   flex-direction: column;
+
+  &-light {
+    background-color: rgba(193, 224, 223, 0.75);
+  }
+
+  &-dark {
+    background-color: var(--background-color);
+  }
 }
 
 .links {

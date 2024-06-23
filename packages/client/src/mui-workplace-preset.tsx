@@ -43,25 +43,26 @@ export const theme = createTheme({
       white: '#fff',
     },
     primary: {
-      main: '#3F767B',
-      contrastText: '#F2F9F8',
+      main: '#F2F9F8',
+      contrastText: '#3F767B',
       // light: '#C1E0DF',
       // main: '#3F767B',
       // dark: '#345256',
       // contrastText: '#fff',
     },
     secondary: {
-      main: '#C1E0DF',
-      contrastText: '#2F464A',
+      main: '#3F767B',
+      contrastText: '#F2F9F8',
       // main: '#FF5C00',
     },
     text: {
-      primary: '#fff',
-      secondary: '#000',
+      primary: '#345256',
+      secondary: '#fff',
       disabled: '#ddd',
     },
     background: {
-      default: '#2F464A',
+      // default: 'var(--primary-color-main)',
+      default: 'var(--primary-color-light)',
       paper: '#2F464A',
     },
     // error: {
@@ -94,9 +95,6 @@ export const theme = createTheme({
     fontFamily: ['"Press Start 2P"', 'sans-serif'].join(','),
     fontSize: 16,
     fontWeightRegular: 400,
-    body1: {
-      color: '#FFFFFF',
-    },
     body2: {
       fontSize: '1rem',
     },
@@ -167,6 +165,7 @@ export const theme = createTheme({
       } as LinkProps,
       styleOverrides: {
         root: {
+          color: 'var(--primary-color-dark)',
           textDecoration: 'none',
           transition: '.2s',
           ':hover': {
@@ -214,8 +213,8 @@ export const theme = createTheme({
           padding: '1px 0.25rem 1px 0.25rem',
           borderRadius: '0.25rem',
           fontSize: '1rem',
-          backgroundColor: '#C1E0DF',
-          color: '#2F464A',
+          backgroundColor: 'var(--primary-color-light)',
+          color: 'var(--background-color)',
         },
       },
     },

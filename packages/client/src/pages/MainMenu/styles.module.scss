@@ -1,7 +1,6 @@
 .main-menu {
   width: 100vw;
   height: 100vh;
-  background-image: url('/images/main-menu_background.png');
   background-position: 50% 75%;
   background-size: cover;
   padding: 5.25rem;
@@ -10,6 +9,14 @@
   justify-content: space-between;
   align-items: center;
   gap: 4.875rem;
+
+  &-dark {
+    background-image: url('/images/main-menu_background.png');
+  }
+
+  &-light {
+    background-image: url('/images/mainBackground.png');
+  }
 
   &_title {
     background: linear-gradient(#ff5c00 46%, #ffffff, #4396b5 80%);

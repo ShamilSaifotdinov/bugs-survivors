@@ -25,8 +25,13 @@ function MainMenu() {
     }
   }
 
+  const currentTheme = 'light' // TODO
+
   return (
-    <div className={styles['main-menu']}>
+    <div
+      className={`${styles['main-menu']} ${
+        styles[currentTheme === 'light' ? 'main-menu-light' : 'main-menu-dark']
+      }`}>
       <Helmet>
         <meta charSet="utf-8" />
         <title>Main menu</title>

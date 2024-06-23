@@ -93,7 +93,7 @@ function ProfilePage() {
                         : ' '
                     return (
                       <Box key={key} className={styles.fieldItem}>
-                        <Typography>{fields[key]}</Typography>
+                        <Typography color="white">{fields[key]}</Typography>
                         <TextField
                           error={isError}
                           helperText={isHelperText}
@@ -109,7 +109,7 @@ function ProfilePage() {
                   <Box
                     className={styles.fieldItem}
                     sx={{ marginBottom: '2.8rem' }}>
-                    <Typography>Password</Typography>
+                    <Typography color="white">Password</Typography>
                     <PasswordChange />
                   </Box>
                   <Button

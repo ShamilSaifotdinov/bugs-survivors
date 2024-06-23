@@ -9,6 +9,8 @@ import { useLoggedInUser } from '../../hooks/useLoggedInUser'
 const Leaderboard = () => {
   useLoggedInUser()
 
+  const currentTheme = 'light' // TODO
+
   return (
     <section className={styles.section}>
       <Helmet>
@@ -20,7 +22,10 @@ const Leaderboard = () => {
         />
       </Helmet>
       <div className={clsx('container', styles.container)}>
-        <div className={styles.wrapper}>
+        <div
+          className={`${styles.wrapper}  ${
+            styles[currentTheme === 'light' ? 'wrapper-light' : 'wrapper-dark']
+          }`}>
           <Typography variant="h2">
             <PreviousPageBtn />
             Leaderboard
