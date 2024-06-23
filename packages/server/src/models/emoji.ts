@@ -16,6 +16,7 @@ interface IEmoji {
   id: number
   commentId: number
   emoji: string
+  creatorId: number
 }
 
 @Table({ timestamps: false, tableName: 'emoji' })
