@@ -37,6 +37,11 @@ export default class Emoji extends Model<IEmoji> {
   @Column(DataType.STRING)
   declare emoji: string
 
+  @ForeignKey(() => User)
+  @AllowNull(false)
+  @Column({ type: DataType.INTEGER, field: 'creator_id' })
+  declare creatorId: number
+
   @BelongsTo(() => User)
   declare creator: User
 }
