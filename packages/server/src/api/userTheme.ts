@@ -22,13 +22,6 @@ class UserThemeAPI {
   public static create = async (req: Request, res: Response) => {
     const { body } = req
 
-    // const data1 = await someService.find(body.someId);
-    // const data2 = await someOtherService.find(body.otherId); // Или что-то ещё
-    // const data3 = prepareBody(body, data1, data2);
-
-    // /* Делаем что-то с данными */
-    // themeService.create(data3);
-
     const [user] = await UserService.upsert_user(body.user)
     const theme = await ThemeService.find({ title: body.theme })
 

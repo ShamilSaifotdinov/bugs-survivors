@@ -7,7 +7,6 @@ import { userThemeRoutes } from './routes/userTheme'
 const router: Router = Router()
 
 userThemeRoutes(router)
-// themesRoutes(router)
 ForumRoutes(router)
 TopicRoutes(router)
 CommentRoutes(router)
