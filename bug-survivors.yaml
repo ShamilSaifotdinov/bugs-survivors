@@ -33,7 +33,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EmojiOfComment'
+                $ref: '#/components/schemas/ResponseEmoji'
         '400':
           description: Invalid commentId
           content:
@@ -80,7 +80,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EmojiOfComment'
+                $ref: '#/components/schemas/ResponseEmoji'
         '400':
           description: Invalid comment ID
           content:
@@ -102,34 +102,33 @@ paths:
 components:
   schemas:
     Emoji:
-      type: object
-      properties:
-        count:
-          type: number
-          format: int64
-          example: 220
-        emoji:
-          type: string
-          example: '😄'
+      type: string
+      example: '😄'
 
-    EmojiOfComment:
+    ResponseEmoji:
       type: array
       items:
-        $ref: '#/components/schemas/Emoji'
+        type: object
+        properties:
+          count:
+            type: number
+            format: int64
+            example: 55
+          emoji:
+            $ref: '#/components/schemas/Emoji'
 
     RequestUpdateEmoji:
       type: object
       properties:
+        userId:
+          type: number
+          format: int64
         commentId:
           type: number
           format: int64
           example: 2
         emoji:
-          type: array
-          items:
-            type: string
-            example: '😄'
-
+          $ref: '#/components/schemas/Emoji'
     Error:
       type: object
       properties:
