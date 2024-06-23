@@ -30,13 +30,13 @@ export default class Emoji extends Model<IEmoji> {
   @Column({ type: DataType.INTEGER, field: 'comment_id' })
   declare commentId: number
 
+  @BelongsTo(() => Comment)
+  declare comment: Comment
+
   @AllowNull(false)
   @Column(DataType.STRING)
   declare emoji: string
 
   @BelongsTo(() => User)
   declare creator: User
-
-  @BelongsTo(() => Comment)
-  declare comment: Comment
 }
