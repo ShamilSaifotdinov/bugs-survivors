@@ -136,6 +136,16 @@ class Game implements IGame {
     this.drawTimer(ctx)
     this.updateTimer()
 
+    // if (this.canvas) {
+    //   if (
+    //     this.CanvasWidth !== window.innerWidth ||
+    //     this.CanvasHeight !== window.innerHeight
+    //   ) {
+    //     this.canvas.canvas.width = window.innerWidth
+    //     this.canvas.canvas.height = window.innerHeight
+    //   }
+    // }
+
     if (this.Player.hp === 0) {
       this.finishGame()
     }

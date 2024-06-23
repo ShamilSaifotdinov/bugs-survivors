@@ -1,0 +1,53 @@
+.section {
+  padding-top: 20px;
+  height: 100vh;
+}
+
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: flex-start;
+  justify-content: space-between;
+}
+
+.header {
+  width: 100%;
+  position: relative;
+  margin-bottom: 9rem;
+  h4 {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.image {
+  margin-top: 4rem;
+  max-width: 100%;
+}
+.bugsList {
+  margin-top: 4rem;
+  font-size: 1.5rem;
+  max-width: 43rem;
+  li {
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: flex-end;
+  }
+  img {
+    margin-right: 2rem;
+  }
+  span {
+    margin-right: 2rem;
+    &:nth-child(3) {
+      text-align: right;
+      margin-left: auto;
+    }
+    &:last-child {
+      text-align: right;
+      width: 10rem;
+    }
+  }
+}
