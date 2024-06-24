@@ -3,9 +3,9 @@ import styles from './styles.module.scss'
 import { Button, TextField } from '@mui/material'
 import EmojiPicker from '@emoji-mart/react'
 import emojiData from '@emoji-mart/data'
-import { createCommentReply } from '../../../../api/basic/forum'
-import { useAppSelector } from '../../../../hooks/reduxHooks'
-import { CreateCommentReplyData } from '../../../../api/basic/forum/types'
+import { createCommentReply } from '../../../../../api/basic/forum'
+import { useAppSelector } from '../../../../../hooks/reduxHooks'
+import { CreateCommentReplyData } from '../../../../../api/basic/forum/types'
 
 interface IProps {
   replyId?: number
@@ -13,11 +13,7 @@ interface IProps {
   callback: () => Promise<void>
 }
 
-export default function ForumInputComment({
-  replyId,
-  commentId,
-  callback,
-}: IProps) {
+export default function Input({ replyId, commentId, callback }: IProps) {
   const [inputText, setInputText] = useState('')
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 

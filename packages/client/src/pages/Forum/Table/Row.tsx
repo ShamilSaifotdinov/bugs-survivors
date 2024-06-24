@@ -1,15 +1,15 @@
 import { Avatar, TableCell, TableRow, Typography } from '@mui/material'
-import { ForumSubjectData, forumSubjectColumns } from '../constants'
-import getAvatarSrc from '../../../../helpers/getAvatarSrc'
+import { ForumData, forumColumns } from '../constants'
+import getAvatarSrc from '../../../helpers/getAvatarSrc'
 import styles from './styles.module.scss'
 import { useNavigate } from 'react-router-dom'
 import clsx from 'clsx'
 
 type IProps = {
-  data: ForumSubjectData[]
+  data: ForumData[]
 }
 
-function getTableRowsData(data: ForumSubjectData[]) {
+function getTableRowsData(data: ForumData[]) {
   return (
     data.map(item => ({
       ...item,
@@ -27,7 +27,7 @@ function getTableRowsData(data: ForumSubjectData[]) {
   )
 }
 
-export default function ForumTableRow({ data }: IProps) {
+export default function Row({ data }: IProps) {
   const navigate = useNavigate()
 
   return getTableRowsData(data).map(row => {
@@ -39,7 +39,7 @@ export default function ForumTableRow({ data }: IProps) {
         key={row.id}
         className={styles.tr}
         onClick={() => navigate(`/forum/${row.id}`)}>
-        {forumSubjectColumns.map(column => {
+        {forumColumns.map(column => {
           const value = row[column.id]
           return (
             <TableCell

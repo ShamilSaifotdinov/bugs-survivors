@@ -1,7 +1,4 @@
-import {
-  ForumSubjectData,
-  ForumTopicData,
-} from '../../../pages/Forum/components/constants'
+import { ForumData, TopicData } from '../../../pages/Forum/constants'
 import { localInstance } from '../basicInstance'
 import {
   CreateCommentData,
@@ -19,7 +16,7 @@ export const getTopicsAmount = async (): Promise<topicsAmount> => {
 export const getTopics = async (data: {
   offset: number
   limit: number
-}): Promise<ForumSubjectData[]> => {
+}): Promise<ForumData[]> => {
   return localInstance.get(`/forum/topics`, { data })
 }
 
@@ -37,7 +34,7 @@ export const getTopicComments = async (
     offset: number
     limit: number
   }
-): Promise<ForumTopicData[]> => {
+): Promise<TopicData[]> => {
   return localInstance.get(`/topic/${topicId}/comments`, { data })
 }
 
@@ -54,7 +51,7 @@ export const getCommentReplies = async (
     limit: number
     replyId?: number
   }
-): Promise<ForumTopicData[]> => {
+): Promise<TopicData[]> => {
   return localInstance.get(`/comment/${commentId}`, { data })
 }
 

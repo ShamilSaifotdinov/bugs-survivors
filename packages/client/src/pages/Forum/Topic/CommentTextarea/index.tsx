@@ -11,7 +11,7 @@ type IProps = {
   callback: () => Promise<void>
 }
 
-export default function ForumTextareaComment({ callback }: IProps) {
+export default function CommentTextarea({ callback }: IProps) {
   const { topicId } = useParams()
   const [textareaText, setTextareaText] = useState('')
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)

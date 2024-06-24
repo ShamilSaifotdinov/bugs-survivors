@@ -10,12 +10,12 @@ import {
   Avatar,
 } from '@mui/material'
 import { clsx } from 'clsx'
-import { ForumTopicData, forumTopicColumns } from '../constants'
+import { TopicData, topicColumns } from '../../constants'
 import { getCommentReplies } from '../../../../api/basic/forum'
-import { ForumTopicTableRowDataType } from '../ForumTopicTable'
+import { ForumTopicTableRowDataType } from '..'
 import { getCommentRepliesData } from '../../../../api/basic/forum/types'
-import ForumTopicCommentTableRow from './ForumTopicCommentTableRow'
-import ForumInputComment from '../ForumInputComment'
+import Row from './Row'
+import Input from './Input'
 import { useAppSelector } from '../../../../hooks/reduxHooks'
 import getAvatarSrc from '../../../../helpers/getAvatarSrc'
 
@@ -26,7 +26,7 @@ interface IProps {
   nestingLevel: number
 }
 
-export default function ForumTopicCommentTable({
+export default function CommentTable({
   replyId,
   commentId,
   row,
@@ -34,7 +34,7 @@ export default function ForumTopicCommentTable({
 }: IProps) {
   const rowsPerPage = 10
   const [repliesAmount, setRepliesAmount] = useState(0)
-  const [data, setData] = useState<ForumTopicData[]>([])
+  const [data, setData] = useState<TopicData[]>([])
   const [expanded, setExpanded] = useState(false)
 
   const user = useAppSelector(state => state.user.user)
@@ -65,11 +65,9 @@ export default function ForumTopicCommentTable({
 
   const tableRows = useMemo(
     () => (
-      <ForumTopicCommentTableRow
-        data={data}
-        nestingLevel={nestingLevel}
-        commentId={commentId}
-      />
+      <>
+        <Row data={data} nestingLevel={nestingLevel} commentId={commentId} />
+      </>
     ),
     [data]
   )
@@ -93,7 +91,7 @@ export default function ForumTopicCommentTable({
             tabIndex={-1}
             key={row.id}
             className={nestingLevel === 0 ? styles.tr : styles.tr_reply}>
-            {forumTopicColumns.map(column => {
+            {topicColumns.map(column => {
               const value = row[column.id]
               return (
                 <TableCell
@@ -138,10 +136,10 @@ export default function ForumTopicCommentTable({
             role="checkbox"
             tabIndex={-1}
             className={styles.tr_reply}>
-            {forumTopicColumns.map(column => {
+            {topicColumns.map(column => {
               const value =
                 column.id === 'content' ? (
-                  <ForumInputComment
+                  <Input
                     commentId={commentId}
                     replyId={replyId}
                     callback={() => setCommentReplies()}

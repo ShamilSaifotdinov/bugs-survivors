@@ -2,11 +2,11 @@ import { ChangeEvent, useEffect, useMemo, useState, useTransition } from 'react'
 import styles from './styles.module.scss'
 import { TablePagination } from '@mui/material'
 import { useParams } from 'react-router-dom'
-import { ForumTopicData } from '../constants'
-import { getTopicComments, getTopicInfo } from '../../../../api/basic/forum'
-import ForumMetaData from '../ForumMetaData'
-import ForumTextareaComment from '../ForumTextareaComment'
-import ForumTopicTableRow from './ForumTopicTableRow'
+import { getTopicComments, getTopicInfo } from '../../../api/basic/forum'
+import CommentTextarea from './CommentTextarea'
+import Row from './Row'
+import MetaData from '../MetaData'
+import { TopicData } from '../constants'
 
 export type ForumTopicTableRowDataType = {
   creator: JSX.Element
@@ -15,14 +15,14 @@ export type ForumTopicTableRowDataType = {
   replies_count: number
 }
 
-export default function ForumTopicTable() {
+export default function Topic() {
   const [isPending, startTransition] = useTransition()
   const { topicId } = useParams()
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(2)
   const [commentsAmount, setCommentsAmount] = useState(0)
   const [topicName, setTopicName] = useState('')
-  const [data, setData] = useState<ForumTopicData[]>([])
+  const [data, setData] = useState<TopicData[]>([])
 
   function setComments() {
     return getTopicComments(Number(topicId), {
@@ -44,7 +44,14 @@ export default function ForumTopicTable() {
     setComments()
   }, [page, rowsPerPage, topicId])
 
-  const tableRows = useMemo(() => <ForumTopicTableRow data={data} />, [data])
+  const tableRows = useMemo(
+    () => (
+      <>
+        <Row data={data} />
+      </>
+    ),
+    [data]
+  )
 
   const handleChangePage = (event: unknown, newPage: number) => {
     startTransition(() => {
@@ -61,7 +68,7 @@ export default function ForumTopicTable() {
 
   return (
     <>
-      <ForumMetaData title={topicName} />
+      <MetaData title={topicName} />
       <div>{tableRows}</div>
       <TablePagination
         className={styles.pagination}
@@ -73,7 +80,7 @@ export default function ForumTopicTable() {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      <ForumTextareaComment
+      <CommentTextarea
         callback={() =>
           setComments().then(() => setCommentsAmount(commentsAmount + 1))
         }

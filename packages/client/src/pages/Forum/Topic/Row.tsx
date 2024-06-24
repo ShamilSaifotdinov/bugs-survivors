@@ -1,17 +1,15 @@
 import { Avatar, Typography } from '@mui/material'
-import { ForumTopicData } from '../constants'
-import getAvatarSrc from '../../../../helpers/getAvatarSrc'
+import getAvatarSrc from '../../../helpers/getAvatarSrc'
 import styles from './styles.module.scss'
 import { ForumTopicTableRowDataType } from '.'
-import ForumTopicCommentTable from '../ForumTopicCommentTable'
+import CommentTable from './CommentTable'
+import { TopicData } from '../constants'
 
 type IProps = {
-  data: ForumTopicData[]
+  data: TopicData[]
 }
 
-function getTableRowsData(
-  data: ForumTopicData[]
-): ForumTopicTableRowDataType[] {
+function getTableRowsData(data: TopicData[]): ForumTopicTableRowDataType[] {
   return (
     data.map(item => ({
       ...item,
@@ -31,13 +29,8 @@ function getTableRowsData(
   )
 }
 
-export default function ForumTopicTableRow({ data }: IProps) {
+export default function Row({ data }: IProps) {
   return getTableRowsData(data).map(row => (
-    <ForumTopicCommentTable
-      key={row.id}
-      commentId={row.id}
-      row={row}
-      nestingLevel={0}
-    />
+    <CommentTable key={row.id} commentId={row.id} row={row} nestingLevel={0} />
   ))
 }

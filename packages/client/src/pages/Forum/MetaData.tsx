@@ -4,7 +4,7 @@ type IProps = {
   title: string
 }
 
-export default function ForumMetaData({ title }: IProps) {
+export default function MetaData({ title }: IProps) {
   return (
     <>
       <Helmet>

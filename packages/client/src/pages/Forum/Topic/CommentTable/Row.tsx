@@ -1,20 +1,17 @@
 import { Avatar, Typography } from '@mui/material'
-import { ForumTopicData } from '../constants'
+import { TopicData } from '../../constants'
 import getAvatarSrc from '../../../../helpers/getAvatarSrc'
 import styles from './styles.module.scss'
 import clsx from 'clsx'
-import ForumTopicCommentTable from '.'
+import CommentTable from '.'
 
 type IProps = {
-  data: ForumTopicData[]
+  data: TopicData[]
   nestingLevel: number
   commentId: number
 }
 
-function getTableTopicCommentRowsData(
-  data: ForumTopicData[],
-  nestingLevel: number
-) {
+function getTableTopicCommentRowsData(data: TopicData[], nestingLevel: number) {
   return (
     data.map(item => ({
       ...item,
@@ -46,13 +43,9 @@ function getTableTopicCommentRowsData(
   )
 }
 
-export default function ForumTopicCommentTableRow({
-  data,
-  nestingLevel,
-  commentId,
-}: IProps) {
+export default function Row({ data, nestingLevel, commentId }: IProps) {
   return getTableTopicCommentRowsData(data, nestingLevel).map(row => (
-    <ForumTopicCommentTable
+    <CommentTable
       key={row.id}
       replyId={row.id}
       commentId={commentId}

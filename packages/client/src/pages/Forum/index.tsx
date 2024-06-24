@@ -3,11 +3,11 @@ import { clsx } from 'clsx'
 import styles from './styles.module.scss'
 import PreviousPageBtn from '../../components/PreviousPageBtn'
 import { useParams } from 'react-router-dom'
-import ForumSubjectTable from './components/ForumTable'
+import MainTable from './Table'
 import { useEffect, useState } from 'react'
-import ForumTopicTable from './components/ForumTopicTable'
 import { useLoggedInUser } from '../../hooks/useLoggedInUser'
 import { getTopicInfo } from '../../api/basic/forum'
+import Topic from './Topic'
 
 const Forum = () => {
   useLoggedInUser()
@@ -34,7 +34,7 @@ const Forum = () => {
               {name}
             </Typography>
           </div>
-          {topicId ? <ForumTopicTable /> : <ForumSubjectTable />}
+          {topicId ? <Topic /> : <MainTable />}
         </div>
       </div>
     </section>
