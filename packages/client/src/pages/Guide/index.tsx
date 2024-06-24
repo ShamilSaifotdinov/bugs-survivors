@@ -7,16 +7,17 @@ import styles from './styles.module.scss'
 const Guide = () => {
   return (
     <section className={styles.section}>
+      <style type="text/css">
+        {`body {
+            background: #365A36
+          }`}
+      </style>
       <Helmet>
         <meta charSet="utf-8" />
         <title>Guide</title>
         <meta name="description" content="Guide" />
-        <style type="text/css">
-          {`body {
-            background: #365A36
-          }`}
-        </style>
       </Helmet>
+      <div className={styles.progressbar} />
       <div className={clsx('container', styles.wrapper)}>
         <div className={styles.header}>
           <PreviousPageBtn />

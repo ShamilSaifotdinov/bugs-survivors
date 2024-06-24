@@ -8,6 +8,7 @@ import { useValidationForm } from '../../hooks/useValidationForm'
 import { useLoggedInUser } from '../../hooks/useLoggedInUser'
 import { yandexOauth, yandexServiceId } from '../../api/basic/oauth'
 import { useAppSelector } from '../../hooks/reduxHooks'
+import Clue from '../../components/Clue'
 
 function Login() {
   const user = useAppSelector(state => state.user)
@@ -144,6 +145,7 @@ function Login() {
           </Button>
         </div>
       </div>
+      <Clue />
     </section>
   )
 }
