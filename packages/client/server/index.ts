@@ -41,7 +41,7 @@ async function createServer() {
     changeOrigin: true,
   })
 
-  app.get('/api/*', backendProxy)
+  app.all('/api/v2/*', backendProxy)
 
   app.get('*', async (req, res, next) => {
     const url = req.originalUrl
