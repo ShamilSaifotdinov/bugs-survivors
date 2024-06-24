@@ -1,18 +1,39 @@
 import { ChangeEvent, useEffect, useMemo, useState, useTransition } from 'react'
 import styles from './styles.module.scss'
-import { TablePagination } from '@mui/material'
+import { Avatar, TablePagination, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { getTopicComments, getTopicInfo } from '../../../api/basic/forum'
 import CommentTextarea from './CommentTextarea'
-import Row from './Row'
 import MetaData from '../MetaData'
 import { TopicData } from '../constants'
+import getAvatarSrc from '../../../helpers/getAvatarSrc'
+import CommentTable from './CommentTable'
 
-export type ForumTopicTableRowDataType = {
+export type TopicRowDataType = {
   creator: JSX.Element
   id: number
   content: string | JSX.Element
   replies_count: number
+}
+
+function getTableRowsData(data: TopicData[]): TopicRowDataType[] {
+  return (
+    data.map(item => ({
+      ...item,
+      creator: (
+        <div className={styles.user}>
+          <Avatar
+            className={styles.avatar}
+            alt={item.creator.login}
+            src={getAvatarSrc(item.creator.avatar)}
+          />
+          <Typography variant="body1" fontSize="0.75rem">
+            {item.creator.login}
+          </Typography>
+        </div>
+      ),
+    })) ?? []
+  )
 }
 
 export default function Topic() {
@@ -45,11 +66,15 @@ export default function Topic() {
   }, [page, rowsPerPage, topicId])
 
   const tableRows = useMemo(
-    () => (
-      <>
-        <Row data={data} />
-      </>
-    ),
+    () =>
+      getTableRowsData(data).map(row => (
+        <CommentTable
+          key={row.id}
+          commentId={row.id}
+          row={row}
+          nestingLevel={0}
+        />
+      )),
     [data]
   )
 

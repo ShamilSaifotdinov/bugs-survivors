@@ -1,12 +1,14 @@
 import { ChangeEvent, useEffect, useMemo, useState, useTransition } from 'react'
 import styles from './styles.module.scss'
 import {
+  Avatar,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TablePagination,
   TableRow,
+  Typography,
 } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { clsx } from 'clsx'
@@ -15,6 +17,32 @@ import { getTopics, getTopicsAmount } from '../../../api/basic/forum'
 import MetaData from '../MetaData'
 import Row from './Row'
 import CreateTopicModal from './CreateTopicModal'
+import getAvatarSrc from '../../../helpers/getAvatarSrc'
+
+export type RowDataType = {
+  creator: JSX.Element
+  id: string
+  name: string
+  comments_count: number
+}
+
+function getRowsData(data: ForumData[]) {
+  return (
+    data.map(item => ({
+      ...item,
+      creator: (
+        <div className={styles.user}>
+          <Avatar
+            className={styles.avatar}
+            alt={item.creator.login}
+            src={getAvatarSrc(item.creator.avatar)}
+          />
+          <Typography variant="body1">{item.creator.login}</Typography>
+        </div>
+      ),
+    })) ?? []
+  )
+}
 
 export default function MainTable() {
   const [isPending, startTransition] = useTransition()
@@ -45,11 +73,7 @@ export default function MainTable() {
   }, [page, rowsPerPage])
 
   const tableRows = useMemo(
-    () => (
-      <>
-        <Row data={data} />
-      </>
-    ),
+    () => getRowsData(data).map(row => <Row key={row.id} row={row} />),
     [data, navigate]
   )
 

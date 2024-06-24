@@ -8,21 +8,53 @@ import {
   TableRow,
   Collapse,
   Avatar,
+  Typography,
 } from '@mui/material'
 import { clsx } from 'clsx'
 import { TopicData, topicColumns } from '../../constants'
 import { getCommentReplies } from '../../../../api/basic/forum'
-import { ForumTopicTableRowDataType } from '..'
+import { TopicRowDataType } from '..'
 import { getCommentRepliesData } from '../../../../api/basic/forum/types'
-import Row from './Row'
 import Input from './Input'
 import { useAppSelector } from '../../../../hooks/reduxHooks'
 import getAvatarSrc from '../../../../helpers/getAvatarSrc'
 
+function getCommentRowData(data: TopicData[], nestingLevel: number) {
+  return (
+    data.map(item => ({
+      ...item,
+      content: (
+        <div>
+          {item.creator.login}
+          <br />
+          {item.content}
+        </div>
+      ),
+      creator: (
+        <div className={styles.user}>
+          <Avatar
+            className={clsx(
+              styles.avatar,
+              nestingLevel === 0 ? styles.avatar_reply : ''
+            )}
+            alt={item.creator.login}
+            src={getAvatarSrc(item.creator.avatar)}
+          />
+          {nestingLevel !== 0 && (
+            <Typography variant="body1" fontSize="0.75rem">
+              {item.creator.login}
+            </Typography>
+          )}
+        </div>
+      ),
+    })) ?? []
+  )
+}
+
 interface IProps {
   replyId?: number
   commentId: number
-  row: ForumTopicTableRowDataType
+  row: TopicRowDataType
   nestingLevel: number
 }
 
@@ -64,11 +96,16 @@ export default function CommentTable({
   }, [])
 
   const tableRows = useMemo(
-    () => (
-      <>
-        <Row data={data} nestingLevel={nestingLevel} commentId={commentId} />
-      </>
-    ),
+    () =>
+      getCommentRowData(data, nestingLevel).map(row => (
+        <CommentTable
+          key={row.id}
+          replyId={row.id}
+          commentId={commentId}
+          row={row}
+          nestingLevel={nestingLevel + 1}
+        />
+      )),
     [data]
   )
 
