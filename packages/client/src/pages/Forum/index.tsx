@@ -14,6 +14,14 @@ const Forum = () => {
   useLoggedInUser()
   const { forumId, topicId } = useParams()
 
+  useEffect(() => {
+    fetch('/api/v2/test')
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+      })
+  }, [])
+
   const name = topicId
     ? mockData.forum
         .find(item => item.id === forumId)
