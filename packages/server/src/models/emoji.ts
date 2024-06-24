@@ -8,6 +8,7 @@ import {
   ForeignKey,
   AllowNull,
   BelongsTo,
+  Index,
 } from 'sequelize-typescript'
 import Comment from './comment'
 import User from './user'
@@ -34,6 +35,7 @@ export default class Emoji extends Model<IEmoji> {
   @BelongsTo(() => Comment)
   declare comment: Comment
 
+  @Index
   @AllowNull(false)
   @Column(DataType.STRING)
   declare emoji: string
