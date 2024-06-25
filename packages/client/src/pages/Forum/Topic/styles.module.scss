@@ -1,0 +1,17 @@
+.user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .avatar {
+    width: 5rem;
+    height: 5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.pagination {
+  margin-bottom: 3.875rem;
+  overflow: initial !important;
+}

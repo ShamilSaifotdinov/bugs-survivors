@@ -64,14 +64,8 @@ const routes = [
     element: <Forum />,
     children: [
       {
-        path: '/forum/:forumId',
+        path: '/forum/:topicId',
         element: <Forum />,
-        children: [
-          {
-            path: '/forum/:forumId/:topicId',
-            element: <Forum />,
-          },
-        ],
       },
     ],
   },

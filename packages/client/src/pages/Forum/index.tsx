@@ -2,39 +2,27 @@ import { Typography } from '@mui/material'
 import { clsx } from 'clsx'
 import styles from './styles.module.scss'
 import PreviousPageBtn from '../../components/PreviousPageBtn'
-import ForumTable from './components/ForumTable'
 import { useParams } from 'react-router-dom'
-import mockData from '../../../mockData.json'
-import ForumSubjectTable from './components/ForumSubjectTable'
-import { useEffect } from 'react'
-import ForumTopicTable from './components/ForumTopicTable'
+import MainTable from './Table'
+import { useEffect, useState } from 'react'
 import { useLoggedInUser } from '../../hooks/useLoggedInUser'
+import { getTopicInfo } from '../../api/basic/forum'
+import Topic from './Topic'
 
 const Forum = () => {
   useLoggedInUser()
-  const { forumId, topicId } = useParams()
+  const { topicId } = useParams()
+  const [name, setName] = useState(topicId ? 'Topic' : 'Forum')
 
   useEffect(() => {
-    fetch('/api/v2/test')
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
+    if (topicId) {
+      getTopicInfo(Number(topicId)).then(data => {
+        setName(data.name)
       })
-  }, [])
-
-  const name = topicId
-    ? mockData.forum
-        .find(item => item.id === forumId)
-        ?.data.find(topicItem => topicItem.id === topicId)?.name
-    : forumId
-    ? mockData.forum.find(item => item.id === forumId)?.name
-    : 'Forum'
-
-  useEffect(() => {
-    if (!name) {
-      throw new Error('Not found')
+    } else {
+      setName('Forum')
     }
-  }, [])
+  }, [name, topicId])
 
   return (
     <section className={styles.section}>
@@ -46,13 +34,7 @@ const Forum = () => {
               {name}
             </Typography>
           </div>
-          {topicId ? (
-            <ForumTopicTable />
-          ) : forumId ? (
-            <ForumSubjectTable />
-          ) : (
-            <ForumTable />
-          )}
+          {topicId ? <Topic /> : <MainTable />}
         </div>
       </div>
     </section>
