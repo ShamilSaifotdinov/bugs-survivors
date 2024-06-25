@@ -116,11 +116,10 @@ export default function CommentTable({
   return (
     <div
       style={{
-        width: `calc(100% - 7.5rem)`,
         minWidth: `25rem`,
         marginLeft: 'auto',
       }}>
-      <Table className={styles.table}>
+      <Table>
         <TableBody>
           <TableRow
             hover
@@ -149,61 +148,63 @@ export default function CommentTable({
         onClick={handleExpandClick}
         color="secondary"
         className={clsx(styles.collapse, styles.collapse_rigth)}>
-        {repliesAmount} replies ▼
+        {row.replies_count} replies ▼
       </Button>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      <Collapse
+        in={expanded}
+        timeout="auto"
+        unmountOnExit
+        className={styles.collapse_content}>
         {tableRows}
-      </Collapse>
 
-      {row.replies_count - repliesAmount > 0 && (
-        <>
+        {row.replies_count - repliesAmount > 0 && (
           <Button
             onClick={handleLoadMore}
             color="secondary"
             className={styles.collapse}>
             {row.replies_count - repliesAmount} more replies ▼
           </Button>
-        </>
-      )}
+        )}
 
-      <Table className={clsx(styles.table, styles.comment_table)}>
-        <TableBody>
-          <TableRow
-            hover
-            role="checkbox"
-            tabIndex={-1}
-            className={styles.tr_reply}>
-            {topicColumns.map(column => {
-              const value =
-                column.id === 'content' ? (
-                  <Input
-                    commentId={commentId}
-                    replyId={replyId}
-                    callback={() => setCommentReplies()}
-                  />
-                ) : (
-                  <div className={styles.user}>
-                    <Avatar
-                      className={clsx(styles.avatar, styles.avatar_reply)}
-                      alt={user.login}
-                      src={getAvatarSrc(user.avatar)}
+        <Table className={clsx(styles.table, styles.comment_table)}>
+          <TableBody>
+            <TableRow
+              hover
+              role="checkbox"
+              tabIndex={-1}
+              className={styles.tr_reply}>
+              {topicColumns.map(column => {
+                const value =
+                  column.id === 'content' ? (
+                    <Input
+                      commentId={commentId}
+                      replyId={replyId}
+                      callback={() => setCommentReplies()}
                     />
-                  </div>
+                  ) : (
+                    <div className={styles.user}>
+                      <Avatar
+                        className={clsx(styles.avatar, styles.avatar_reply)}
+                        alt={user.login}
+                        src={getAvatarSrc(user.avatar)}
+                      />
+                    </div>
+                  )
+                return (
+                  <TableCell
+                    key={column.id}
+                    className={clsx(
+                      styles.tc_reply,
+                      column.className ? styles[column.className] : ''
+                    )}>
+                    {value}
+                  </TableCell>
                 )
-              return (
-                <TableCell
-                  key={column.id}
-                  className={clsx(
-                    styles.tc_reply,
-                    column.className ? styles[column.className] : ''
-                  )}>
-                  {value}
-                </TableCell>
-              )
-            })}
-          </TableRow>
-        </TableBody>
-      </Table>
+              })}
+            </TableRow>
+          </TableBody>
+        </Table>
+      </Collapse>
     </div>
   )
 }
