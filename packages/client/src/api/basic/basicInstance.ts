@@ -1,9 +1,8 @@
+import { LOCAL_API, YA_API, YA_GAME_API } from '../../constants'
 import fetchApi from '../../services/request'
 
-export const RESOURCES_URL = 'https://ya-praktikum.tech/api/v2/resources'
-
-export const localInstance = fetchApi('/api/v2')
-export const basicInstance = fetchApi('https://ya-praktikum.tech/api/v2')
-export const gameInstance = fetchApi('https://ya-praktikum.tech/game/api/v2')
+export const localInstance = fetchApi(LOCAL_API)
+export const basicInstance = fetchApi(YA_API)
+export const gameInstance = fetchApi(YA_GAME_API)
 
 export default basicInstance

@@ -32,18 +32,20 @@ export default function CommentTextarea({ callback }: IProps) {
   }
 
   const handleCreateComment = () => {
-    createComment({
-      topicId: Number(topicId),
-      content: textareaText,
-      creator: {
-        id: user.id,
-        login: user.login,
-        avatar: user.avatar,
-      },
-    }).then(() => {
-      setTextareaText('')
-      callback()
-    })
+    if (textareaText !== '') {
+      createComment({
+        topicId: Number(topicId),
+        content: textareaText,
+        creator: {
+          id: user.id,
+          login: user.login,
+          avatar: user.avatar,
+        },
+      }).then(() => {
+        setTextareaText('')
+        callback()
+      })
+    }
   }
 
   return (

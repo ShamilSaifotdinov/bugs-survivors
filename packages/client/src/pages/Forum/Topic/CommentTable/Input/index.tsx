@@ -33,24 +33,26 @@ export default function Input({ replyId, commentId, callback }: IProps) {
   }
 
   const handleCreateCommentReply = () => {
-    const creationData: CreateCommentReplyData = {
-      commentId,
-      content: inputText,
-      creator: {
-        id: user.id,
-        login: user.login,
-        avatar: user.avatar,
-      },
-    }
+    if (inputText !== '') {
+      const creationData: CreateCommentReplyData = {
+        commentId,
+        content: inputText,
+        creator: {
+          id: user.id,
+          login: user.login,
+          avatar: user.avatar,
+        },
+      }
 
-    if (replyId) {
-      creationData.replyId = replyId
-    }
+      if (replyId) {
+        creationData.replyId = replyId
+      }
 
-    createCommentReply(creationData).then(() => {
-      setInputText('')
-      callback()
-    })
+      createCommentReply(creationData).then(() => {
+        setInputText('')
+        callback()
+      })
+    }
   }
 
   return (

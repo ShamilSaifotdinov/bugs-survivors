@@ -220,10 +220,5 @@ export const theme = createTheme({
         },
       },
     },
-    MuiAvatar: {
-      defaultProps: {
-        src: '/images/defaultAvatar.png',
-      },
-    },
   },
 })

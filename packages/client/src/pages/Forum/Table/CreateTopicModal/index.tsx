@@ -20,21 +20,23 @@ export default function CreateTopicModal({ callback }: IProps) {
     setOpen(false)
   }
   const handleCreateTopic = () => {
-    createTopic({
-      name: newTopicName,
-      creator: {
-        id: user.id,
-        login: user.login,
-        avatar: user.avatar,
-      },
-    })
-      .then(() => {
-        setCreateTopicError('')
-        setNewTopicName('')
-        setOpen(false)
-        callback()
+    if (newTopicName !== '') {
+      createTopic({
+        name: newTopicName,
+        creator: {
+          id: user.id,
+          login: user.login,
+          avatar: user.avatar,
+        },
       })
-      .catch(error => setCreateTopicError(error.message))
+        .then(() => {
+          setCreateTopicError('')
+          setNewTopicName('')
+          setOpen(false)
+          callback()
+        })
+        .catch(error => setCreateTopicError(error.message))
+    }
   }
 
   return (
