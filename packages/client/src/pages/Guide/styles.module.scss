@@ -2,6 +2,10 @@
   height: 100vh;
 }
 
+body:has(.section) {
+  background: var(--game-background);
+}
+
 .wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -16,6 +20,14 @@
   height: 0.625rem;
   width: 100%;
   background-color: #fff;
+
+  &::after {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 40%;
+    background: var(--blue-dianne);
+  }
 }
 
 .header {

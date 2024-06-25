@@ -10,7 +10,7 @@ async function createServer() {
   const app = express()
   app.use(cors())
   app.use(express.json())
-  const port = Number(process.env.SERVER_PORT) || 3001
+  const port = Number(process.env.SERVER_PORT) || 3002
 
   app.get('/', (_, res) => {
     res.json('👋 Howdy from the server :)')

@@ -7,11 +7,6 @@ import styles from './styles.module.scss'
 const Guide = () => {
   return (
     <section className={styles.section}>
-      <style type="text/css">
-        {`body {
-            background: #365A36
-          }`}
-      </style>
       <Helmet>
         <meta charSet="utf-8" />
         <title>Guide</title>
