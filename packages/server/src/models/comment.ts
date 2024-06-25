@@ -13,6 +13,7 @@ import {
 import User from './user'
 import Topic from './topic'
 import Reply from './reply'
+import Emoji from './emoji'
 
 export interface IComment {
   id: number
@@ -62,4 +63,7 @@ export default class Comment
 
   @HasMany(() => Reply)
   declare replies: Reply[]
+
+  @HasMany(() => Emoji)
+  declare emoji: Emoji[]
 }
