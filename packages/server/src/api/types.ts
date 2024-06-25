@@ -75,3 +75,11 @@ export const get_replies: ValidationScheme = {
     commentId: { type: 'integer' },
   },
 }
+
+export const update_emoji: ValidationScheme = {
+  type: 'object',
+  properties: {
+    creatorId: { type: 'integer' },
+    emoji: { type: 'string' },
+  },
+}

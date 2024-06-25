@@ -9,7 +9,6 @@ import Topic from '../models/topic'
 import Comment from '../models/comment'
 import UserService from './user'
 import { Sequelize } from 'sequelize'
-
 class TopicService {
   public static create_topic = async (data: CreateTopicRequest) => {
     await UserService.upsert_user(data.creator)
@@ -65,6 +64,18 @@ class TopicService {
             WHERE replies.comment_id = "Comment"."id" AND replies.reply_id IS NULL
           )`),
           'replies_count',
+        ],
+        [
+          Sequelize.literal(`(
+         SELECT JSON_AGG(row_to_json(subquery))
+         FROM  (
+         SELECT emoji, COUNT(emoji) AS emoji_count
+         FROM emoji
+         WHERE emoji.comment_id="Comment"."id"
+         GROUP BY emoji
+         ) AS subquery
+          )`),
+          'emoji',
         ],
       ],
     })
