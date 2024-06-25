@@ -370,10 +370,6 @@ components:
         creatorId:
           type: number
           format: int64
-        commentId:
-          type: number
-          format: int64
-          example: 2
         emoji:
           $ref: '#/components/schemas/Emoji'
     RepliesResponse:
