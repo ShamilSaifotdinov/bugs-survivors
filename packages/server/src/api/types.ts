@@ -83,3 +83,10 @@ export const update_emoji: ValidationScheme = {
     emoji: { type: 'string' },
   },
 }
+
+export const get_emoji: ValidationScheme = {
+  type: 'object',
+  properties: {
+    commentId: { type: 'integer' },
+  },
+}

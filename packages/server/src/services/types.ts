@@ -33,7 +33,7 @@ export interface CommentAndReplyResponse {
   content: string
   creator: IUser
   replies_count: number
-  emoji?: IEmoji[] | null
+  emoji?: EmojiResponse[] | null
 }
 
 export interface GetReplyRequest extends GetPaginationRequest {
@@ -47,8 +47,7 @@ export interface CreateReplyRequest {
   creator: IUser
 }
 
-export interface IEmoji {
-  commentId: number
-  creatorId: number
+export interface EmojiResponse {
+  count: number
   emoji: string
 }

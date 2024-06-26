@@ -1,6 +1,6 @@
 import Comment from '../models/comment'
-import Emoji from '../models/emoji'
-import { IEmoji } from './types'
+import Emoji, { EmojiRequest } from '../models/emoji'
+import { EmojiResponse } from './types'
 import { fn, col } from 'sequelize'
 
 export class EmojiService {
@@ -13,13 +13,21 @@ export class EmojiService {
       where: {
         commentId,
       },
-      attributes: ['emoji', [fn('count', col('emoji')), 'emoji_count']],
+      attributes: [[fn('COUNT', col('emoji')), 'count'], 'emoji'],
       group: 'emoji',
+    })
+    emoji.forEach(emoji => {
+      const data = emoji.dataValues as unknown as EmojiResponse
+      data.count = Number(data.count)
     })
     return emoji
   }
 
-  public static update = async ({ commentId, creatorId, emoji }: IEmoji) => {
+  public static update = async ({
+    commentId,
+    creatorId,
+    emoji,
+  }: EmojiRequest) => {
     try {
       const instance = await Emoji.findOne({
         where: {

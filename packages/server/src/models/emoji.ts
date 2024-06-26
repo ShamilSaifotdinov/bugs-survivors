@@ -20,7 +20,8 @@ interface IEmoji {
   creatorId: number
 }
 
-type EmojiRequest = Omit<IEmoji, 'id'>
+export type EmojiRequest = Omit<IEmoji, 'id'>
+
 @Table({ timestamps: false, tableName: 'emoji' })
 export default class Emoji extends Model<IEmoji, EmojiRequest> {
   @PrimaryKey
