@@ -20,10 +20,10 @@ const GameOver = () => {
       console.log(user)
       leaderboardPost({
         data: {
-          name: user.user.display_name,
+          name: user.user.login,
           score: diedEnemies,
           seconds: time,
-          user_avatar: user.user.avatar,
+          avatar: user.user.avatar,
         },
         ratingFieldName: 'seconds',
         teamName: 'StathamGames',

@@ -4,7 +4,7 @@ export type LeaderboardPostData = {
   name: string | undefined
   score: number
   seconds: number
-  user_avatar: string | null | undefined
+  avatar: string | undefined
 }
 
 export type LeaderboardUserData = {

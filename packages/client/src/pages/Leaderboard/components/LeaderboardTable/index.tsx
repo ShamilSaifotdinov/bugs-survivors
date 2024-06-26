@@ -58,7 +58,7 @@ const columns: readonly Column[] = [
 type formattedData = {
   position: number
   user: {
-    avatar: string | null | undefined
+    avatar: string | undefined
     name: string
   }
   time: string
@@ -74,20 +74,12 @@ export default function LeaderboardTable() {
     ...item,
     user: (
       <div className={styles.user}>
-        {item.user.avatar !== null ? (
-          <Avatar
-            className={styles.avatar}
-            alt={item.user.name}
-            src={getAvatarSrc(item.user.avatar)}
-          />
-        ) : (
-          <Avatar
-            className={styles.avatar}
-            alt={item.user.name}
-            src={getAvatarSrc('noImage')}
-          />
-        )}
-
+        =
+        <Avatar
+          className={styles.avatar}
+          alt={item.user.name}
+          src={getAvatarSrc(item.user.avatar)}
+        />
         <Typography variant="body1">{item.user.name}</Typography>
       </div>
     ),
@@ -103,14 +95,14 @@ export default function LeaderboardTable() {
           item.data.name &&
           item.data.score !== undefined &&
           item.data.seconds !== undefined &&
-          item.data.user_avatar !== undefined
+          item.data.avatar !== undefined
       )
 
       const formattedData: formattedData[] = filteredData.map(
         (item, index) => ({
           position: index + 1,
           user: {
-            avatar: item.data.user_avatar,
+            avatar: item.data.avatar,
             name: item.data.name!,
           },
           time: convertSeconds(item.data.seconds!),
