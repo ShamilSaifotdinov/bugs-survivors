@@ -367,9 +367,8 @@ components:
     RequestUpdateEmoji:
       type: object
       properties:
-        creatorId:
-          type: number
-          format: int64
+        creator:
+          $ref: '#/components/schemas/User'
         emoji:
           $ref: '#/components/schemas/Emoji'
     RepliesResponse:

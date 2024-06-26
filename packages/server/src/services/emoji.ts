@@ -2,6 +2,7 @@ import Comment from '../models/comment'
 import Emoji, { EmojiRequest } from '../models/emoji'
 import { EmojiResponse } from './types'
 import { fn, col } from 'sequelize'
+import UserService from './user'
 
 export class EmojiService {
   public static find = async (commentId: number) => {
@@ -23,11 +24,10 @@ export class EmojiService {
     return emoji
   }
 
-  public static update = async ({
-    commentId,
-    creatorId,
-    emoji,
-  }: EmojiRequest) => {
+  public static update = async (data: EmojiRequest) => {
+    const { emoji, commentId, creator } = data
+    const creatorId = creator.id
+    await UserService.upsert_user(creator)
     try {
       const instance = await Emoji.findOne({
         where: {
@@ -43,6 +43,7 @@ export class EmojiService {
           commentId,
           creatorId,
           emoji,
+          creator,
         })
       }
     } catch {

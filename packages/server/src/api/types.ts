@@ -79,7 +79,7 @@ export const get_replies: ValidationScheme = {
 export const update_emoji: ValidationScheme = {
   type: 'object',
   properties: {
-    creatorId: { type: 'integer' },
+    creator: user,
     emoji: { type: 'string' },
   },
 }

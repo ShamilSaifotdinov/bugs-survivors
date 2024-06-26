@@ -18,6 +18,7 @@ interface IEmoji {
   commentId: number
   emoji: string
   creatorId: number
+  creator: User
 }
 
 export type EmojiRequest = Omit<IEmoji, 'id'>
