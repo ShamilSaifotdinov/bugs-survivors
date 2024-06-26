@@ -23,7 +23,6 @@ const GameOver = () => {
           name: user.user.display_name,
           score: diedEnemies,
           seconds: time,
-          user_id: user.user.id,
           user_avatar: user.user.avatar,
         },
         ratingFieldName: 'seconds',

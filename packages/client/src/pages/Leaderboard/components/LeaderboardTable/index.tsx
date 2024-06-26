@@ -58,7 +58,6 @@ const columns: readonly Column[] = [
 type formattedData = {
   position: number
   user: {
-    id: string
     avatar: string | null | undefined
     name: string
   }
@@ -104,7 +103,6 @@ export default function LeaderboardTable() {
           item.data.name &&
           item.data.score !== undefined &&
           item.data.seconds !== undefined &&
-          item.data.user_id !== undefined &&
           item.data.user_avatar !== undefined
       )
 
@@ -112,7 +110,6 @@ export default function LeaderboardTable() {
         (item, index) => ({
           position: index + 1,
           user: {
-            id: item.data.user_id!.toString(),
             avatar: item.data.user_avatar,
             name: item.data.name!,
           },
