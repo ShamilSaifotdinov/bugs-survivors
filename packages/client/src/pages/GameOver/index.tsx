@@ -16,8 +16,7 @@ const GameOver = () => {
   const user = useAppSelector(state => state.user)
 
   useEffect(() => {
-    if (user) {
-      console.log(user)
+    if (user && user.user.id) {
       leaderboardPost({
         data: {
           name: user.user.login,

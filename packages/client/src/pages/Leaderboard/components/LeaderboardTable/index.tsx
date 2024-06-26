@@ -74,7 +74,6 @@ export default function LeaderboardTable() {
     ...item,
     user: (
       <div className={styles.user}>
-        =
         <Avatar
           className={styles.avatar}
           alt={item.user.name}
