@@ -15,6 +15,7 @@ import {
   getLeaderboard,
 } from '../../../../api/basic/leaderboard'
 import convertSeconds from '../../../../helpers/convertSeconds'
+import getAvatarSrc from '../../../../helpers/getAvatarSrc'
 
 type User = {
   id: string
@@ -54,31 +55,40 @@ const columns: readonly Column[] = [
   },
 ]
 
-type LeaderboardResponse = {
-  data: {
-    name?: string
-    score?: number
-    seconds?: number
-    user_id?: number
+type formattedData = {
+  position: number
+  user: {
+    id: string
+    avatar: string | null | undefined
+    name: string
   }
-}[]
+  time: string
+  score: number
+}
 
 export default function LeaderboardTable() {
-  const [mockData, setMockData] = useState<{ leaderboard: LeaderboardEntry[] }>(
-    {
-      leaderboard: [],
-    }
-  )
+  const [mockData, setMockData] = useState<{ leaderboard: formattedData[] }>({
+    leaderboard: [],
+  })
 
   const tableRows = mockData.leaderboard.map(item => ({
     ...item,
     user: (
       <div className={styles.user}>
-        <Avatar
-          className={styles.avatar}
-          alt={item.user.name}
-          src={item.user.avatar}
-        />
+        {item.user.avatar !== null ? (
+          <Avatar
+            className={styles.avatar}
+            alt={item.user.name}
+            src={getAvatarSrc(item.user.avatar)}
+          />
+        ) : (
+          <Avatar
+            className={styles.avatar}
+            alt={item.user.name}
+            src={getAvatarSrc('noImage')}
+          />
+        )}
+
         <Typography variant="body1">{item.user.name}</Typography>
       </div>
     ),
@@ -89,26 +99,27 @@ export default function LeaderboardTable() {
 
   useEffect(() => {
     getLeaderboard('StathamGames', page, rowsPerPage).then(response => {
-      const leaderboardResponse = response as LeaderboardResponse // Type assertion
-
-      const filteredData = leaderboardResponse.filter(
+      const filteredData = response.filter(
         item =>
           item.data.name &&
           item.data.score !== undefined &&
           item.data.seconds !== undefined &&
-          item.data.user_id !== undefined
+          item.data.user_id !== undefined &&
+          item.data.user_avatar !== undefined
       )
 
-      const formattedData = filteredData.map((item, index) => ({
-        position: (index + 1).toString(),
-        user: {
-          id: item.data.user_id!.toString(),
-          avatar: '/images/defaultAvatar.png', // Default avatar, replace with actual if available
-          name: item.data.name!,
-        },
-        time: convertSeconds(item.data.seconds!), // Assuming convertSeconds is a function that converts seconds to a time string
-        score: item.data.score!,
-      }))
+      const formattedData: formattedData[] = filteredData.map(
+        (item, index) => ({
+          position: index + 1,
+          user: {
+            id: item.data.user_id!.toString(),
+            avatar: item.data.user_avatar,
+            name: item.data.name!,
+          },
+          time: convertSeconds(item.data.seconds!),
+          score: item.data.score || 0,
+        })
+      )
 
       setMockData({ leaderboard: formattedData })
     })

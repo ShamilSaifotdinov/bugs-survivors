@@ -1,14 +1,15 @@
 import basicInstance from './basicInstance'
 
-export type Data = {
+export type LeaderboardPostData = {
   name: string | undefined
   score: number
   seconds: number
   user_id: number | undefined
+  user_avatar: string | null | undefined
 }
 
-export type LeaderboardData = {
-  data: Data
+export type LeaderboardUserData = {
+  data: LeaderboardPostData
   ratingFieldName: string
   teamName: string
 }
@@ -20,8 +21,8 @@ export type Options = {
 }
 
 export const leaderboardPost = async (
-  data: LeaderboardData
-): Promise<unknown> => {
+  data: LeaderboardUserData
+): Promise<LeaderboardPostData> => {
   return basicInstance.post(`/leaderboard`, { data })
 }
 
@@ -29,9 +30,9 @@ export const getLeaderboard = async (
   teamname: string,
   cursor: number,
   limit: number
-): Promise<unknown> => {
+): Promise<LeaderboardUserData[]> => {
   const data: Options = {
-    ratingFieldName: 'score',
+    ratingFieldName: 'seconds',
     cursor: cursor,
     limit: limit,
   }

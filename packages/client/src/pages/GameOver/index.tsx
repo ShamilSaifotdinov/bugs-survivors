@@ -16,17 +16,21 @@ const GameOver = () => {
   const user = useAppSelector(state => state.user)
 
   useEffect(() => {
-    leaderboardPost({
-      data: {
-        name: user?.user?.display_name,
-        score: diedEnemies,
-        seconds: time,
-        user_id: user?.user?.id,
-      },
-      ratingFieldName: 'score',
-      teamName: 'StathamGames',
-    })
-  })
+    if (user) {
+      console.log(user)
+      leaderboardPost({
+        data: {
+          name: user.user.display_name,
+          score: diedEnemies,
+          seconds: time,
+          user_id: user.user.id,
+          user_avatar: user.user.avatar,
+        },
+        ratingFieldName: 'seconds',
+        teamName: 'StathamGames',
+      })
+    }
+  }, [user])
 
   return (
     <LayoutWithBgImage>
