@@ -93,8 +93,7 @@ export default function LeaderboardTable() {
         item =>
           item.data.name &&
           item.data.score !== undefined &&
-          item.data.seconds !== undefined &&
-          item.data.avatar !== undefined
+          item.data.seconds !== undefined
       )
 
       const formattedData: formattedData[] = filteredData.map(
