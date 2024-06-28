@@ -1,4 +1,4 @@
-import { IUser } from '../models/user'
+import User, { IUser } from '../models/user'
 
 export interface GetPaginationRequest {
   offset: number
@@ -49,5 +49,12 @@ export interface CreateReplyRequest {
 
 export interface EmojiResponse {
   count: number
+  emoji: string
+}
+
+export interface UpdateEmoji {
+  commentId: number
+  creatorId: number
+  creator: User
   emoji: string
 }

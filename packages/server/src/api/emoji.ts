@@ -14,11 +14,7 @@ export class EmojiApi {
       })
       res.json(result)
     } catch (e) {
-      if ((e as Error).name === 'SequelizeForeignKeyConstraintError') {
-        res
-          .status(400)
-          .json({ reason: 'Comment ID, creator ID or emoji not exist' })
-      }
+      res.status(400).json({ reason: (e as Error).message })
     }
   }
 }
