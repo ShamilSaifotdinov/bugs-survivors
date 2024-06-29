@@ -18,10 +18,13 @@ interface IEmoji {
   commentId: number
   emoji: string
   creatorId: number
+  creator: User
 }
 
+export type EmojiInput = Omit<IEmoji, 'id' | 'creator'>
+
 @Table({ timestamps: false, tableName: 'emoji' })
-export default class Emoji extends Model<IEmoji> {
+export default class Emoji extends Model<IEmoji, EmojiInput> {
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
