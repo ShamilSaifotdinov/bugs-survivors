@@ -66,6 +66,18 @@ class TopicService {
           )`),
           'replies_count',
         ],
+        [
+          Sequelize.literal(`(
+         SELECT JSON_AGG(row_to_json(subquery))
+         FROM  (
+         SELECT COUNT(emoji) AS count, emoji
+         FROM emoji
+         WHERE emoji.comment_id="Comment"."id"
+         GROUP BY emoji
+         ) AS subquery
+          )`),
+          'emoji',
+        ],
       ],
     })
 
