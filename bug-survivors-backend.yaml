@@ -1,0 +1,435 @@
+openapi: 3.0.3
+info:
+  title: Bug Survivors Backend
+  description: |-
+    Backend API for Bug Survivors
+  version: 0.0.1
+externalDocs:
+  description: API of ya-praktikum.tech
+  url: https://ya-praktikum.tech/api/v2/swagger/
+servers:
+  - url: http://localhost:3002/api/v2
+tags:
+  - name: forum
+    description: Forum for discussion
+  - name: topic
+    description: Topic of forum
+  - name: comment
+    description: Comment on topic
+paths:
+  /forum:
+    get:
+      tags:
+        - forum
+      summary: Get count of topics
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TopicCountResponse'
+        '403':
+          description: Forbidden (Not Authorized)
+        '500':
+          description: Internal server error
+  /forum/topics:
+    get:
+      tags:
+        - forum
+      summary: Get topics of forum
+      parameters:
+        - name: offset
+          in: query
+          description: The number of items to skip
+          required: true
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: The numbers of items to return
+          required: true
+          schema:
+            type: integer
+            maximum: 50
+      # requestBody:
+      #   description: Update an existent pet in the store
+      #   content:
+      #     application/json:
+      #       schema:
+      #         $ref: '#/components/schemas/ForumResponse'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForumResponse'
+        '400':
+          description: Invalid query
+        '403':
+          description: Forbidden (Not Authorized)
+        '500':
+          description: Internal server error
+  /topic:
+    post:
+      tags:
+        - topic
+      summary: Creat new topic
+      requestBody:
+        description: Creat new topic at the forum
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTopicRequest'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewTopicResponse'
+        '400':
+          description: Invalid query
+        '403':
+          description: Forbidden (Not Authorized)
+        '409':
+          description: Already exist
+        '500':
+          description: Internal server error
+  /topic/{topicId}:
+    get:
+      tags:
+        - topic
+      summary: Get topic info
+      parameters:
+        - name: topicId
+          in: path
+          description: ID of topic that needs to be fetched
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TopicResponse'
+        '400':
+          description: Invalid query
+        '403':
+          description: Forbidden (Not Authorized)
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+  /topic/{topicId}/comments:
+    get:
+      tags:
+        - topic
+      summary: Get comments of topic
+      parameters:
+        - name: topicId
+          in: path
+          description: ID of topic that needs to be fetched
+          required: true
+          schema:
+            type: integer
+        - name: offset
+          in: query
+          description: The number of items to skip
+          required: true
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: The numbers of items to return
+          required: true
+          schema:
+            type: integer
+            maximum: 50
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentsResponse'
+        '400':
+          description: Invalid query
+        '403':
+          description: Forbidden (Not Authorized)
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+  /comment:
+    post:
+      tags:
+        - comment
+      summary: Add new comment
+      requestBody:
+        description: Add new comment at the topic
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCommentRequest'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewCommentResponse'
+        '400':
+          description: Invalid query
+        '403':
+          description: Forbidden (Not Authorized)
+        '500':
+          description: Internal server error
+  /comment/{commentId}:
+    get:
+      tags:
+        - comment
+      summary: Get replies
+      parameters:
+        - name: commentId
+          in: path
+          description: ID of comment whose replies needs to be fetched
+          required: true
+          schema:
+            type: integer
+        - name: offset
+          in: query
+          description: The number of items to skip
+          required: true
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: The numbers of items to return
+          required: true
+          schema:
+            type: integer
+            maximum: 50
+        - name: replyId
+          in: query
+          description: ID of parent reply
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RepliesResponse'
+        '400':
+          description: Invalid query
+        '403':
+          description: Forbidden (Not Authorized)
+        '500':
+          description: Internal server error
+  /comment/{commentId}/emoji:
+    put:
+      tags:
+        - comment
+      summary: Update emoji by comment id
+      parameters:
+        - name: commentId
+          in: path
+          description: 'The comment which needs update emoji'
+          required: true
+          schema:
+            type: number
+      requestBody:
+        description: Update an existent emoji in database
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestUpdateEmoji'
+        required: true
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEmoji'
+        '400':
+          description: Invalid query
+        '403':
+          description: Forbidden (Not Authorized)
+        '500':
+          description: Internal server error
+  /comment/reply:
+    post:
+      tags:
+        - comment
+      summary: Add new reply
+      requestBody:
+        description: Add new reply for comment or another reply (replyId is not required)
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewReplyRequest'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewReplyResponse'
+        '400':
+          description: Invalid query
+        '403':
+          description: Forbidden (Not Authorized)
+        '500':
+          description: Internal server error
+components:
+  schemas:
+    ForumResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+            # example: 198772
+          name:
+            format: string
+          creator:
+            $ref: '#/components/schemas/User'
+          comments_count:
+            type: integer
+    TopicCountResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+    NewTopicRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          # example: 10
+        creator:
+          $ref: '#/components/schemas/User'
+    NewTopicResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          # example: 10
+    TopicResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        comments_count:
+          type: integer
+    CommentsResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+            # example: 198772
+          content:
+            format: string
+          creator:
+            $ref: '#/components/schemas/User'
+          replies_count:
+            type: integer
+            format: int64
+          emoji:
+            $ref: '#/components/schemas/ResponseEmoji'
+            # example: 198772
+    Emoji:
+      type: string
+      example: '😄'
+    ResponseEmoji:
+      type: array
+      items:
+        type: object
+        properties:
+          count:
+            type: number
+            format: int64
+            example: 55
+          emoji:
+            $ref: '#/components/schemas/Emoji'
+    RequestUpdateEmoji:
+      type: object
+      properties:
+        creator:
+          $ref: '#/components/schemas/User'
+        emoji:
+          $ref: '#/components/schemas/Emoji'
+    RepliesResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+            # example: 198772
+          content:
+            format: string
+          replies_count:
+            type: integer
+          creator:
+            $ref: '#/components/schemas/User'
+    NewCommentRequest:
+      type: object
+      properties:
+        topicId:
+          type: integer
+        content:
+          type: string
+        creator:
+          $ref: '#/components/schemas/User'
+    NewCommentResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          # example: 10
+    NewReplyRequest:
+      type: object
+      properties:
+        commentId:
+          type: integer
+        replyId:
+          type: integer
+          nullable: true
+        content:
+          type: string
+        creator:
+          $ref: '#/components/schemas/User'
+    NewReplyResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          # example: 10
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          # example: 198772
+        login:
+          format: string
+        avatar:
+          format: string
+          nullable: true

@@ -4,10 +4,31 @@ import { Helmet } from 'react-helmet'
 import LayoutWithBgImage from '../../components/LayoutWithBgImage'
 import styles from './styles.module.scss'
 import convertSeconds from '../../helpers/convertSeconds'
+import { useAppSelector } from '../../hooks/reduxHooks'
+import { useEffect } from 'react'
+
+import { leaderboardPost } from '../../api/basic/leaderboard'
 
 const GameOver = () => {
   const location = useLocation()
   const { time, level, diedEnemies } = location.state
+
+  const user = useAppSelector(state => state.user)
+
+  useEffect(() => {
+    if (user && user.user.id) {
+      leaderboardPost({
+        data: {
+          name: user.user.login,
+          score: diedEnemies,
+          seconds: time,
+          avatar: user.user.avatar,
+        },
+        ratingFieldName: 'seconds',
+        teamName: 'StathamGames',
+      })
+    }
+  }, [user])
 
   return (
     <LayoutWithBgImage>

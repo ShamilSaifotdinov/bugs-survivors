@@ -78,6 +78,28 @@
 Если вам понадобится только один сервис, просто уточните какой в команде
 `docker compose up {sevice_name}`, например `docker compose up server`
 
+### Сборка
+
+`docker compose build` - сборка всех сервисов (для сборки и послдедующего запуска - `docker compose up --build`)
+
+Сборка отдельного сервиса:
+`docker compose build {sevice_name}`, например `docker compose build`
+
+### Остановка
+
+`docker compose stop` - остановка всех сервисов
+
+Остановка отдельного сервиса:
+`docker compose stop {sevice_name}`, например `docker compose stop server`
+
+### Прочее
+
+`docker ps` или `docker compose ps` - просмотр запущенных контейнеров или сервисов
+
+`docker ps -a` или `docker compose ps -a` - просмотр всех существующих контейнеров или сервисов
+
+`docker system prune --all` - для очистки ранее созданных контейнеров и кэша
+
 ## Описание игры
 
 ### Основные элементы игры:
@@ -135,4 +157,6 @@
 
 ### Видео с демонстрацией реализации:
 
-https://disk.yandex.ru/i/IjqTjC1OSPC_tw
+Спринт 5-6: https://disk.yandex.ru/i/IjqTjC1OSPC_tw
+
+Спринт 7-8: https://disk.yandex.ru/i/AyLonOpc7n_RYQ

@@ -1,9 +1,10 @@
 import { Button, Typography } from '@mui/material'
 import { Helmet } from 'react-helmet'
-import styles from './styles.module.scss'
 import { useLoggedInUser } from '../../hooks/useLoggedInUser'
 import { logOutUser } from '../../store/slices/userSlice'
 import { useAppDispatch } from '../../hooks/reduxHooks'
+import Clue from '../../components/Clue'
+import styles from './styles.module.scss'
 
 const breakpointSizes = {
   fontSize: {
@@ -56,6 +57,7 @@ function MainMenu() {
           Logout
         </Button>
       </div>
+      <Clue />
     </div>
   )
 }

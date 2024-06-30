@@ -9,6 +9,7 @@ import ErrorPage from './pages/Error'
 import ErrorPage500 from './pages/Error500'
 import GameOver from './pages/GameOver'
 import GamePage from './pages/GamePage'
+import Guide from './pages/Guide'
 import { AppDispatch, RootState } from './store'
 
 export type PageInitArgs = {
@@ -63,14 +64,8 @@ const routes = [
     element: <Forum />,
     children: [
       {
-        path: '/forum/:forumId',
+        path: '/forum/:topicId',
         element: <Forum />,
-        children: [
-          {
-            path: '/forum/:forumId/:topicId',
-            element: <Forum />,
-          },
-        ],
       },
     ],
   },
@@ -81,6 +76,10 @@ const routes = [
   {
     path: '/gameOver',
     element: <GameOver />,
+  },
+  {
+    path: '/guide',
+    element: <Guide />,
   },
 ].map((item: Route) => ({
   ...item,
