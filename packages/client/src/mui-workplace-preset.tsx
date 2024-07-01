@@ -198,6 +198,7 @@ export const theme = createTheme({
     MuiInputBase: {
       styleOverrides: {
         root: {
+          fontFamily: 'var(--primary-font)',
           color: '#00000099',
         },
       },
@@ -209,19 +210,14 @@ export const theme = createTheme({
       },
       styleOverrides: {
         root: {
-          fontFamily: 'var(--secondary-font)',
+          fontFamily: 'var(--primary-font)',
           fontWeight: '400',
           padding: '1px 0.25rem 1px 0.25rem',
           borderRadius: '0.25rem',
-          fontSize: '1rem',
+          fontSize: '.75rem',
           backgroundColor: '#C1E0DF',
           color: '#2F464A',
         },
-      },
-    },
-    MuiAvatar: {
-      defaultProps: {
-        src: '/images/defaultAvatar.png',
       },
     },
   },

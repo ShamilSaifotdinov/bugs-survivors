@@ -6,7 +6,7 @@ dotenv.config()
 import { dbConnect } from './db'
 import router from './src/router'
 
-const port = Number(process.env.SERVER_PORT) || 3001
+const port = Number(process.env.SERVER_PORT) || 3002
 
 async function createServer() {
   const app = express()

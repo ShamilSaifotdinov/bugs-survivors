@@ -1,0 +1,30 @@
+.pagination {
+  margin-top: 2.5rem;
+  overflow: initial !important;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+
+  .avatar {
+    margin-right: 0.5rem;
+  }
+}
+
+.tr {
+  cursor: pointer;
+}
+
+.tr .tc {
+  border-bottom: 1px solid #fff;
+}
+
+.tc.tc_align_right {
+  text-align: right;
+}
+
+.tc.creator_header {
+  padding-left: calc(56px + 0.5rem);
+}

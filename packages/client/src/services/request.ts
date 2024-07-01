@@ -54,7 +54,11 @@ const fetchApi = (baseUrl?: string) => {
 
   const get: FetchMethod = (url, options = {}) => {
     const finalUrl = options.data ? url + queryString(options.data) : url
-    return request(finalUrl, { ...options, method: METHODS.GET })
+    return request(finalUrl, {
+      ...options,
+      data: undefined,
+      method: METHODS.GET,
+    })
   }
 
   const post: FetchMethod = (url, options = {}) =>

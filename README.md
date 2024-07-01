@@ -163,4 +163,6 @@
 
 ### Видео с демонстрацией реализации:
 
-https://disk.yandex.ru/i/IjqTjC1OSPC_tw
+Спринт 5-6: https://disk.yandex.ru/i/IjqTjC1OSPC_tw
+
+Спринт 7-8: https://disk.yandex.ru/i/AyLonOpc7n_RYQ

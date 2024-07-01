@@ -233,6 +233,38 @@ paths:
           description: Forbidden (Not Authorized)
         '500':
           description: Internal server error
+  /comment/{commentId}/emoji:
+    put:
+      tags:
+        - comment
+      summary: Update emoji by comment id
+      parameters:
+        - name: commentId
+          in: path
+          description: 'The comment which needs update emoji'
+          required: true
+          schema:
+            type: number
+      requestBody:
+        description: Update an existent emoji in database
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestUpdateEmoji'
+        required: true
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEmoji'
+        '400':
+          description: Invalid query
+        '403':
+          description: Forbidden (Not Authorized)
+        '500':
+          description: Internal server error
   /comment/reply:
     post:
       tags:
@@ -369,7 +401,30 @@ components:
           replies_count:
             type: integer
             format: int64
+          emoji:
+            $ref: '#/components/schemas/ResponseEmoji'
             # example: 198772
+    Emoji:
+      type: string
+      example: '😄'
+    ResponseEmoji:
+      type: array
+      items:
+        type: object
+        properties:
+          count:
+            type: number
+            format: int64
+            example: 55
+          emoji:
+            $ref: '#/components/schemas/Emoji'
+    RequestUpdateEmoji:
+      type: object
+      properties:
+        creator:
+          $ref: '#/components/schemas/User'
+        emoji:
+          $ref: '#/components/schemas/Emoji'
     RepliesResponse:
       type: array
       items:
