@@ -18,6 +18,7 @@ export default {
     database: POSTGRES_DB,
     password: POSTGRES_PASSWORD,
     dialect: 'postgres',
+    seederStorage: "sequelize",
   },
   production: {
     host: POSTGRES_INTERNAL_HOST,
@@ -26,5 +27,6 @@ export default {
     database: POSTGRES_DB,
     password: POSTGRES_PASSWORD,
     dialect: 'postgres',
+    seederStorage: "sequelize",
   }
 }

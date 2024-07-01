@@ -32,7 +32,7 @@ class UserThemeService implements BaseRESTService {
         themeId: data.themeId,
         ownerId: data.userId,
       },
-      { where: { id: userTheme.theme.id } }
+      { where: { id: userTheme.id } }
     )
   }
 }

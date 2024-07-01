@@ -1,4 +1,5 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
+import { exec } from 'child_process'
 
 const {
   POSTGRES_EXTERNAL_HOST,
@@ -32,6 +33,25 @@ export async function dbConnect() {
     // @ts-ignore
     console.log('  ➜ 🎸 Connected to the database at:', res[0][0].now)
     await sequelize.sync()
+
+    const seed = await new Promise(resolve =>
+      exec(
+        `npx sequelize-cli db:seed:all${isDev ? '' : ' --env production'}`,
+        (error, stdout, stderr) => {
+          if (error) {
+            throw new Error(`error: ${error.message}`)
+          }
+
+          if (stderr) {
+            console.log(`stderr: ${stderr}`)
+          }
+
+          resolve(`stdout:\n${stdout}`)
+        }
+      )
+    )
+
+    console.log(seed)
 
     return sequelize
   } catch (error) {
