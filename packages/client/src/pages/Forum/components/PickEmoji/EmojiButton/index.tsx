@@ -30,7 +30,6 @@ function EmojiButton({
         onClick={toggleEmojiBar}
         sx={{
           borderRadius: '0.4rem',
-          margin: '0 0 0.3rem 0.7rem',
         }}
       />
       {isPickerVisible ? (

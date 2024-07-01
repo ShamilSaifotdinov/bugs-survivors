@@ -18,6 +18,7 @@ import { getCommentRepliesData } from '../../../../api/basic/forum/types'
 import Input from './Input'
 import { useAppSelector } from '../../../../hooks/reduxHooks'
 import getAvatarSrc from '../../../../helpers/getAvatarSrc'
+import PickEmoji from '../../components/PickEmoji'
 
 function getCommentRowData(data: TopicData[], nestingLevel: number) {
   return (
@@ -137,6 +138,7 @@ export default function CommentTable({
                     column.className ? styles[column.className] : ''
                   )}>
                   {value}
+                  {column.className === 'answer_cell' ? <PickEmoji /> : null}
                 </TableCell>
               )
             })}
