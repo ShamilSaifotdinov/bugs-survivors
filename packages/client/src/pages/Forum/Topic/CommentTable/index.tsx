@@ -11,7 +11,7 @@ import {
   Typography,
 } from '@mui/material'
 import { clsx } from 'clsx'
-import { TopicData, topicColumns } from '../../constants'
+import { Emoji, TopicData, topicColumns } from '../../constants'
 import { getCommentReplies } from '../../../../api/basic/forum'
 import { TopicRowDataType } from '..'
 import { getCommentRepliesData } from '../../../../api/basic/forum/types'
@@ -57,6 +57,7 @@ interface IProps {
   commentId: number
   row: TopicRowDataType
   nestingLevel: number
+  emoji: Emoji[] | []
 }
 
 export default function CommentTable({
@@ -64,6 +65,7 @@ export default function CommentTable({
   commentId,
   row,
   nestingLevel,
+  emoji,
 }: IProps) {
   const rowsPerPage = 10
   const [repliesAmount, setRepliesAmount] = useState(0)
@@ -105,6 +107,7 @@ export default function CommentTable({
           commentId={commentId}
           row={row}
           nestingLevel={nestingLevel + 1}
+          emoji={row.emoji}
         />
       )),
     [data]
@@ -138,7 +141,9 @@ export default function CommentTable({
                     column.className ? styles[column.className] : ''
                   )}>
                   {value}
-                  {column.className === 'answer_cell' ? <PickEmoji /> : null}
+                  {nestingLevel === 0 && (
+                    <PickEmoji emoji={emoji} commentId={commentId} />
+                  )}
                 </TableCell>
               )
             })}
