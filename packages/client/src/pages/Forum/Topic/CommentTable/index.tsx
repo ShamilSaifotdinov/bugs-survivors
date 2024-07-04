@@ -133,6 +133,7 @@ export default function CommentTable({
             className={nestingLevel === 0 ? styles.tr : styles.tr_reply}>
             {topicColumns.map(column => {
               const value = row[column.id]
+              const isAnswerCell = column.className
               return (
                 <TableCell
                   key={column.id}
@@ -141,7 +142,7 @@ export default function CommentTable({
                     column.className ? styles[column.className] : ''
                   )}>
                   {value}
-                  {nestingLevel === 0 && (
+                  {nestingLevel === 0 && isAnswerCell && (
                     <PickEmoji emoji={emoji} commentId={commentId} />
                   )}
                 </TableCell>
