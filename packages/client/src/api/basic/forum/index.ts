@@ -1,4 +1,4 @@
-import { ForumData, TopicData } from '../../../pages/Forum/constants'
+import { Emoji, ForumData, TopicData } from '../../../pages/Forum/constants'
 import { localInstance } from '../basicInstance'
 import {
   CreateCommentData,
@@ -7,6 +7,7 @@ import {
   IdType,
   TopicInfoType,
   topicsAmount,
+  UpdateEmoji,
 } from './types'
 
 export const getTopicsAmount = async (): Promise<topicsAmount> => {
@@ -59,4 +60,11 @@ export const createCommentReply = async (
   data: CreateCommentReplyData
 ): Promise<IdType> => {
   return localInstance.post('/comment/reply', { data })
+}
+
+export const updateEmoji = async (
+  commentId: number,
+  data: UpdateEmoji
+): Promise<Emoji[] | []> => {
+  return localInstance.put(`/comment/${commentId}/emoji`, { data })
 }

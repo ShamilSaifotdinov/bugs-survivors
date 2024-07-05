@@ -1,16 +1,23 @@
+import { Emoji } from '../../../constants'
 import styles from './styles.module.scss'
 
-type EmojiViewProps = {
-  count: number | string
-  emoji: string
+interface IProps {
+  emoji: Emoji
+  clickOnEmoji?: (e: string) => void
 }
 
-function EmojiView(props: EmojiViewProps) {
-  return (
-    <div className={styles.container}>
-      <div className={styles.emoji}>{props.emoji}</div>
+function EmojiView({ emoji, clickOnEmoji }: IProps) {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const firstChild = e.currentTarget.firstChild
+    if (firstChild?.textContent) {
+      clickOnEmoji?.(firstChild.textContent)
+    }
+  }
 
-      <span>{props.count}</span>
+  return (
+    <div className={styles.container} onClick={handleClick}>
+      <div className={styles.emoji}>{emoji.emoji}</div>
+      <span>{emoji.count}</span>
     </div>
   )
 }

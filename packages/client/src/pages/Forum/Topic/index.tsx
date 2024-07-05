@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import { getTopicComments, getTopicInfo } from '../../../api/basic/forum'
 import CommentTextarea from './CommentTextarea'
 import MetaData from '../MetaData'
-import { TopicData } from '../constants'
+import { Emoji, TopicData } from '../constants'
 import getAvatarSrc from '../../../helpers/getAvatarSrc'
 import CommentTable from './CommentTable'
 
@@ -14,6 +14,7 @@ export type TopicRowDataType = {
   id: number
   content: string | JSX.Element
   replies_count: number
+  emoji: Emoji[] | []
 }
 
 function getTableRowsData(data: TopicData[]): TopicRowDataType[] {
@@ -73,6 +74,7 @@ export default function Topic() {
           commentId={row.id}
           row={row}
           nestingLevel={0}
+          emoji={row.emoji}
         />
       )),
     [data]
