@@ -9,8 +9,8 @@ services:
       args:
         CLIENT_PORT: ${CLIENT_PORT}
     restart: always
-    # ports:
-    #   - '${CLIENT_PORT}:${CLIENT_PORT}'
+    ports:
+      - '${CLIENT_PORT}:${CLIENT_PORT}'
     environment:
       - CLIENT_PORT=${CLIENT_PORT}
       - SERVER_PORT=${SERVER_PORT}
@@ -31,8 +31,8 @@ services:
       args:
         SERVER_PORT: ${SERVER_PORT}
     restart: always
-    # ports:
-    #   - '${SERVER_PORT}:${SERVER_PORT}'
+    ports:
+      - '${SERVER_PORT}:${SERVER_PORT}'
     depends_on:
       postgres:
         condition: service_healthy
@@ -70,19 +70,19 @@ services:
       - INTERNAL_SERVER_URL=${INTERNAL_SERVER_URL}
       - DOMAIN=${DOMAIN}
       - NGINX_ENVSUBST_OUTPUT_DIR=/etc/nginx
-    # depends_on:
-    #   - certbot
-    #   - client
-    #   - server
+    depends_on:
+      - certbot
+      - client
+      - server
     networks:
       - awesome
 
-  # certbot:
-  #   image: certbot/certbot:latest
-  #   volumes:
-  #     - ./data/certbot/conf:/etc/letsencrypt/:rw
-  #     - ./data/certbot/www:/var/www/certbot/:rw
-  #   entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h; done;'"
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt/:rw
+      - ./data/certbot/www:/var/www/certbot/:rw
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h; done;'"
 
 networks:
   awesome:

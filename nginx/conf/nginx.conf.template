@@ -4,6 +4,7 @@ http {
     server {
         listen 80;
         server_name  $DOMAIN;
+        ssi on;
 
         location /.well-known/acme-challenge/ {
             root /var/www/certbot;
@@ -18,25 +19,36 @@ http {
         include listen; # По умолчанию путь берётся из корня: /etc/nginx
         server_name  $DOMAIN;
 
-        add_header Strict-Transport-Security "max-age=15768000; includeSubdomains; preload;" always;
-        add_header X-Content-Type-Options nosniff;
-        add_header X-Frame-Options DENY;
-        add_header X-XSS-Protection "1; mode=block";
+        add_header  X-Content-Type-Options "nosniff"; # На весь сервер
+        add_header  X-XSS-Protection "1; mode=block";
 
         location / {
-            proxy_pass http://client:$CLIENT_PORT;
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_pass          http://client:$CLIENT_PORT;
+
+            proxy_set_header    Host $host;
+            proxy_set_header    X-Real-IP $remote_addr;
+            proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header    X-Forwarded-Proto $scheme;
+            add_header Cache-Control 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
+            if_modified_since off;
+            expires off;
+
+            client_max_body_size    128m;
         }
 
         location /api/v2 {
-            proxy_pass $INTERNAL_SERVER_URL;
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_pass          $INTERNAL_SERVER_URL;
+
+            proxy_set_header    Host $host;
+            proxy_set_header    X-Real-IP $remote_addr;
+            proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header    X-Forwarded-Proto $scheme;
+
+            add_header Cache-Control 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
+            if_modified_since off;
+            expires off;
+
+            client_max_body_size    128m;
         }
 
     }
