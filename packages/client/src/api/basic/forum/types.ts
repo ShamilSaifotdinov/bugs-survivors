@@ -36,3 +36,8 @@ export type getCommentRepliesData = {
   limit: number
   replyId?: number
 }
+
+export type UpdateEmoji = {
+  creator: Partial<User>
+  emoji: string
+}
