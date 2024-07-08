@@ -16,6 +16,8 @@ tags:
     description: Topic of forum
   - name: comment
     description: Comment on topic
+  - name: theme
+    description: Style theme
 paths:
   /forum:
     get:
@@ -287,6 +289,58 @@ paths:
           description: Forbidden (Not Authorized)
         '500':
           description: Internal server error
+  /theme:
+    post:
+      tags:
+        - theme
+      summary: Get current theme
+      requestBody:
+        description: Get current style theme
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ThemeRequest'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThemeResponse'
+        '400':
+          description: Invalid query
+        '403':
+          description: Forbidden (Not Authorized)
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+    put:
+      tags:
+        - theme
+      summary: Change theme (dark or light)
+      requestBody:
+        description: Change style theme
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeThemeRequest'
+      responses:
+        '200':
+          description: Ok
+        '400':
+          description: Invalid query
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reason:
+                    format: string
+        '403':
+          description: Forbidden (Not Authorized)
+        '500':
+          description: Internal server error
 components:
   schemas:
     ForumResponse:
@@ -421,6 +475,28 @@ components:
           type: integer
           format: int64
           # example: 10
+    ThemeRequest:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+          # example: 10
+    ThemeResponse:
+      type: object
+      properties:
+        theme:
+          format: string
+    ChangeThemeRequest:
+      type: object
+      properties:
+        theme:
+          format: string
+          enum: [ dark, light ]
+          description:
+            "Two theme: dark or light"
+        user:
+          $ref: '#/components/schemas/User'
     User:
       type: object
       properties:

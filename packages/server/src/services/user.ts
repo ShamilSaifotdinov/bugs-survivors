@@ -5,7 +5,7 @@ class UserService {
     if (data.avatar === undefined) {
       data.avatar = null
     }
-    await User.upsert(data)
+    return await User.upsert(data)
   }
 }
 

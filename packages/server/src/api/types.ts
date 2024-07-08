@@ -90,3 +90,18 @@ export const get_emoji: ValidationScheme = {
     commentId: { type: 'integer' },
   },
 }
+
+export const get_theme: ValidationScheme = {
+  type: 'object',
+  properties: {
+    userId: { type: 'integer' },
+  },
+}
+
+export const change_theme: ValidationScheme = {
+  type: 'object',
+  properties: {
+    theme: { type: 'string' },
+    user,
+  },
+}
