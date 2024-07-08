@@ -19,6 +19,7 @@ export default defineConfig({
   define: {
     __EXTERNAL_SERVER_URL__: JSON.stringify(process.env.EXTERNAL_SERVER_URL),
     __INTERNAL_SERVER_URL__: JSON.stringify(process.env.INTERNAL_SERVER_URL),
+    __NODE_ENV__: JSON.stringify(process.env.NODE_ENV),
   },
   plugins: [
     react(),
