@@ -27,7 +27,7 @@ export default defineConfig({
       strategies: 'injectManifest',
       includeAssets: ['images/**/*.png', 'svg/*.svg'],
       injectManifest: {
-        globPatterns: ['**/*.{js,css,html,ttf}'],
+        globPatterns: ['**/*.{js,css,html,ttf,eot,woff2,woff}'],
       },
     }),
   ],

@@ -13,5 +13,12 @@
 
 @font-face {
   font-family: 'pixel';
-  src: url('/font/pixel.ttf') format('truetype');
+  src: url('/font/fffforward.ttf') format('truetype');
+  src: url('/font/fffforward.eot');
+  src: url('/font/fffforward.eot?#iefix') format('embedded-opentype'),
+    url('/font/fffforward.woff2') format('woff2'),
+    url('/font/fffforward.woff') format('woff'),
+    url('/svg/fffforward.svg#fff_forwardregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }

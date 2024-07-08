@@ -4,6 +4,13 @@
 @font-face {
   font-family: 'Press Start 2P';
   src: url('/font/PressStart2P-Regular.TTF') format('truetype');
+  src: url('/font/PressStart2P-Regular.eot');
+  src: url('/font/PressStart2P-Regular.eot?#iefix') format('embedded-opentype'),
+    url('/font/PressStart2P-Regular.woff2') format('woff2'),
+    url('/font/PressStart2P-Regular.woff') format('woff'),
+    url('/svg/PressStart2P-Regular.svg#press_start_2pregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 
 *,
