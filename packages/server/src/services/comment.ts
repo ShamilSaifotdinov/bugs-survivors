@@ -12,10 +12,10 @@ import { Sequelize } from 'sequelize'
 
 class CommentService {
   public static create = async (data: CreateCommentRequest) => {
-    await UserService.upsert_user(data.creator)
+    await UserService.upsert_user(data._user)
     const comment = await Comment.create({
       content: data.content,
-      creatorId: data.creator.id,
+      creatorId: data._user.id,
       topicId: data.topicId,
     })
 
@@ -63,10 +63,10 @@ class CommentService {
   }
 
   public static create_reply = async (data: CreateReplyRequest) => {
-    await UserService.upsert_user(data.creator)
+    await UserService.upsert_user(data._user)
     const reply = await Reply.create({
       content: data.content,
-      creatorId: data.creator.id,
+      creatorId: data._user.id,
       replyId: data.replyId,
       commentId: data.commentId,
     })

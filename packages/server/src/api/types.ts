@@ -8,15 +8,6 @@ export const get_page: ValidationScheme = {
   },
 }
 
-export const user: ValidationScheme = {
-  type: 'object',
-  properties: {
-    id: { type: 'integer' },
-    login: { type: 'string' },
-    avatar: { type: 'string', required: false },
-  },
-}
-
 export const _user: ValidationScheme = {
   type: 'object',
   properties: {
@@ -38,7 +29,6 @@ export const create_topic: ValidationScheme = {
   properties: {
     _user,
     name: { type: 'string' },
-    creator: user,
   },
 }
 
@@ -64,7 +54,6 @@ export const add_comment: ValidationScheme = {
     _user,
     topicId: { type: 'integer' },
     content: { type: 'string' },
-    creator: user,
   },
 }
 
@@ -75,7 +64,6 @@ export const add_reply: ValidationScheme = {
     commentId: { type: 'integer' },
     replyId: { type: 'integer', required: false },
     content: { type: 'string' },
-    creator: user,
   },
 }
 
@@ -103,7 +91,6 @@ export const update_emoji: ValidationScheme = {
   type: 'object',
   properties: {
     _user,
-    creator: user,
     emoji: { type: 'string' },
   },
 }
@@ -121,7 +108,6 @@ export const get_theme: ValidationScheme = {
   type: 'object',
   properties: {
     _user,
-    userId: { type: 'integer' },
   },
 }
 
@@ -130,6 +116,5 @@ export const change_theme: ValidationScheme = {
   properties: {
     _user,
     theme: { type: 'string' },
-    user,
   },
 }

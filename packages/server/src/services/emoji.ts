@@ -25,9 +25,9 @@ export class EmojiService {
   }
 
   public static update = async (data: UpdateEmoji) => {
-    const { emoji, commentId, creator } = data
-    const creatorId = creator.id
-    await UserService.upsert_user(creator)
+    const { emoji, commentId, _user } = data
+    const creatorId = _user.id
+    await UserService.upsert_user(_user)
     try {
       const instance = await Emoji.findOne({
         where: {
