@@ -34,14 +34,14 @@ async function createServer() {
     )
   }
 
-  const backendProxy = createProxyMiddleware({
-    target: isDev
-      ? process.env.EXTERNAL_SERVER_URL
-      : process.env.INTERNAL_SERVER_URL,
-    changeOrigin: true,
-  })
+  if (isDev) {
+    const backendProxy = createProxyMiddleware({
+      target: process.env.EXTERNAL_SERVER_URL,
+      changeOrigin: true,
+    })
 
-  app.all('/api/v2/*', backendProxy)
+    app.all('/api/v2/*', backendProxy)
+  }
 
   app.get('*', async (req, res, next) => {
     const url = req.originalUrl
