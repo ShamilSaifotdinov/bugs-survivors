@@ -1,4 +1,4 @@
-type User = {
+export type User = {
   id: string
   avatar: string
   login: string
@@ -34,11 +34,17 @@ export type TopicData = {
   creator: Partial<User>
   content: string
   replies_count: number
+  emoji: Emoji[] | []
 }
 
 type TopicColumn = {
-  id: keyof TopicData
+  id: Exclude<keyof TopicData, 'emoji'>
   className: string
+}
+
+export type Emoji = {
+  count: number
+  emoji: string
 }
 
 export const topicColumns: readonly TopicColumn[] = [
