@@ -8,8 +8,8 @@ import { change_theme, get_theme } from './types'
 class UserThemeAPI {
   @validation(get_theme)
   public static find = async (req: Request, res: Response) => {
-    const { body } = req
-    const theme = await UserThemeService.find(body.userId)
+    const { _user } = req.body
+    const theme = await UserThemeService.find(_user.id)
 
     if (!theme) {
       return res.status(404).send()
@@ -22,7 +22,7 @@ class UserThemeAPI {
   public static create = async (req: Request, res: Response) => {
     const { body } = req
 
-    const [user] = await UserService.upsert_user(body.user)
+    const [user] = await UserService.upsert_user(body._user)
     const theme = await ThemeService.find({ title: body.theme })
 
     if (!theme) {

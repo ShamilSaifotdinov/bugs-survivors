@@ -4,7 +4,6 @@ import styles from './style.module.scss'
 import EmojiButton from './EmojiButton'
 import { Emoji } from '../../constants'
 import { updateEmoji } from '../../../../api/basic/forum'
-import { useAppSelector } from '../../../../hooks/reduxHooks'
 
 interface IProps {
   emoji: Emoji[] | []
@@ -13,26 +12,23 @@ interface IProps {
 
 function PickEmoji({ emoji, commentId }: IProps) {
   const [currentEmoji, setCurrentEmoji] = useState<Emoji[]>(emoji)
-  const user = useAppSelector(state => state.user.user)
 
   useEffect(() => {
     setCurrentEmoji(emoji)
   }, [emoji])
 
-  const toggleEmoji = useCallback((emoji: string) => {
-    updateEmoji(Number(commentId), {
-      creator: {
-        id: user.id,
-        login: user.login,
-        avatar: user.avatar,
-      },
-      emoji,
-    })
-      .then(res => {
-        setCurrentEmoji(res)
+  const toggleEmoji = useCallback(
+    (emoji: string) => {
+      updateEmoji(Number(commentId), {
+        emoji,
       })
-      .catch(e => console.error(e))
-  }, [])
+        .then(res => {
+          setCurrentEmoji(res)
+        })
+        .catch(e => console.error(e))
+    },
+    [commentId]
+  )
 
   return (
     <div className={styles.root}>

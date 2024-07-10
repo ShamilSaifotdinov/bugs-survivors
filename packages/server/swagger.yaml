@@ -8,7 +8,7 @@ externalDocs:
   description: API of ya-praktikum.tech
   url: https://ya-praktikum.tech/api/v2/swagger/
 servers:
-  - url: http://localhost:3002/api/v2
+  - url: /api/v2
 tags:
   - name: forum
     description: Forum for discussion
@@ -54,12 +54,6 @@ paths:
           schema:
             type: integer
             maximum: 50
-      # requestBody:
-      #   description: Update an existent pet in the store
-      #   content:
-      #     application/json:
-      #       schema:
-      #         $ref: '#/components/schemas/ForumResponse'
       responses:
         '200':
           description: Ok
@@ -290,16 +284,10 @@ paths:
         '500':
           description: Internal server error
   /theme:
-    post:
+    get:
       tags:
         - theme
       summary: Get current theme
-      requestBody:
-        description: Get current style theme
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ThemeRequest'
       responses:
         '200':
           description: Ok
@@ -369,8 +357,6 @@ components:
         name:
           type: string
           # example: 10
-        creator:
-          $ref: '#/components/schemas/User'
     NewTopicResponse:
       type: object
       properties:
@@ -421,8 +407,6 @@ components:
     RequestUpdateEmoji:
       type: object
       properties:
-        creator:
-          $ref: '#/components/schemas/User'
         emoji:
           $ref: '#/components/schemas/Emoji'
     RepliesResponse:
@@ -447,8 +431,6 @@ components:
           type: integer
         content:
           type: string
-        creator:
-          $ref: '#/components/schemas/User'
     NewCommentResponse:
       type: object
       properties:
@@ -466,19 +448,10 @@ components:
           nullable: true
         content:
           type: string
-        creator:
-          $ref: '#/components/schemas/User'
     NewReplyResponse:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          # example: 10
-    ThemeRequest:
-      type: object
-      properties:
-        userId:
           type: integer
           format: int64
           # example: 10
@@ -495,8 +468,6 @@ components:
           enum: [ dark, light ]
           description:
             "Two theme: dark or light"
-        user:
-          $ref: '#/components/schemas/User'
     User:
       type: object
       properties:

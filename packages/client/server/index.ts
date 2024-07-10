@@ -28,19 +28,17 @@ async function createServer() {
     })
 
     app.use(vite.middlewares)
-  } else {
-    app.use(
-      express.static(path.join(clientPath, 'dist/client'), { index: false })
-    )
-  }
 
-  if (isDev) {
     const backendProxy = createProxyMiddleware({
       target: process.env.EXTERNAL_SERVER_URL,
       changeOrigin: true,
     })
 
     app.all('/api/v2/*', backendProxy)
+  } else {
+    app.use(
+      express.static(path.join(clientPath, 'dist/client'), { index: false })
+    )
   }
 
   app.get('*', async (req, res, next) => {

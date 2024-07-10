@@ -1,11 +1,7 @@
 import SiteTheme from '../models/siteTheme'
 import UserTheme from '../models/userTheme'
 import BaseRESTService from './BaseREST'
-
-interface UpdateRequest {
-  userId: number
-  themeId: number
-}
+import { UpdateRequest } from './types'
 
 class UserThemeService implements BaseRESTService {
   public static find = (userId: number) => {
