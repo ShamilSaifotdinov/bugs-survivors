@@ -43,7 +43,7 @@ jobs:
       - name: Build and push nginx image
         uses: docker/build-push-action@v2
         with:
-          context: ./nginx
-          file: Dockerfile
+          context: .
+          file: nginx/Dockerfile
           push: true
           tags: ghcr.io/${{ env.OWNER_LC }}/${{ github.event.repository.name }}/nginx:${{ github.sha }}
