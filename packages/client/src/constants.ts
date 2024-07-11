@@ -2,6 +2,10 @@ import './client.d'
 
 const isDev = __NODE_ENV__ === 'development'
 
+export const CLIENT_HOST = isDev
+  ? `http://localhost:${__CLIENT_PORT__}`
+  : `https://${__DOMAIN__}`
+
 export const SERVER_HOST =
   typeof window === 'undefined' && !isDev
     ? __INTERNAL_SERVER_URL__

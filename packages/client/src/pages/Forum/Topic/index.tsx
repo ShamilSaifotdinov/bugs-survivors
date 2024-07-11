@@ -28,7 +28,10 @@ function getTableRowsData(data: TopicData[]): TopicRowDataType[] {
             alt={item.creator.login}
             src={getAvatarSrc(item.creator.avatar)}
           />
-          <Typography variant="body1" fontSize="0.75rem">
+          <Typography
+            variant="body1"
+            sx={{ wordBreak: 'break-all' }}
+            fontSize="0.75rem">
             {item.creator.login}
           </Typography>
         </div>

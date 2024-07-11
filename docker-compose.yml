@@ -16,6 +16,7 @@ services:
       - SERVER_PORT=${SERVER_PORT}
       - EXTERNAL_SERVER_URL=${EXTERNAL_SERVER_URL}
       - INTERNAL_SERVER_URL=${INTERNAL_SERVER_URL}
+      - DOMAIN=${DOMAIN}
     depends_on:
       - server
     networks:
@@ -82,7 +83,7 @@ services:
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt/:rw
       - ./data/certbot/www:/var/www/certbot/:rw
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h; done;'"
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot --dry-run; sleep 12h; done;'"
 
 networks:
   awesome:
