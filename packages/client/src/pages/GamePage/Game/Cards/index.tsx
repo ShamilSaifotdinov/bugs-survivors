@@ -68,7 +68,8 @@ function Cards({ upgradePick }: CardsProps) {
           key={'card' + el.id}>
           <div
             className={styles.card_image}
-            style={{ backgroundPositionX: el.id * -18 + 'vh' }}></div>
+            style={{ backgroundPositionX: el.id * -18 + 'vh' }}
+          />
           <p>{el.text}</p>
         </div>
       ))}

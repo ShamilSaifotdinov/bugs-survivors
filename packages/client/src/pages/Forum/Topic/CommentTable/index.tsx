@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import styles from './styles.module.scss'
 import {
   Button,
@@ -8,7 +8,6 @@ import {
   TableRow,
   Collapse,
   Avatar,
-  Typography,
 } from '@mui/material'
 import { clsx } from 'clsx'
 import { Emoji, TopicData, topicColumns } from '../../constants'
@@ -20,32 +19,23 @@ import { useAppSelector } from '../../../../hooks/reduxHooks'
 import getAvatarSrc from '../../../../helpers/getAvatarSrc'
 import PickEmoji from '../../components/PickEmoji'
 
-function getCommentRowData(data: TopicData[], nestingLevel: number) {
+function getCommentRowData(data: TopicData[]) {
   return (
     data.map(item => ({
       ...item,
       content: (
         <div>
-          {item.creator.login}
-          <br />
+          <div className={styles.login_reply}>{item.creator.login}</div>
           {item.content}
         </div>
       ),
       creator: (
         <div className={styles.user}>
           <Avatar
-            className={clsx(
-              styles.avatar,
-              nestingLevel === 0 ? styles.avatar_reply : ''
-            )}
+            className={clsx(styles.avatar, styles.avatar_reply)}
             alt={item.creator.login}
             src={getAvatarSrc(item.creator.avatar)}
           />
-          {nestingLevel !== 0 && (
-            <Typography variant="body1" fontSize="0.75rem">
-              {item.creator.login}
-            </Typography>
-          )}
         </div>
       ),
     })) ?? []
@@ -56,7 +46,7 @@ interface IProps {
   replyId?: number
   commentId: number
   row: TopicRowDataType
-  nestingLevel: number
+  nestingLevel?: number
   emoji: Emoji[] | []
 }
 
@@ -74,7 +64,11 @@ export default function CommentTable({
 
   const user = useAppSelector(state => state.user.user)
 
-  const handleExpandClick = () => {
+  const handleExpandClick = async () => {
+    if (!expanded) {
+      await setCommentReplies()
+    }
+
     setExpanded(!expanded)
   }
 
@@ -94,23 +88,18 @@ export default function CommentTable({
     })
   }
 
-  useEffect(() => {
-    setCommentReplies()
-  }, [])
-
   const tableRows = useMemo(
     () =>
-      getCommentRowData(data, nestingLevel).map(row => (
+      getCommentRowData(data).map(row => (
         <CommentTable
           key={row.id}
           replyId={row.id}
           commentId={commentId}
           row={row}
-          nestingLevel={nestingLevel + 1}
           emoji={row.emoji}
         />
       )),
-    [data]
+    [data, commentId]
   )
 
   const handleLoadMore = () => {

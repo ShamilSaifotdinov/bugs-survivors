@@ -7,5 +7,5 @@ ssl_ciphers HIGH:!RC4:!aNULL:!eNULL:!MD5:!EXPORT:!EXP:!LOW:!SEED:!CAMELLIA:!IDEA
 ssl_prefer_server_ciphers on;
 ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
 
-ssl_certificate /etc/nginx/ssl/letsencrypt/live/$server_name/localhost.crt;
-ssl_certificate_key /etc/nginx/ssl/letsencrypt/live/$server_name/localhost.key;
+ssl_certificate /etc/nginx/ssl/live/$server_name/fullchain.pem;
+ssl_certificate_key /etc/nginx/ssl/live/$server_name/privkey.pem;

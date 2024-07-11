@@ -40,6 +40,9 @@ const fetchApi = (baseUrl?: string) => {
 
     const response = await fetch(baseUrl + url, requestOptions)
     if (!response.ok) {
+      if (response.status >= 500) {
+        window.location.replace('/error500')
+      }
       const error = await response.json()
       throw new Error(error.reason)
     }
