@@ -1,8 +1,6 @@
-import dotenv from 'dotenv'
 import { NextFunction, Request, Response } from 'express'
 import http from 'http'
 import { createProxyMiddleware } from 'http-proxy-middleware'
-dotenv.config()
 
 const yandexURL = 'https://ya-praktikum.tech'
 

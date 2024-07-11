@@ -1,5 +1,5 @@
 import dotenv from 'dotenv'
-dotenv.config()
+dotenv.config({ path: '../../.env' })
 
 import fs from 'fs/promises'
 import { createServer as createViteServer, ViteDevServer } from 'vite'
