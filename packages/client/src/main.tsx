@@ -2,8 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './global.scss'
 import { ThemeProvider } from '@mui/material'
-import { theme } from './mui-workplace-preset'
 import CssBaseline from '@mui/material/CssBaseline'
+import { theme } from './mui-workplace-preset'
 import { createEmotionCache } from './entry-server.utils'
 import { CacheProvider } from '@emotion/react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
@@ -14,9 +14,8 @@ import { Provider } from 'react-redux'
 const cache = createEmotionCache()
 const router = createBrowserRouter(routes)
 
-ReactDOM.hydrateRoot(
-  document.getElementById('root') as HTMLElement,
-  <React.StrictMode>
+const App = () => {
+  return (
     <CacheProvider value={cache}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
@@ -25,5 +24,12 @@ ReactDOM.hydrateRoot(
         </Provider>
       </ThemeProvider>
     </CacheProvider>
+  )
+}
+
+ReactDOM.hydrateRoot(
+  document.getElementById('root') as HTMLElement,
+  <React.StrictMode>
+    <App />
   </React.StrictMode>
 )

@@ -12,7 +12,7 @@
   gap: 4.875rem;
 
   &_title {
-    background: linear-gradient(#ff5c00 46%, #ffffff, #4396b5 80%);
+    background: var(--main-gradient);
     background-clip: text;
     -webkit-text-fill-color: transparent;
     text-align: center;

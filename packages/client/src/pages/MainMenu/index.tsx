@@ -4,6 +4,7 @@ import { useLoggedInUser } from '../../hooks/useLoggedInUser'
 import { logOutUser } from '../../store/slices/userSlice'
 import { useAppDispatch } from '../../hooks/reduxHooks'
 import Clue from '../../components/Clue'
+import ThemeSwitcher from '../../components/ThemeSwitcher'
 import styles from './styles.module.scss'
 
 const breakpointSizes = {
@@ -58,6 +59,7 @@ function MainMenu() {
         </Button>
       </div>
       <Clue />
+      <ThemeSwitcher />
     </div>
   )
 }
