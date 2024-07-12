@@ -61,7 +61,28 @@ h4 {
   }
 }
 
+.MuiTableCell-root {
+  color: var(--secondary-color-text) !important;
+}
+
+.MuiButton-colorPrimary {
+  color: var(--secondary-color-main) !important;
+  background-color: var(--secondary-color-text) !important;
+}
+
 .MuiButton-containedSecondary {
   background-color: var(--secondary-color-main) !important;
   color: var(--secondary-color-text) !important;
+}
+
+.MuiTypography-root {
+  color: var(--primary-color-dark) !important;
+}
+
+.MuiTypography-root::before {
+  color: var(--primary-color-dark) !important;
+}
+
+.MuiTableCell-root {
+  color: var(--primary-color-dark) !important;
 }

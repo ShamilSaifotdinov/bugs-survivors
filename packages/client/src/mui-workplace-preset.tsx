@@ -43,21 +43,22 @@ export const theme = createTheme({
       white: '#fff',
     },
     primary: {
-      main: '#3F767B',
-      contrastText: '#F2F9F8',
+      main: '#F2F9F8',
+      contrastText: '#3F767B',
     },
     secondary: {
-      main: '#C1E0DF',
-      contrastText: '#2F464A',
+      main: '#3F767B',
+      contrastText: '#F2F9F8',
       // main: '#FF5C00',
     },
     text: {
-      primary: '#fff',
-      secondary: '#000',
+      primary: '#345256',
+      secondary: '#fff',
       disabled: '#ddd',
     },
     background: {
-      default: '#2F464A',
+      // default: 'var(--primary-color-main)',
+      default: 'var(--primary-color-light)',
       paper: '#2F464A',
     },
     divider: '#fff',
@@ -66,29 +67,14 @@ export const theme = createTheme({
     fontFamily: ['"Press Start 2P"', 'sans-serif'].join(','),
     fontSize: 16,
     fontWeightRegular: 400,
-    body1: {
-      color: '#FFFFFF',
-    },
     body2: {
       fontSize: '1rem',
     },
     h1: {
       fontSize: '5.3rem',
-      // [mediaBreakpoint.lg]: {
-      //   fontSize: '2rem',
-      // },
-      // [mediaBreakpoint.sm]: {
-      //   fontSize: '1.75rem',
-      // },
     },
     h2: {
       fontSize: '2.3rem',
-      // [mediaBreakpoint.lg]: {
-      //   fontSize: '1.5rem',
-      // },
-      // [mediaBreakpoint.sm]: {
-      //   fontSize: '1.25rem',
-      // },
     },
     h3: {
       fontSize: '1.75rem',
@@ -126,6 +112,7 @@ export const theme = createTheme({
       } as LinkProps,
       styleOverrides: {
         root: {
+          color: 'var(--primary-color-dark)',
           textDecoration: 'none',
           transition: '.2s',
           ':hover': {
@@ -157,7 +144,6 @@ export const theme = createTheme({
     MuiInputBase: {
       styleOverrides: {
         root: {
-          fontFamily: 'var(--primary-font)',
           color: '#00000099',
         },
       },
@@ -169,14 +155,19 @@ export const theme = createTheme({
       },
       styleOverrides: {
         root: {
-          fontFamily: 'var(--primary-font)',
+          fontFamily: 'var(--secondary-font)',
           fontWeight: '400',
           padding: '1px 0.25rem 1px 0.25rem',
           borderRadius: '0.25rem',
-          fontSize: '.75rem',
-          backgroundColor: '#C1E0DF',
-          color: '#2F464A',
+          fontSize: '1rem',
+          backgroundColor: 'var(--primary-color-light)',
+          color: 'var(--background-color)',
         },
+      },
+    },
+    MuiAvatar: {
+      defaultProps: {
+        src: '/images/defaultAvatar.png',
       },
     },
   },
