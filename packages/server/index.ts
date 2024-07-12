@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 import cors from 'cors'
 import express from 'express'
-dotenv.config()
+dotenv.config({ path: '../../.env' })
 
 import { dbConnect } from './db'
 import router from './src/router'
