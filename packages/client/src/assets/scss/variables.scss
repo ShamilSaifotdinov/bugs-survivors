@@ -1,3 +1,18 @@
+:root {
+  --primary-font: 'Press Start 2P';
+  --primary-color-light: #c1e0df;
+  --primary-color-main: #3f767b;
+  --primary-color-dark: #c2e6eb;
+  --secondary-color-main: #c1e0df;
+  --secondary-color-text: #345256;
+  --background-color: #2f464a;
+  --game-background: #365a36;
+  --blue-dianne: #3f767b;
+  --main-gradient: linear-gradient(#ff5c00 46%, #ffffff, #4396b5 80%);
+  --wrapper-background: rgb(63, 118, 123, 0.8);
+  --main-background: url('/images/main-menu_background.png');
+}
+
 :root[data-theme='dark'] {
   --primary-font: 'Press Start 2P';
   --primary-color-light: #c1e0df;
