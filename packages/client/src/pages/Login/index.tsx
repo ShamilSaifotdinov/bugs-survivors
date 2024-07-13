@@ -10,8 +10,10 @@ import { yandexOauth, yandexServiceId } from '../../api/basic/oauth'
 import { useAppSelector } from '../../hooks/reduxHooks'
 import Clue from '../../components/Clue'
 import { CLIENT_HOST } from '../../constants'
+import useTheme from '../../hooks/useTheme'
 
 function Login() {
+  const { theme, updateTheme } = useTheme()
   const user = useAppSelector(state => state.user)
   useLoggedInUser()
   const navigate = useNavigate()

@@ -6,6 +6,7 @@ import { SignUpData, signUp } from '../../api/basic/auth'
 import { useLoggedInUser } from '../../hooks/useLoggedInUser'
 import Clue from '../../components/Clue'
 import style from './styles.module.scss'
+import useTheme from '../../hooks/useTheme'
 
 const fields: SignUpData = {
   first_name: 'First name',
@@ -17,6 +18,7 @@ const fields: SignUpData = {
 }
 
 function RegisterPage() {
+  const { theme, updateTheme } = useTheme()
   useLoggedInUser()
   const initialData = {
     first_name: '',

@@ -25,7 +25,7 @@ const useTheme = (): UseThemeResult => {
       const response: ThemeGetData = await getTheme()
       setThemeState(response.theme)
     } catch (err) {
-      setError('Failed to fetch theme')
+      setThemeState('dark')
     } finally {
       setLoading(false)
     }
