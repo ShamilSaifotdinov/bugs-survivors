@@ -11,6 +11,7 @@
   --main-gradient: linear-gradient(#ff5c00 46%, #ffffff, #4396b5 80%);
   --wrapper-background: rgb(63, 118, 123, 0.8);
   --main-background: url('/images/main-menu_background.png');
+  --topic-user-background: #345256;
 }
 
 :root[data-theme='dark'] {
@@ -26,6 +27,7 @@
   --main-gradient: linear-gradient(#ff5c00 46%, #ffffff, #4396b5 80%);
   --wrapper-background: rgb(63, 118, 123, 0.8);
   --main-background: url('/images/main-menu_background.png');
+  --topic-user-background: #345256;
 }
 
 :root[data-theme='light'] {
@@ -41,4 +43,5 @@
   --main-gradient: linear-gradient(#ff5c00 46%, #ffffff, #4396b5 80%);
   --wrapper-background: rgba(193, 224, 223, 0.75);
   --main-background: url('/images/mainBackground.png');
+  --topic-user-background: #dafbff;
 }

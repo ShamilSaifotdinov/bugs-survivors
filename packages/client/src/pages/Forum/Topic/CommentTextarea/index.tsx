@@ -57,10 +57,12 @@ export default function CommentTextarea({ callback }: IProps) {
           variant="contained"
           className={styles.emoji_button}
           onClick={showEmojiButtonHandle}
+          color="secondary"
         />
         <Button
           onClick={handleCreateComment}
           variant="contained"
+          color="secondary"
           className={styles.send_button}>
           SEND
         </Button>

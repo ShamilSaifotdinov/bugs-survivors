@@ -86,8 +86,12 @@ const GameOver = () => {
         href="/game">
         Restart
       </Button>
-      <Button type="submit" variant="contained" color="secondary">
-        <Link href="/main_menu">Main menu</Link>
+      <Button
+        type="submit"
+        variant="contained"
+        color="secondary"
+        href="/main_menu">
+        Main menu
       </Button>
     </LayoutWithBgImage>
   )

@@ -45,7 +45,7 @@
 .tc.author_cell {
   width: 17.5rem;
   text-align: center;
-  background-color: var(--primary-color-dark);
+  background-color: var(--topic-user-background);
   color: #fff;
 }
 
@@ -58,7 +58,7 @@
   width: 92.5rem;
   vertical-align: baseline;
   background-color: var(--primary-color-light);
-  color: #000;
+  color: #000 !important;
   position: relative;
 }
 

@@ -19,6 +19,8 @@
   white-space: nowrap;
   display: flex;
   align-items: center;
+  color: #c1e0df;
+
   > img {
     margin-right: 2rem;
     @include sm {
