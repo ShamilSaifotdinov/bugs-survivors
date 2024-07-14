@@ -13,11 +13,18 @@ import Reply from './reply'
 import Emoji from './emoji'
 import UserTheme from './userTheme'
 
-export interface IUser {
+export interface _IUser {
   id: number
+  first_name?: string | null
+  second_name?: string | null
+  display_name?: string | null
   login: string
+  email?: string | null
+  phone?: string | null
   avatar?: string | null
 }
+
+export type IUser = Pick<_IUser, 'id' | 'login' | 'avatar'>
 
 @Table({
   timestamps: false,

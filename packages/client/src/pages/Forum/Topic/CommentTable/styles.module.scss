@@ -15,6 +15,11 @@
   }
 }
 
+.login_reply {
+  color: var(--primary-color-dark);
+  margin-bottom: 10px;
+}
+
 .tr_reply .tc_reply .avatar_reply {
   margin-bottom: 0;
 }
@@ -54,6 +59,7 @@
   vertical-align: baseline;
   background-color: var(--primary-color-light);
   color: #000;
+  position: relative;
 }
 
 .collapse {

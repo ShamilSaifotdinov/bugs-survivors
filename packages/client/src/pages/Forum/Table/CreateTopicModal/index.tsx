@@ -3,7 +3,6 @@ import styles from './styles.module.scss'
 import { Button, FormHelperText, TextField } from '@mui/material'
 import ButtonModal from '../../../../components/ButtonModal/ButtonModal'
 import { createTopic } from '../../../../api/basic/forum'
-import { useAppSelector } from '../../../../hooks/reduxHooks'
 
 interface IProps {
   callback: () => Promise<void>
@@ -13,8 +12,6 @@ export default function CreateTopicModal({ callback }: IProps) {
   const [newTopicName, setNewTopicName] = useState('')
   const [createTopicError, setCreateTopicError] = useState('')
 
-  const user = useAppSelector(state => state.user.user)
-
   const [open, setOpen] = useState(false)
   const handleClose = () => {
     setOpen(false)
@@ -23,11 +20,6 @@ export default function CreateTopicModal({ callback }: IProps) {
     if (newTopicName !== '') {
       createTopic({
         name: newTopicName,
-        creator: {
-          id: user.id,
-          login: user.login,
-          avatar: user.avatar,
-        },
       })
         .then(() => {
           setCreateTopicError('')

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import styles from './styles.module.scss'
 import {
   Button,
@@ -8,44 +8,37 @@ import {
   TableRow,
   Collapse,
   Avatar,
-  Typography,
 } from '@mui/material'
 import { clsx } from 'clsx'
-import { TopicData, topicColumns } from '../../constants'
+import { Emoji, TopicData, topicColumns } from '../../constants'
 import { getCommentReplies } from '../../../../api/basic/forum'
 import { TopicRowDataType } from '..'
 import { getCommentRepliesData } from '../../../../api/basic/forum/types'
 import Input from './Input'
 import { useAppSelector } from '../../../../hooks/reduxHooks'
 import getAvatarSrc from '../../../../helpers/getAvatarSrc'
+import PickEmoji from '../../components/PickEmoji'
 import getAppliedXSS from '../../../../helpers/getAppliedXSS'
 
-function getCommentRowData(data: TopicData[], nestingLevel: number) {
+function getCommentRowData(data: TopicData[]) {
   return (
     data.map(item => ({
       ...item,
       content: (
         <div>
-          {getAppliedXSS(item.creator.login)}
-          <br />
+          <div className={styles.login_reply}>
+            {getAppliedXSS(item.creator.login)}
+          </div>
           {getAppliedXSS(item.content)}
         </div>
       ),
       creator: (
         <div className={styles.user}>
           <Avatar
-            className={clsx(
-              styles.avatar,
-              nestingLevel === 0 ? styles.avatar_reply : ''
-            )}
+            className={clsx(styles.avatar, styles.avatar_reply)}
             alt={getAppliedXSS(item.creator.login)}
             src={getAvatarSrc(getAppliedXSS(item.creator.avatar))}
           />
-          {nestingLevel !== 0 && (
-            <Typography variant="body1" fontSize="0.75rem">
-              {getAppliedXSS(item.creator.login)}
-            </Typography>
-          )}
         </div>
       ),
     })) ?? []
@@ -56,7 +49,8 @@ interface IProps {
   replyId?: number
   commentId: number
   row: TopicRowDataType
-  nestingLevel: number
+  nestingLevel?: number
+  emoji: Emoji[] | []
 }
 
 export default function CommentTable({
@@ -64,6 +58,7 @@ export default function CommentTable({
   commentId,
   row,
   nestingLevel,
+  emoji,
 }: IProps) {
   const rowsPerPage = 10
   const [repliesAmount, setRepliesAmount] = useState(0)
@@ -72,7 +67,11 @@ export default function CommentTable({
 
   const user = useAppSelector(state => state.user.user)
 
-  const handleExpandClick = () => {
+  const handleExpandClick = async () => {
+    if (!expanded) {
+      await setCommentReplies()
+    }
+
     setExpanded(!expanded)
   }
 
@@ -92,22 +91,18 @@ export default function CommentTable({
     })
   }
 
-  useEffect(() => {
-    setCommentReplies()
-  }, [])
-
   const tableRows = useMemo(
     () =>
-      getCommentRowData(data, nestingLevel).map(row => (
+      getCommentRowData(data).map(row => (
         <CommentTable
           key={row.id}
           replyId={row.id}
           commentId={commentId}
           row={row}
-          nestingLevel={nestingLevel + 1}
+          emoji={row.emoji}
         />
       )),
-    [data]
+    [data, commentId]
   )
 
   const handleLoadMore = () => {
@@ -130,6 +125,7 @@ export default function CommentTable({
             className={nestingLevel === 0 ? styles.tr : styles.tr_reply}>
             {topicColumns.map(column => {
               const value = row[column.id]
+              const isAnswerCell = column.className === 'answer_cell'
               return (
                 <TableCell
                   key={column.id}
@@ -138,6 +134,9 @@ export default function CommentTable({
                     column.className ? styles[column.className] : ''
                   )}>
                   {getAppliedXSS(value)}
+                  {nestingLevel === 0 && isAnswerCell && (
+                    <PickEmoji emoji={emoji} commentId={commentId} />
+                  )}
                 </TableCell>
               )
             })}

@@ -1,5 +1,3 @@
-import { User } from '../types'
-
 export type topicsAmount = {
   count: number
 }
@@ -15,19 +13,16 @@ export type TopicInfoType = {
 
 export type CreateTopicData = {
   name: string
-  creator: Partial<User>
 }
 
 export type CreateCommentData = {
   topicId: number
   content: string
-  creator: Partial<User>
 }
 
 export type CreateCommentReplyData = {
   commentId: number
   content: string
-  creator: Partial<User>
   replyId?: number
 }
 
@@ -35,4 +30,8 @@ export type getCommentRepliesData = {
   offset: number
   limit: number
   replyId?: number
+}
+
+export type UpdateEmoji = {
+  emoji: string
 }

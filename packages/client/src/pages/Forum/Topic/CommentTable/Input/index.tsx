@@ -4,7 +4,6 @@ import { Button, TextField } from '@mui/material'
 import EmojiPicker from '@emoji-mart/react'
 import emojiData from '@emoji-mart/data'
 import { createCommentReply } from '../../../../../api/basic/forum'
-import { useAppSelector } from '../../../../../hooks/reduxHooks'
 import { CreateCommentReplyData } from '../../../../../api/basic/forum/types'
 
 interface IProps {
@@ -16,8 +15,6 @@ interface IProps {
 export default function Input({ replyId, commentId, callback }: IProps) {
   const [inputText, setInputText] = useState('')
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
-
-  const user = useAppSelector(state => state.user.user)
 
   const inputChangeHandle = (event: ChangeEvent<HTMLInputElement>) => {
     setInputText(event.target.value)
@@ -37,11 +34,6 @@ export default function Input({ replyId, commentId, callback }: IProps) {
       const creationData: CreateCommentReplyData = {
         commentId,
         content: inputText,
-        creator: {
-          id: user.id,
-          login: user.login,
-          avatar: user.avatar,
-        },
       }
 
       if (replyId) {

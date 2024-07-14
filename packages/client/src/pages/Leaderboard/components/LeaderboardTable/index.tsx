@@ -10,10 +10,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material'
-import {
-  leaderboardPost,
-  getLeaderboard,
-} from '../../../../api/basic/leaderboard'
+import { getLeaderboard } from '../../../../api/basic/leaderboard'
 import convertSeconds from '../../../../helpers/convertSeconds'
 import getAvatarSrc from '../../../../helpers/getAvatarSrc'
 

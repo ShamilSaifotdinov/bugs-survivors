@@ -12,10 +12,10 @@ import { Sequelize } from 'sequelize'
 
 class TopicService {
   public static create_topic = async (data: CreateTopicRequest) => {
-    await UserService.upsert_user(data.creator)
+    await UserService.upsert_user(data._user)
     const topic = await Topic.create({
       name: data.name,
-      creatorId: data.creator.id,
+      creatorId: data._user.id,
     })
 
     return { id: topic.id }

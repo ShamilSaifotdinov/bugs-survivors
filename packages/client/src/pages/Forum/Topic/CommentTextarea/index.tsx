@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom'
 import EmojiPicker from '@emoji-mart/react'
 import emojiData from '@emoji-mart/data'
 import { createComment } from '../../../../api/basic/forum'
-import { useAppSelector } from '../../../../hooks/reduxHooks'
 
 type IProps = {
   callback: () => Promise<void>
@@ -15,8 +14,6 @@ export default function CommentTextarea({ callback }: IProps) {
   const { topicId } = useParams()
   const [textareaText, setTextareaText] = useState('')
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
-
-  const user = useAppSelector(state => state.user.user)
 
   const textareaChangeHandle = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setTextareaText(event.target.value)
@@ -36,11 +33,6 @@ export default function CommentTextarea({ callback }: IProps) {
       createComment({
         topicId: Number(topicId),
         content: textareaText,
-        creator: {
-          id: user.id,
-          login: user.login,
-          avatar: user.avatar,
-        },
       }).then(() => {
         setTextareaText('')
         callback()

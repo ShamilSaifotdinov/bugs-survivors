@@ -1,4 +1,4 @@
-const CACHE_NAME = 'my-site-cache-v1';
+const CACHE_NAME = 'my-site-cache-v2';
 
 const manifest = self.__WB_MANIFEST
 
@@ -27,6 +27,10 @@ self.addEventListener("install", event => {
 });
 
 self.addEventListener("fetch", event => {
+  if (event.request.url.match( '^.*(/api/v2/).*$' )) {
+    return false;
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then(response => {

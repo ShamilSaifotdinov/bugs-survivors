@@ -1,6 +1,3 @@
-import dotenv from "dotenv"
-dotenv.config({ path: "../../.env" })
-
 const {
   POSTGRES_EXTERNAL_HOST,
   POSTGRES_INTERNAL_HOST,

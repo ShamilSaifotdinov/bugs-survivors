@@ -1,5 +1,5 @@
 import dotenv from 'dotenv'
-dotenv.config()
+dotenv.config({ path: '../../.env' })
 
 import fs from 'fs/promises'
 import { createServer as createViteServer, ViteDevServer } from 'vite'
@@ -28,20 +28,18 @@ async function createServer() {
     })
 
     app.use(vite.middlewares)
+
+    const backendProxy = createProxyMiddleware({
+      target: process.env.EXTERNAL_SERVER_URL,
+      changeOrigin: true,
+    })
+
+    app.all('/api/v2/*', backendProxy)
   } else {
     app.use(
       express.static(path.join(clientPath, 'dist/client'), { index: false })
     )
   }
-
-  const backendProxy = createProxyMiddleware({
-    target: isDev
-      ? process.env.EXTERNAL_SERVER_URL
-      : process.env.INTERNAL_SERVER_URL,
-    changeOrigin: true,
-  })
-
-  app.all('/api/v2/*', backendProxy)
 
   app.get('*', async (req, res, next) => {
     const url = req.originalUrl
