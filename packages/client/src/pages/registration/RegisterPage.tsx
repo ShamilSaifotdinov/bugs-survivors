@@ -6,6 +6,7 @@ import { SignUpData, signUp } from '../../api/basic/auth'
 import { useLoggedInUser } from '../../hooks/useLoggedInUser'
 import Clue from '../../components/Clue'
 import style from './styles.module.scss'
+import getAppliedXSS from '../../helpers/getAppliedXSS'
 
 const fields: SignUpData = {
   first_name: 'First name',
@@ -35,7 +36,10 @@ function RegisterPage() {
 
   const navigate = useNavigate()
   const handleChange = (event: React.ChangeEvent<HTMLFormElement>) => {
-    setDataForm({ ...dataForm, [event.target.name]: event.target.value })
+    setDataForm({
+      ...dataForm,
+      [event.target.name]: getAppliedXSS(event.target.value),
+    })
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -80,7 +84,7 @@ function RegisterPage() {
                   return (
                     <TextField
                       key={key}
-                      value={dataForm[field]}
+                      value={getAppliedXSS(dataForm[field])}
                       name={field}
                       label={fields[key]}
                       error={isError}

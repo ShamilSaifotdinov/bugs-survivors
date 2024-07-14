@@ -10,6 +10,7 @@ import { useValidationForm } from '../../hooks/useValidationForm'
 import { useLoggedInUser } from '../../hooks/useLoggedInUser'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 import { changeProfile } from '../../store/slices/userSlice'
+import getAppliedXSS from '../../helpers/getAppliedXSS'
 
 const initialData = {
   first_name: '',
@@ -52,7 +53,7 @@ function ProfilePage() {
   }, [user, setProfile])
 
   const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
-    setProfile({ ...profile, [e.target.name]: e.target?.value })
+    setProfile({ ...profile, [e.target.name]: getAppliedXSS(e.target?.value) })
   }
 
   const handleSubmitData = async (e: React.FormEvent) => {
@@ -100,7 +101,7 @@ function ProfilePage() {
                           onBlur={valid[key].blur.onBlur}
                           sx={{ width: '45%' }}
                           label={fields[key]}
-                          value={profile[key] ?? ''}
+                          value={getAppliedXSS(profile[key] ?? '')}
                           name={field}
                         />
                       </Box>

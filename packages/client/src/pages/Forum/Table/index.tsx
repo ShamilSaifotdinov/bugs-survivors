@@ -18,6 +18,7 @@ import MetaData from '../MetaData'
 import Row from './Row'
 import CreateTopicModal from './CreateTopicModal'
 import getAvatarSrc from '../../../helpers/getAvatarSrc'
+import getAppliedXSS from '../../../helpers/getAppliedXSS'
 
 export type RowDataType = {
   creator: JSX.Element
@@ -34,10 +35,12 @@ function getRowsData(data: ForumData[]) {
         <div className={styles.user}>
           <Avatar
             className={styles.avatar}
-            alt={item.creator.login}
-            src={getAvatarSrc(item.creator.avatar)}
+            alt={getAppliedXSS(item.creator.login)}
+            src={getAvatarSrc(getAppliedXSS(item.creator.avatar))}
           />
-          <Typography variant="body1">{item.creator.login}</Typography>
+          <Typography variant="body1">
+            {getAppliedXSS(item.creator.login)}
+          </Typography>
         </div>
       ),
     })) ?? []

@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import { useLoggedInUser } from '../../hooks/useLoggedInUser'
 import { getTopicInfo } from '../../api/basic/forum'
 import Topic from './Topic'
+import getAppliedXSS from '../../helpers/getAppliedXSS'
 
 const Forum = () => {
   useLoggedInUser()
@@ -17,7 +18,7 @@ const Forum = () => {
   useEffect(() => {
     if (topicId) {
       getTopicInfo(Number(topicId)).then(data => {
-        setName(data.name)
+        setName(getAppliedXSS(data.name))
       })
     } else {
       setName('Forum')
