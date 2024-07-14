@@ -8,6 +8,7 @@ import MetaData from '../MetaData'
 import { Emoji, TopicData } from '../constants'
 import getAvatarSrc from '../../../helpers/getAvatarSrc'
 import CommentTable from './CommentTable'
+import getAppliedXSS from '../../../helpers/getAppliedXSS'
 
 export type TopicRowDataType = {
   creator: JSX.Element
@@ -61,7 +62,7 @@ export default function Topic() {
   useEffect(() => {
     getTopicInfo(Number(topicId)).then(data => {
       setCommentsAmount(data.comments_count)
-      setTopicName(data.name)
+      setTopicName(getAppliedXSS(data.name))
     })
   }, [topicId])
 

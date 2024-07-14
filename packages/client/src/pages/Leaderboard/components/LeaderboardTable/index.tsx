@@ -13,6 +13,7 @@ import {
 import { getLeaderboard } from '../../../../api/basic/leaderboard'
 import convertSeconds from '../../../../helpers/convertSeconds'
 import getAvatarSrc from '../../../../helpers/getAvatarSrc'
+import getAppliedXSS from '../../../../helpers/getAppliedXSS'
 
 type User = {
   id: string
@@ -73,10 +74,10 @@ export default function LeaderboardTable() {
       <div className={styles.user}>
         <Avatar
           className={styles.avatar}
-          alt={item.user.name}
-          src={getAvatarSrc(item.user.avatar)}
+          alt={getAppliedXSS(item.user.name)}
+          src={getAvatarSrc(getAppliedXSS(item.user.avatar))}
         />
-        <Typography variant="body1">{item.user.name}</Typography>
+        <Typography variant="body1">{getAppliedXSS(item.user.name)}</Typography>
       </div>
     ),
   }))
@@ -147,7 +148,7 @@ export default function LeaderboardTable() {
                     const value = row[column.id]
                     return (
                       <TableCell key={column.id} align={column.align}>
-                        {value}
+                        {getAppliedXSS(value)}
                       </TableCell>
                     )
                   })}

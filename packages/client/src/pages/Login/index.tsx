@@ -10,6 +10,7 @@ import { yandexOauth, yandexServiceId } from '../../api/basic/oauth'
 import { useAppSelector } from '../../hooks/reduxHooks'
 import Clue from '../../components/Clue'
 import { CLIENT_HOST } from '../../constants'
+import getAppliedXSS from '../../helpers/getAppliedXSS'
 
 function Login() {
   const user = useAppSelector(state => state.user)
@@ -58,10 +59,13 @@ function Login() {
   const handleChange = (event: React.ChangeEvent<HTMLFormElement>) => {
     switch (event.target.name) {
       case 'login':
-        setDataForm({ ...dataForm, login: event.target.value })
+        setDataForm({ ...dataForm, login: getAppliedXSS(event.target.value) })
         break
       case 'password':
-        setDataForm({ ...dataForm, password: event.target.value })
+        setDataForm({
+          ...dataForm,
+          password: getAppliedXSS(event.target.value),
+        })
         break
     }
   }
@@ -98,14 +102,14 @@ function Login() {
             className={style.form}>
             <Typography variant="h5">Sign In</Typography>
             <TextField
-              value={dataForm.login}
+              value={getAppliedXSS(dataForm.login)}
               name="login"
               label="Login"
               error={loginErr}
               onBlur={valid.login.blur.onBlur}
             />
             <TextField
-              value={dataForm.password}
+              value={getAppliedXSS(dataForm.password)}
               type="password"
               name="password"
               label="Password"

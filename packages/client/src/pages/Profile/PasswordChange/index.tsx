@@ -6,6 +6,7 @@ import {
   ChangeUserPasswordData,
   changeUserPassword,
 } from '../../../api/basic/users'
+import getAppliedXSS from '../../../helpers/getAppliedXSS'
 
 const initialPassword = {
   oldPassword: '',
@@ -32,7 +33,10 @@ function PasswordChange() {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
-    setPasswords({ ...passwords, [e.target.name]: e.target.value })
+    setPasswords({
+      ...passwords,
+      [e.target.name]: getAppliedXSS(e.target.value),
+    })
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -66,7 +70,7 @@ function PasswordChange() {
             name="oldPassword"
             error={oldPassword.blur.isDirty && !oldPassword.valid.isValid}
             onBlur={oldPassword.blur.onBlur}
-            value={passwords.oldPassword}
+            value={getAppliedXSS(passwords.oldPassword)}
           />
           <FormHelperText error={!!errorPasswords}>
             {errorPasswords}
@@ -82,7 +86,7 @@ function PasswordChange() {
             name="newPassword"
             error={newPassword.blur.isDirty && !newPassword.valid.isValid}
             onBlur={newPassword.blur.onBlur}
-            value={passwords.newPassword}
+            value={getAppliedXSS(passwords.newPassword)}
           />
           <Button
             onClick={handleSubmit}

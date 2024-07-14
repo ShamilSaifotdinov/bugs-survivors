@@ -4,6 +4,7 @@ import styles from './styles.module.scss'
 import { useNavigate } from 'react-router-dom'
 import clsx from 'clsx'
 import { RowDataType } from '.'
+import getAppliedXSS from '../../../helpers/getAppliedXSS'
 
 type IProps = {
   row: RowDataType
@@ -28,7 +29,7 @@ export default function Row({ row }: IProps) {
               styles.tc,
               column.bodyClassName ? styles[column.bodyClassName] : ''
             )}>
-            {value}
+            {getAppliedXSS(value)}
           </TableCell>
         )
       })}

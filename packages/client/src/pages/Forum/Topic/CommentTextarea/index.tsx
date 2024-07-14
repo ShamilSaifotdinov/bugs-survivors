@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import EmojiPicker from '@emoji-mart/react'
 import emojiData from '@emoji-mart/data'
 import { createComment } from '../../../../api/basic/forum'
+import getAppliedXSS from '../../../../helpers/getAppliedXSS'
 
 type IProps = {
   callback: () => Promise<void>
@@ -16,7 +17,7 @@ export default function CommentTextarea({ callback }: IProps) {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 
   const textareaChangeHandle = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setTextareaText(event.target.value)
+    setTextareaText(getAppliedXSS(event.target.value))
   }
 
   const showEmojiButtonHandle = () => {
@@ -44,7 +45,7 @@ export default function CommentTextarea({ callback }: IProps) {
     <div className={styles.textarea_container}>
       <textarea
         className={styles.textarea}
-        value={textareaText}
+        value={getAppliedXSS(textareaText)}
         onChange={textareaChangeHandle}
       />
       <div className={styles.buttons_container}>
