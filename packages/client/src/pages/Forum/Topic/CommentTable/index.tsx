@@ -18,6 +18,7 @@ import { getCommentRepliesData } from '../../../../api/basic/forum/types'
 import Input from './Input'
 import { useAppSelector } from '../../../../hooks/reduxHooks'
 import getAvatarSrc from '../../../../helpers/getAvatarSrc'
+import getAppliedXSS from '../../../../helpers/getAppliedXSS'
 
 function getCommentRowData(data: TopicData[], nestingLevel: number) {
   return (
@@ -25,9 +26,9 @@ function getCommentRowData(data: TopicData[], nestingLevel: number) {
       ...item,
       content: (
         <div>
-          {item.creator.login}
+          {getAppliedXSS(item.creator.login)}
           <br />
-          {item.content}
+          {getAppliedXSS(item.content)}
         </div>
       ),
       creator: (
@@ -37,12 +38,12 @@ function getCommentRowData(data: TopicData[], nestingLevel: number) {
               styles.avatar,
               nestingLevel === 0 ? styles.avatar_reply : ''
             )}
-            alt={item.creator.login}
-            src={getAvatarSrc(item.creator.avatar)}
+            alt={getAppliedXSS(item.creator.login)}
+            src={getAvatarSrc(getAppliedXSS(item.creator.avatar))}
           />
           {nestingLevel !== 0 && (
             <Typography variant="body1" fontSize="0.75rem">
-              {item.creator.login}
+              {getAppliedXSS(item.creator.login)}
             </Typography>
           )}
         </div>
@@ -136,7 +137,7 @@ export default function CommentTable({
                     nestingLevel === 0 ? styles.tc : styles.tc_reply,
                     column.className ? styles[column.className] : ''
                   )}>
-                  {value}
+                  {getAppliedXSS(value)}
                 </TableCell>
               )
             })}
@@ -185,8 +186,8 @@ export default function CommentTable({
                     <div className={styles.user}>
                       <Avatar
                         className={clsx(styles.avatar, styles.avatar_reply)}
-                        alt={user.login}
-                        src={getAvatarSrc(user.avatar)}
+                        alt={getAppliedXSS(user.login)}
+                        src={getAvatarSrc(getAppliedXSS(user.avatar))}
                       />
                     </div>
                   )
@@ -197,7 +198,7 @@ export default function CommentTable({
                       styles.tc_reply,
                       column.className ? styles[column.className] : ''
                     )}>
-                    {value}
+                    {getAppliedXSS(value)}
                   </TableCell>
                 )
               })}
